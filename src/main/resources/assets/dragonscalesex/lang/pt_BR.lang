@@ -1,0 +1,22 @@
+//Interface
+itemGroup.tabDragonScalesEX=Dragon Scales EX Mod
+
+//Blocks
+tile.dragonScaleBlock.name=Bloco de Escamas de Dragão
+tile.dragonScaleOre.name=Minério de Escamas de Dragão
+tile.dragonBricks.name=Tijolos de Escamas de Dragão
+tile.dragonCrystal.name=Cristal de Escamas de Dragão
+
+//Items
+item.dragonScale.name=Escamas de Dragão
+item.tinyDragonScale.name=Escamas Pequenas de Dragão
+item.dragonBrick.name=Tijolo de Escamas de Dragão
+
+item.dragonScepter.name=Cetro do Dragão
+item.dragonSword.name=Espada de DragonAlloy
+item.dragonMultiTool.name=Ferramenta Universal de DragonAlloy
+
+item.scalesHelm.name=Capacete de Escamas de Dragão
+item.scalesChestplate.name=Peitoral de Escamas de Dragão
+item.scalesLeggings.name=Calças de Escamas de Dragão
+item.scalesBoots.name=Botas de Escamas de Dragão

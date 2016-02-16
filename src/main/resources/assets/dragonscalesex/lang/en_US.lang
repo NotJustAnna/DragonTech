@@ -1,0 +1,22 @@
+//Interface
+itemGroup.tabDragonScalesEX=Dragon Scales EX Mod
+
+//Blocks
+tile.dragonScaleBlock.name=Dragon Scale Block
+tile.dragonScaleOre.name=Dragon Scale Ore
+tile.dragonBricks.name=Dragon Bricks
+tile.dragonCrystal.name=Dragon Crystal
+
+//Items
+item.dragonScale.name=Dragon Scale
+item.tinyDragonScale.name=Tiny Dragon Scale
+item.dragonBrick.name=Dragon Brick
+
+item.dragonScepter.name=Dragon Scepter
+item.dragonSword.name=DragonAlloy Sword
+item.dragonMultiTool.name=DragonAlloy MultiTool
+
+item.scalesHelm.name=Dragon Scales Helm
+item.scalesChestplate.name=Dragon Scales Chestplate
+item.scalesLeggings.name=Dragon Scales Leggings
+item.scalesBoots.name=Dragon Scales Boots
