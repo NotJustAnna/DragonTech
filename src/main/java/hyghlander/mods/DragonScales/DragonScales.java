@@ -37,7 +37,7 @@ public class DragonScales {
 	public void init(FMLInitializationEvent e)
 	{
 		proxy.init();
-		//UpdateChecker.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
+		UpdateChecker.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
 	}
 	
 	@Mod.EventHandler
