@@ -8,7 +8,7 @@ public class Lib {
 	
 	//Little Helper, huh?
 	public static final String TEXTURE_PATH = MODID + ":";
-	//public static final String UPDATEURL = "https://raw.githubusercontent.com/adriantodt/DragonScalesMod/master/latest.txt";
+	public static final String UPDATEURL = "https://raw.githubusercontent.com/adriantodt/DragonScalesEXMod/master/latest.txt";
 	
 	//Easter Eggs
 	public static final String FANCYNAME = "§5§lDragon Scales EX Mod";
