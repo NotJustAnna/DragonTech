@@ -31,7 +31,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockModCauldron extends BlockContainer {
+public class BlockModCauldron extends BlockCauldron/*Container*/ {
 	@SideOnly(Side.CLIENT)
     private IIcon innerIcon;
     @SideOnly(Side.CLIENT)
@@ -41,7 +41,8 @@ public class BlockModCauldron extends BlockContainer {
 
     public BlockModCauldron()
     {
-        super(Material.iron);
+        //super(Material.iron);
+    	super();
         this.setHardness(2.0F).setBlockName("essentiaCauldron").setBlockTextureName("cauldron");
     }
 
@@ -245,50 +246,8 @@ public class BlockModCauldron extends BlockContainer {
 		}
     }
 	
-    public boolean renderBlockCauldron(BlockModCauldron p_147785_1_, RenderBlocks renderer, int x, int y, int z)
-    {
-    	renderer.renderStandardBlock(p_147785_1_, x, y, z);
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(p_147785_1_.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
-        int l = p_147785_1_.colorMultiplier(renderer.blockAccess, x, y, z);
-        float f = (float)(l >> 16 & 255) / 255.0F;
-        float f1 = (float)(l >> 8 & 255) / 255.0F;
-        float f2 = (float)(l & 255) / 255.0F;
-        float f4;
-
-        if (EntityRenderer.anaglyphEnable)
-        {
-            float f3 = (f * 30.0F + f1 * 59.0F + f2 * 11.0F) / 100.0F;
-            f4 = (f * 30.0F + f1 * 70.0F) / 100.0F;
-            float f5 = (f * 30.0F + f2 * 70.0F) / 100.0F;
-            f = f3;
-            f1 = f4;
-            f2 = f5;
-        }
-
-        tessellator.setColorOpaque_F(f, f1, f2);
-        IIcon iicon1 = p_147785_1_.getBlockTextureFromSide(2);
-        f4 = 0.125F;
-        renderer.renderFaceXPos(p_147785_1_, (double)((float)x - 1.0F + f4), (double)y, (double)z, iicon1);
-        renderer.renderFaceXNeg(p_147785_1_, (double)((float)x + 1.0F - f4), (double)y, (double)z, iicon1);
-        renderer.renderFaceZPos(p_147785_1_, (double)x, (double)y, (double)((float)z - 1.0F + f4), iicon1);
-        renderer.renderFaceZNeg(p_147785_1_, (double)x, (double)y, (double)((float)z + 1.0F - f4), iicon1);
-        IIcon iicon2 = BlockCauldron.getCauldronIcon("inner");
-        renderer.renderFaceYPos(p_147785_1_, (double)x, (double)((float)y - 1.0F + 0.25F), (double)z, iicon2);
-        renderer.renderFaceYNeg(p_147785_1_, (double)x, (double)((float)y + 1.0F - 0.75F), (double)z, iicon2);
-        int i1 = renderer.blockAccess.getBlockMetadata(x, y, z);
-
-        if (i1 > 0)
-        {
-            IIcon iicon = BlockLiquid.getLiquidIcon("water_still");
-            renderer.renderFaceYPos(p_147785_1_, (double)x, (double)((float)y - 1.0F + BlockModCauldron.getRenderLiquidLevel(i1)), (double)z, iicon);
-        }
-
-        return true;
-    }
-
-	@Override
-	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-		return new TileEntityModCauldron();
-	}
+	//@Override
+	//public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+	//	return new TileEntityModCauldron();
+	//}
 }

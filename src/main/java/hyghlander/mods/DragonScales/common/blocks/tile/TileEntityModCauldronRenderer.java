@@ -15,7 +15,7 @@ public class TileEntityModCauldronRenderer extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float size) {
-		RenderBlocks renderer = new RenderBlocks();
+		RenderBlocks renderer = RenderBlocks.getInstance();
 		Block block =  te.blockType;
 		renderer.renderStandardBlock(block, (int)x, (int)y, (int)z);
         Tessellator tessellator = Tessellator.instance;

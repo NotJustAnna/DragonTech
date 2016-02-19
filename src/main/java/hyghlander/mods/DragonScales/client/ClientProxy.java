@@ -22,7 +22,7 @@ public class ClientProxy extends CommonProxy {
 	
 	public void registerRenderThings(){
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDragonCrystal.class, new TileEntityDragonCrystalRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModCauldron.class, new TileEntityModCauldronRenderer());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModCauldron.class, new TileEntityModCauldronRenderer());
 		//RenderingRegistry.registerEntityRenderingHandler(EntityModDragon.class, new RenderModDragon(new ModelModDragon(), 0.5F));
 	}
 	
