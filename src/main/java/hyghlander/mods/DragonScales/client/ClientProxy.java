@@ -9,6 +9,8 @@ import hyghlander.mods.DragonScales.client.models.RenderModDragon;
 import hyghlander.mods.DragonScales.common.CommonProxy;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystalRenderer;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldronRenderer;
 import hyghlander.mods.DragonScales.common.events.KeyBindings;
 import hyghlander.mods.DragonScales.common.events.PlayerTickHandler;
 import net.minecraft.client.model.ModelBiped;
@@ -20,6 +22,7 @@ public class ClientProxy extends CommonProxy {
 	
 	public void registerRenderThings(){
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDragonCrystal.class, new TileEntityDragonCrystalRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityModCauldron.class, new TileEntityModCauldronRenderer());
 		//RenderingRegistry.registerEntityRenderingHandler(EntityModDragon.class, new RenderModDragon(new ModelModDragon(), 0.5F));
 	}
 	
