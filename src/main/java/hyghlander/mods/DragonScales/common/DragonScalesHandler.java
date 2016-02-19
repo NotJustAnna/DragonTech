@@ -34,10 +34,12 @@ public class DragonScalesHandler {
 			EnumHelper.addArmorMaterial("DRAGONSCALE", 1000, new int[] { 50, 80, 60, 30 }, 35);
 	
 	// All Items
-	public static Item dragonScale, tinyDragonScale, dragonPlate, dragonBrick, dragonSword, dragonMultiTool, dragonScepter, scalesHelm,  scalesChestplate, scalesLeggings, scalesBoots;
+	public static Item dragonScale, tinyDragonScale, dragonMetal, essentiaBottle,
+		dragonSword, dragonMultiTool, dragonScepter,
+		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
 	// All Blocks
-	public static Block dragonBricks, dragonChest, dragonScaleBlock, dragonScaleOre, dragonCrystal;
+	public static Block essentiaCauldron, dragonBricks, dragonChest, dragonScaleBlock, dragonScaleOre, dragonCrystal;
 	
 	public static void registerAll()
 	{
@@ -61,6 +63,9 @@ public class DragonScalesHandler {
 		dragonScaleOre = ModBlock.process(new BlockDragonScaleOre(), "dragonScaleOre");
 		GameRegistry.registerBlock(dragonScaleOre, "dragonScaleOre");
 		
+		essentiaCauldron = new BlockModCauldron();
+		GameRegistry.registerBlock(essentiaCauldron, "essentiaCauldron");
+		
 		//dragonChest = ModBlock.process(new BlockDragonChest(), "dragonChest");
 		//GameRegistry.registerBlock(dragonChest, ItemBlock.class, "dragonChest");
 		//GameRegistry.registerTileEntity(TileEntityDragonChest.class, "dragonchestTileEntity");
@@ -75,12 +80,14 @@ public class DragonScalesHandler {
 		ModItem.set(DragonScales.tabDragonScales, Lib.MODID);
 
 		
-		dragonScale = new ModItem("dragonScale");
+		dragonScale = ModItem.process(new ItemDragonScale("dragonScale", false), "dragonScale");
 		GameRegistry.registerItem(dragonScale, "dragonScale");
-		tinyDragonScale = new ModItem("tinyDragonScale");
+		tinyDragonScale = ModItem.process(new ItemDragonScale("tinyDragonScale", true), "tinyDragonScale");
 		GameRegistry.registerItem(tinyDragonScale, "tinyDragonScale");
-		dragonBrick = new ModItem("dragonBrick");
-		GameRegistry.registerItem(dragonBrick, "dragonBrick");
+		dragonMetal = new ModItem("dragonMetal");
+		GameRegistry.registerItem(dragonMetal, "dragonMetal");
+		essentiaBottle = new ModItem("essentiaBottle");
+		GameRegistry.registerItem(essentiaBottle, "essentiaBottle");
 		
 		dragonSword = ModItem.process(new ItemDragonSword(DRAGONALLOY_TOOL_MATERIAL), "dragonSword");
 		GameRegistry.registerItem(dragonSword, "dragonSword");
@@ -174,13 +181,13 @@ public class DragonScalesHandler {
 				'S', Items.blaze_rod
 		);
 		
-		GameRegistry.addShapedRecipe(
-				new ItemStack(dragonBricks,1), 
-				"DDD","DDD","DDD",
-				'D', dragonBrick
-		);
+		//GameRegistry.addShapedRecipe(
+		//		new ItemStack(dragonBricks,1), 
+		//		"DDD","DDD","DDD",
+		//		'D', dragonBrick
+		//);
 		
-		GameRegistry.addSmelting(tinyDragonScale, new ItemStack(dragonBrick), 0.1f);
+		//GameRegistry.addSmelting(tinyDragonScale, new ItemStack(dragonBrick), 0.1f);
 		
 		GameRegistry.addShapelessRecipe(
 				new ItemStack(dragonScale,9), 
