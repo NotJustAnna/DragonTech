@@ -2,8 +2,6 @@ package hyghlander.mods.DragonScales.common;
 
 import org.apache.http.impl.conn.tsccm.WaitingThreadAborter;
 
-import brazillianforgers.lib.EntityHelper;
-import brazillianforgers.lib.MathUtils;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;

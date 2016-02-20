@@ -5,8 +5,6 @@ import java.util.Random;
 
 import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 
-import brazillianforgers.lib.ItemHelper;
-import brazillianforgers.lib.MathUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import hyghlander.mods.DragonScales.DragonScales;

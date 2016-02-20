@@ -2,8 +2,8 @@ package hyghlander.mods.DragonScales;
 
 import org.apache.logging.log4j.Logger;
 
-import brazillianforgers.core.UpdateChecker;
-import brazillianforgers.lib.SilentLogger;
+import brforgers.core.UpdateManager;
+import brforgers.core.lib.SilentLogger;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -37,7 +37,7 @@ public class DragonScales {
 	public void init(FMLInitializationEvent e)
 	{
 		proxy.init();
-		UpdateChecker.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
+		UpdateManager.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
 	}
 	
 	@Mod.EventHandler
