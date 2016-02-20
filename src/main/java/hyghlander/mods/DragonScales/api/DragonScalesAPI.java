@@ -18,22 +18,22 @@ public class DragonScalesAPI {
 			this.essentiaCost = essentiaCost;
 		}
 		
-		public boolean isValidInput(ItemStack input)
+		public boolean isValidInput(ItemStack input, int essentiaLevel)
 		{
-			return this.input.isItemEqual(input) && (getItemCost(input) >= input.stackSize);
+			return this.input.isItemEqual(input) && (getItemCost(input, essentiaLevel) <= input.stackSize) && (getEssentiaCost(input,essentiaLevel) <= essentiaLevel);
 		}
 		
-		public ItemStack getOutput(ItemStack input)
+		public ItemStack getOutput(ItemStack input, int essentiaLevel)
 		{
 			return this.output.copy();
 		}
 		
-		public int getEssentiaCost(ItemStack input)
+		public int getEssentiaCost(ItemStack input, int essentiaLevel)
 		{
 			return this.essentiaCost;
 		}
 		
-		public int getItemCost(ItemStack input)
+		public int getItemCost(ItemStack input, int essentiaLevel)
 		{
 			return this.input.stackSize;
 		}
@@ -44,7 +44,7 @@ public class DragonScalesAPI {
 	public static CauldronRecipe getValidRecipe(ItemStack input, int essentiaLevel) {
 		for (CauldronRecipe recipe : cauldronRecipes)
 		{
-			if (recipe.isValidInput(input)) return recipe;
+			if (recipe.isValidInput(input, essentiaLevel)) return recipe;
 		}
 		return null;
 	}

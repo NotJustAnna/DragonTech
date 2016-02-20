@@ -188,7 +188,7 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
 		{
 			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
 			this.setMetadataProperly(theWorld, x, y, z, 0);
-			return false;
+			return Blocks.cauldron.onBlockActivated(theWorld, x, y, z, player, ignored1, ignored2, ignored3, ignored4);
 		}
 		
         if (theWorld.isRemote)
@@ -211,26 +211,24 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
                 
                 if (recipe != null)
                 {
-                	//First remove the Item
-                	stack.stackSize -= recipe.getItemCost(stack);
-
-                    if (stack.stackSize <= 0)
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-                    
-                    //Then remove the Essentia
-                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack));
-                    
-                    //Then give the Item
-                    if (!player.inventory.addItemStackToInventory(recipe.getOutput(stack)))
+                	if (!player.inventory.addItemStackToInventory(recipe.getOutput(stack, essentiaLevel)))
                     {
-                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack)));
+                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack, essentiaLevel)));
                     }
                     else if (player instanceof EntityPlayerMP)
                     {
                         ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
                     }
+                	
+                	stack.stackSize -= recipe.getItemCost(stack, essentiaLevel);
+
+                    if (stack.stackSize <= 0)
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+                    
+                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel));
+                    return true;
                 }
-                return false;
+                return /*false*/true;
             }
         }
     }

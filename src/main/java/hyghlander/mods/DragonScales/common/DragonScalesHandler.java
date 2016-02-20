@@ -1,6 +1,9 @@
 package hyghlander.mods.DragonScales.common;
 
+import org.apache.http.impl.conn.tsccm.WaitingThreadAborter;
+
 import brazillianforgers.lib.EntityHelper;
+import brazillianforgers.lib.MathUtils;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -21,6 +24,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -129,29 +133,52 @@ public class DragonScalesHandler {
 		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.stick), 0, new ItemStack(infusedStick)));
 		DragonScalesAPI.cauldronRecipes.add(
 			new CauldronRecipe(new ItemStack(Blocks.brick_block), 1, new ItemStack(dragonBricks)) {
-				public ItemStack getOutput(ItemStack input) {
-					ItemStack output = super.getOutput(input);
+				public ItemStack getOutput(ItemStack input, int essentiaLevel) {
+					ItemStack output = super.getOutput(input, essentiaLevel);
 					output.stackSize = input.stackSize;
 					return output;
 				}
 				
-				public int getEssentiaCost(ItemStack input)
+				public int getEssentiaCost(ItemStack input, int essentiaLevel)
 				{
-					return (int)((float)(input.stackSize / 64) * 3);
+					return MathHelper.clamp_int((int)((float)(input.stackSize / 64) * 3)+1, 1, 3);
 				}
 				
-				public int getItemCost(ItemStack input)
+				public int getItemCost(ItemStack input, int essentiaLevel)
 				{
 					return input.stackSize;
 				}
 			}
 		);
+		DragonScalesAPI.cauldronRecipes.add(
+				new CauldronRecipe(new ItemStack(Blocks.soul_sand), 1, new ItemStack(Blocks.end_stone)) {
+					public ItemStack getOutput(ItemStack input, int essentiaLevel) {
+						ItemStack output = super.getOutput(input, essentiaLevel);
+						output.stackSize = MathHelper.clamp_int(input.stackSize,0,16);
+						return output;
+					}
+					
+					public int getEssentiaCost(ItemStack input, int essentiaLevel)
+					{
+						return MathHelper.clamp_int((int)((float)(input.stackSize / 16) * 3)+1, 1, 3);
+					}
+					
+					public int getItemCost(ItemStack input, int essentiaLevel)
+					{
+						return MathHelper.clamp_int(input.stackSize,0,16);
+					}
+				}
+			);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(dragonEssenceBottle), new ItemStack(Items.potionitem,1,0), new ItemStack(dragonEssenceShard));
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonScaleBlock,1),
 				"DDD","DDD","DDD",
 				'D', dragonScale
 		);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(dragonScale,9), dragonScaleBlock);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonMultiTool,1),
@@ -173,36 +200,37 @@ public class DragonScalesHandler {
 				new ItemStack(scalesHelm,1), 
 				"DDD","DED","   ",
 				'D', dragonScale,
-				'E', dragonEssenceShard
+				'E', dragonEssenceBottle
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesChestplate,1), 
 				"DED","DDD","DDD",
 				'D', dragonScale,
-				'E', dragonEssenceShard
+				'E', dragonEssenceBottle
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesLeggings,1), 
 				"DDD","DED","D D",
 				'D', dragonScale,
-				'E', dragonEssenceShard
+				'E', dragonEssenceBottle
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesBoots,1), 
-				"   ","D D","DED",
+				"E E","D D","D D",
 				'D', dragonScale,
-				'E', dragonEssenceShard
+				'E', dragonEssenceBottle
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonScepter,1), 
-				"MMD"," SD","DS ",
+				"MMD"," SD","DSE",
 				'D', dragonScale,
 				'M', dragonMetal,
-				'S', infusedStick
+				'S', infusedStick,
+				'E', dragonEssenceBottle
 		);
 	}
 }

@@ -23,12 +23,18 @@ public class ModItemEssenceBottle extends ModItemDragonScale {
 		Block block = theWorld.getBlock(x, y, z);
 		int meta = theWorld.getBlockMetadata(x, y, z);
 		
+		if ((block == Blocks.cauldron && meta > 0) || (block == DragonScalesHandler.essentiaCauldron && meta == 3))
+			return false;
+			
 		if (block == Blocks.cauldron && meta == 0)
-			theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron, 3, 1);
-		else if (!!(block != DragonScalesHandler.essentiaCauldron || meta != 3))
-			theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron, 3, meta++);
+			theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron,  1, 3);
 		
-		stack.stackSize -= 1;
+		if (block == DragonScalesHandler.essentiaCauldron && meta < 3)
+		{
+			meta++;
+			theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron, meta, 3);
+		}
+		stack.stackSize--;
 		
 		if(stack.stackSize <= 0)
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
