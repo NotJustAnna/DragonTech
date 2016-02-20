@@ -46,7 +46,7 @@ public class DragonScalesHandler {
 		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
 	// All Blocks
-	public static Block essentiaCauldron, dragonBricks, dragonChest, dragonScaleBlock, dragonEssenceOre, dragonCrystal;
+	public static Block modCauldron, dragonBricks, dragonChest, dragonScaleBlock, dragonEssenceOre, dragonCrystal;
 	
 	public static void registerAll()
 	{
@@ -70,8 +70,8 @@ public class DragonScalesHandler {
 		dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre(), "dragonEssenceOre");
 		GameRegistry.registerBlock(dragonEssenceOre, "dragonEssenceOre");
 		
-		essentiaCauldron = new BlockModCauldron();
-		GameRegistry.registerBlock(essentiaCauldron, "essentiaCauldron");
+		modCauldron = new BlockModCauldron();
+		GameRegistry.registerBlock(modCauldron, "modCauldron");
 		
 		//dragonChest = ModBlock.process(new BlockDragonChest(), "dragonChest");
 		//GameRegistry.registerBlock(dragonChest, ItemBlock.class, "dragonChest");
@@ -200,28 +200,28 @@ public class DragonScalesHandler {
 				new ItemStack(scalesHelm,1), 
 				"DDD","DED","   ",
 				'D', dragonScale,
-				'E', dragonEssenceBottle
+				'E', dragonEssenceBottle.setContainerItem(Items.glass_bottle)
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesChestplate,1), 
 				"DED","DDD","DDD",
 				'D', dragonScale,
-				'E', dragonEssenceBottle
+				'E', dragonEssenceBottle.setContainerItem(Items.glass_bottle)
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesLeggings,1), 
 				"DDD","DED","D D",
 				'D', dragonScale,
-				'E', dragonEssenceBottle
+				'E', dragonEssenceBottle.setContainerItem(Items.glass_bottle)
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesBoots,1), 
 				"E E","D D","D D",
 				'D', dragonScale,
-				'E', dragonEssenceBottle
+				'E', dragonEssenceBottle.setContainerItem(Items.glass_bottle)
 		);
 		
 		GameRegistry.addShapedRecipe(
@@ -230,7 +230,7 @@ public class DragonScalesHandler {
 				'D', dragonScale,
 				'M', dragonMetal,
 				'S', infusedStick,
-				'E', dragonEssenceBottle
+				'E', dragonEssenceBottle.setContainerItem(Items.glass_bottle)
 		);
 	}
 }

@@ -3,6 +3,7 @@ package hyghlander.mods.DragonScales.client;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import hyghlander.mods.DragonScales.client.models.ModelDragonChestplate;
 import hyghlander.mods.DragonScales.client.models.ModelModDragon;
@@ -10,11 +11,13 @@ import hyghlander.mods.DragonScales.client.models.RenderModDragon;
 import hyghlander.mods.DragonScales.client.renderers.TileEntityDragonCrystalRenderer;
 import hyghlander.mods.DragonScales.client.renderers.ModCauldronRenderer;
 import hyghlander.mods.DragonScales.common.CommonProxy;
+import hyghlander.mods.DragonScales.common.DragonScalesHandler;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 import hyghlander.mods.DragonScales.common.events.KeyBindings;
 import hyghlander.mods.DragonScales.common.events.PlayerTickHandler;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.item.ItemStack;
 
 public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonChestplate = new ModelDragonChestplate(1.0f);
@@ -22,6 +25,14 @@ public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonBoots = new ModelBiped(0.9f);
 	
 	private static int cauldronRenderType = -1;
+	
+	public void preInit(){
+		super.preInit();
+		
+		//Tweak to Remove the Cauldron from NEI
+		if (Loader.isModLoaded("NotEnoughItems"));
+		codechicken.nei.api.API.hideItem(new ItemStack(DragonScalesHandler.modCauldron));
+	}
 	
 	public void registerRenderThings(){
 		//Register Crystal TileEntity Renderer

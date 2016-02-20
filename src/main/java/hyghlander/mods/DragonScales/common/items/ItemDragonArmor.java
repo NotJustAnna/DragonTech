@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -138,5 +139,10 @@ public class ItemDragonArmor extends ItemArmor
 			player.capabilities.allowFlying = false;
 			player.capabilities.isFlying = false;
 		}
+	}
+	
+	public EnumRarity getRarity(ItemStack ignored)
+	{
+		return EnumRarity.rare;
 	}
 }

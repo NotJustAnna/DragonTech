@@ -53,7 +53,7 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
     {
         super(Material.iron);
     	//super();
-        this.setHardness(2.0F).setBlockName("essentiaCauldron").setBlockTextureName("cauldron");
+        this.setHardness(2.0F).setBlockName("cauldron").setBlockTextureName("cauldron");
     }
 
     /**
@@ -100,11 +100,11 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
     {
         return
         		iconName.equals("inner") ?
-        				((BlockModCauldron) DragonScalesHandler.essentiaCauldron).innerIcon :
+        				((BlockModCauldron) DragonScalesHandler.modCauldron).innerIcon :
         		iconName.equals("bottom") ?
-        				((BlockModCauldron) DragonScalesHandler.essentiaCauldron).bottomIcon :
+        				((BlockModCauldron) DragonScalesHandler.modCauldron).bottomIcon :
         		iconName.equals("liquid") ?
-        	    		((BlockModCauldron) DragonScalesHandler.essentiaCauldron).essenceLiquid :null;
+        	    		((BlockModCauldron) DragonScalesHandler.modCauldron).essenceLiquid :null;
     }
 
     /**

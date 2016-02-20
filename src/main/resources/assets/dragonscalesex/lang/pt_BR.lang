@@ -1,20 +1,23 @@
 //Interface
 itemGroup.tabDragonScalesEX=Dragon Scales EX Mod
+recipe.essenceInfusion=Infusão de Essência
 
 //Blocks
 tile.dragonScaleBlock.name=Bloco de Escamas de Dragão
-tile.dragonScaleOre.name=Minério de Escamas de Dragão
-tile.dragonBricks.name=Tijolos de Escamas de Dragão
-tile.dragonCrystal.name=Cristal de Escamas de Dragão
+tile.dragonEssenceOre.name=Minério de Essência Draconiana
+tile.dragonBricks.name=Tijolos Draconiano
+tile.dragonCrystal.name=Cristal Draconiano
 
 //Items
 item.dragonScale.name=Escamas de Dragão
-item.tinyDragonScale.name=Escamas Pequenas de Dragão
-item.dragonBrick.name=Tijolo de Escamas de Dragão
+item.dragonEssenceShard.name=Fragmento de Essência Draconiana
+item.dragonMetal.name=Liga de Metal Draconiano
+item.infusedStick.name=Graveto Infundido
+item.dragonEssenceBottle.name=Frasco de Essência Draconiana
 
 item.dragonScepter.name=Cetro do Dragão
-item.dragonSword.name=Espada de DragonAlloy
-item.dragonMultiTool.name=Ferramenta Universal de DragonAlloy
+item.dragonSword.name=Espada de Metal Draconiano
+item.dragonMultiTool.name=Ferramenta Universal de Metal Draconiano
 
 item.scalesHelm.name=Capacete de Escamas de Dragão
 item.scalesChestplate.name=Peitoral de Escamas de Dragão

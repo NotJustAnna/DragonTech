@@ -1,20 +1,23 @@
 //Interface
 itemGroup.tabDragonScalesEX=Dragon Scales EX Mod
+recipe.essenceInfusion=Essence Infusion
 
 //Blocks
 tile.dragonScaleBlock.name=Dragon Scale Block
-tile.dragonScaleOre.name=Dragon Scale Ore
-tile.dragonBricks.name=Dragon Bricks
-tile.dragonCrystal.name=Dragon Crystal
+tile.dragonEssenceOre.name=Draconic Essence Ore
+tile.dragonBricks.name=Draconic Bricks
+tile.dragonCrystal.name=Draconic Crystal
 
 //Items
 item.dragonScale.name=Dragon Scale
-item.tinyDragonScale.name=Tiny Dragon Scale
-item.dragonBrick.name=Dragon Brick
+item.dragonEssenceShard.name=Draconic Essence Shard
+item.dragonMetal.name=Draconic Metal Alloy
+item.infusedStick.name=Infused Stick
+item.dragonEssenceBottle.name=Draconic Essence Bottle
 
 item.dragonScepter.name=Dragon Scepter
-item.dragonSword.name=DragonAlloy Sword
-item.dragonMultiTool.name=DragonAlloy MultiTool
+item.dragonSword.name=Draconic Metal Sword
+item.dragonMultiTool.name=Draconic Metal Multi-Tool
 
 item.scalesHelm.name=Dragon Scales Helm
 item.scalesChestplate.name=Dragon Scales Chestplate

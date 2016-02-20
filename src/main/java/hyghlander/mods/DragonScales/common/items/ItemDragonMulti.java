@@ -104,4 +104,9 @@ public class ItemDragonMulti extends ItemPickaxe
             }
         }
     }
+    
+	public EnumRarity getRarity(ItemStack ignored)
+	{
+		return EnumRarity.rare;
+	}
 }

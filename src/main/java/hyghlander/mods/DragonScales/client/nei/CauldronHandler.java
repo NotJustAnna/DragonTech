@@ -16,7 +16,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -30,108 +32,56 @@ import hyghlander.mods.DragonScales.common.DragonScalesHandler;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 
 public class CauldronHandler extends TemplateRecipeHandler{
-	
-	public String getRecipeName() {
-		return "Cauldron Infusion";
-	}
-
-	public String getGuiTexture() {
-		
-		return new ResourceLocation(Lib.MODID, "textures/gui/NEICauldron.png").toString();
-	}
-	
-	public class SmeltingPair extends CachedRecipe
+	public class InfusionPair extends CachedRecipe
     {
-        public SmeltingPair(ItemStack ingred, ItemStack essentia, ItemStack result) {
-            
-            this.ingred1 = new PositionedStack(ingred, 47, 20);
-            this.essentia = new PositionedStack(essentia, 70, 40);
-            this.result = new PositionedStack(result, 103, 20);
-            this.cauld = new PositionedStack(new ItemStack(Items.cauldron), 72, 20);
+        PositionedStack inputStack, essentiaBottle, outputStack, cauldronIcon;
+        
+        public InfusionPair(ItemStack ingred, int essentiaAmount, ItemStack result) {
+            essentiaAmount = MathHelper.clamp_int(essentiaAmount, 0, 3);
+            this.inputStack = new PositionedStack(ingred, 43, 18);
+            this.essentiaBottle = new PositionedStack((essentiaAmount == 0) ? new ItemStack(Items.glass_bottle) : new ItemStack(DragonScalesHandler.dragonEssenceBottle, essentiaAmount), 74, 38);
+            this.outputStack = new PositionedStack(result, 105, 18);
+            this.cauldronIcon = new PositionedStack(new ItemStack(Items.cauldron), 74, 18);
         }
 
         public List<PositionedStack> getIngredients() {
         	List<PositionedStack> l = new ArrayList<PositionedStack>();
-        	l.add(ingred1);
-        	l.add(essentia);
-        	l.add(cauld);
+        	l.add(inputStack);
+        	l.add(essentiaBottle);
+        	l.add(cauldronIcon);
         	
             return getCycledIngredients(cycleticks / 48, l);
         }
 
-        public PositionedStack getResult() {
-            return result;
-        }
-
-        public PositionedStack getOtherStack() {
-            return afuels.get((cycleticks / 48) % afuels.size()).stack;
-        }
-
-        PositionedStack cauld;
-        PositionedStack ingred1;
-        PositionedStack essentia;
-        PositionedStack result;
+        public PositionedStack getResult() { return outputStack; }
     }
+	
+	//Main things
+	public String getRecipeName() {return StatCollector.translateToLocal("recipe.essenceInfusion"); }
+	public String getGuiTexture() {return new ResourceLocation(Lib.MODID, "textures/gui/NEICauldron.png").toString();}
+    public String getOverlayIdentifier() {return "essenceInfusion";}
+	
+	public void loadTransferRects() {transferRects.add(new RecipeTransferRect(new Rectangle(69, 13, 26, 26), "essenceInfusion"));}
 
-    public static class FuelPair
-    {
-        public FuelPair(ItemStack ingred, int burnTime) {
-            this.burnTime = burnTime;
-        }
-
-        public PositionedStack stack;
-        public int burnTime;
-    }
-
-    public static ArrayList<FuelPair> afuels;
-    public static HashSet<Block> efuels;
-
-    public void loadTransferRects() {
-    	transferRects.add(new RecipeTransferRect(new Rectangle(78, 34, 24, 18), "infusion"));
-    }
-
-    public Class<? extends GuiContainer> getGuiClass() {
-    	return GuiFurnace.class;
-    }
-
-    public TemplateRecipeHandler newInstance() {
-        if (afuels == null)
-            findFuels();
-        return super.newInstance();
-    }
+    public Class<? extends GuiContainer> getGuiClass() {return GuiFurnace.class;}
 
     public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId.equals("infusion") && getClass() == CauldronHandler.class) {//don't want subclasses getting a hold of this
-            List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
-            for (CauldronRecipe recipe : recipes) {
-            	switch(recipe.essentiaCost) {
-            		case 0:
-            			arecipes.add(new SmeltingPair(recipe.input, new ItemStack(Items.glass_bottle), recipe.output));
-            			break;
-            		default:
-            			arecipes.add(new SmeltingPair(recipe.input, new ItemStack(DragonScalesHandler.dragonEssenceBottle, recipe.essentiaCost), recipe.output));
-            	}
-            }
-            	
+        if (outputId.equals("essenceInfusion") && getClass() == CauldronHandler.class) {//don't want subclasses getting a hold of this
+            for (CauldronRecipe recipe : DragonScalesAPI.cauldronRecipes)
+            	arecipes.add(new InfusionPair(recipe.input, recipe.essentiaCost, recipe.output));
         } else
             super.loadCraftingRecipes(outputId, results);
     }
 
     public void loadCraftingRecipes(ItemStack result) {
-    	 List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
-    	 for (CauldronRecipe recipe : recipes)
-            if (NEIServerUtils.areStacksSameType(recipe.output, result)) {
-            	if(recipe.essentiaCost == 0)
-            		arecipes.add(new SmeltingPair(recipe.input, new ItemStack(Items.glass_bottle), recipe.output));
-            	else
-            		arecipes.add(new SmeltingPair(recipe.input, new ItemStack(DragonScalesHandler.dragonEssenceBottle, recipe.essentiaCost), recipe.output));
-            }
-        	
+    	 for (CauldronRecipe recipe : DragonScalesAPI.cauldronRecipes)
+            if (NEIServerUtils.areStacksSameType(recipe.output, result))
+            	arecipes.add(new InfusionPair(recipe.input, recipe.essentiaCost, recipe.output));
     }
 
     public void loadUsageRecipes(String inputId, Object... ingredients) {
-        if (inputId.equals("infusion") && getClass() == CauldronHandler.class)//don't want subclasses getting a hold of this
-            loadCraftingRecipes("infusion");
+        if (inputId.equals("essenceInfusion") && getClass() == CauldronHandler.class)//don't want subclasses getting a hold of this
+            loadCraftingRecipes("essenceInfusion");
         else
             super.loadUsageRecipes(inputId, ingredients);
     }
@@ -140,42 +90,17 @@ public class CauldronHandler extends TemplateRecipeHandler{
     	List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
     	for (CauldronRecipe recipe : recipes)
             if (NEIServerUtils.areStacksSameTypeCrafting(recipe.output, ingredient)) {
-                SmeltingPair arecipe;
-                if(recipe.essentiaCost == 0)
-            		arecipe = new SmeltingPair(recipe.input, new ItemStack(Items.glass_bottle), recipe.output);
-            	else
-            		arecipe = new SmeltingPair(recipe.input, new ItemStack(DragonScalesHandler.dragonEssenceBottle, recipe.essentiaCost), recipe.output);
+                InfusionPair arecipe = new InfusionPair(recipe.input, recipe.essentiaCost, recipe.output);
                 
-                List l = new ArrayList();
-            	l.add(arecipe.ingred1);
+                List list = new ArrayList();
+            	list.add(arecipe.inputStack);
             	
-                arecipe.setIngredientPermutation(l, ingredient);
+                arecipe.setIngredientPermutation(list, ingredient);
                 arecipes.add(arecipe);
             }
     }
 
-    public void drawExtras(int recipe) {
-    	drawProgressBar(62, 13, 188, 0, 59, 28, 48, 1);// AJEITAR AQ
-    }
-
-    private static Set<Item> excludedFuels() {
-        Set<Item> efuels = new HashSet<Item>();
-        return efuels;
-    }
-
-    private static void findFuels() {
-        afuels = new ArrayList<FuelPair>();
-        List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
-        for (CauldronRecipe recipe : recipes) {
-        	int burnTime = 200;
-        	if(recipe.essentiaCost == 0)
-        		afuels.add(new FuelPair(new ItemStack(Items.potionitem), burnTime));
-        	else
-        		afuels.add(new FuelPair(new ItemStack(DragonScalesHandler.dragonEssenceBottle, recipe.essentiaCost), burnTime));
-        }
-    }
-
-    public String getOverlayIdentifier() {
-        return "infusion";
-    }
+    //public void drawExtras(int recipe) {
+    //	drawProgressBar(62, 13, 188, 0, 59, 28, 48, 1);// AJEITAR AQ
+    //}
 }

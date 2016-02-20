@@ -25,7 +25,7 @@ public class ModItemDragonScale extends ModItem {
 		if (theWorld.getBlock(x, y, z) != Blocks.cauldron ||theWorld.getBlockMetadata(x, y, z) != 3)
 			return false;
 		
-		theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron, 3, 3);
+		theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
 		
 		stack.stackSize -= 1;
 		

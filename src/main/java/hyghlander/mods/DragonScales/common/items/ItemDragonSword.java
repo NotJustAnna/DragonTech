@@ -11,7 +11,7 @@ public class ItemDragonSword extends ItemSword
 		super(material);
 	}
 	
-	public EnumRarity getRarity(ItemStack par1ItemStack)
+	public EnumRarity getRarity(ItemStack ignored)
 	{
 		return EnumRarity.rare;
 	}
