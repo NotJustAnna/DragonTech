@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 
 public class DragonScalesAPI {
 	public static class CauldronRecipe {
-		protected ItemStack input;
-		protected ItemStack output;
-		protected int essentiaCost;
+		public final ItemStack input;
+		public final ItemStack output;
+		public final int essentiaCost;
 		
 		public CauldronRecipe(ItemStack input, int essentiaCost, ItemStack output)
 		{
