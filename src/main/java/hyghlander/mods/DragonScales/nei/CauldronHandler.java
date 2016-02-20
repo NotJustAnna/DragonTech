@@ -1,4 +1,4 @@
-package hyghlander.mods.DragonScales.client.nei;
+package hyghlander.mods.DragonScales.nei;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;

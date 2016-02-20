@@ -1,4 +1,4 @@
-package hyghlander.mods.DragonScales.client.nei;
+package hyghlander.mods.DragonScales.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;

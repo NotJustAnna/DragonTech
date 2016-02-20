@@ -30,14 +30,8 @@ public class ItemDragonArmor extends ItemArmor
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		if (stack.getItem().equals(DragonScalesHandler.scalesLeggings)) {
-			return Lib.TEXTURE_PATH + "textures/models/armor/dragon_layer_2.png";
-		}
-		if (stack.getItem().equals(DragonScalesHandler.scalesChestplate)) {
-			return Lib.TEXTURE_PATH + "textures/models/armor/dragonchest3d.png";
-		}
-		
-		return Lib.TEXTURE_PATH + "textures/models/armor/dragon_layer_1.png";
+		int id = stack.getItem().equals(DragonScalesHandler.scalesLeggings) ? 2 : stack.getItem().equals(DragonScalesHandler.scalesChestplate) ? 3 : 1;
+		return Lib.TEXTURE_PATH + "textures/models/armor/scalesArmor"+id+".png";
 	}
 
 	@Override
