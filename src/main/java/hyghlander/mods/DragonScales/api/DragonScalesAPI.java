@@ -7,8 +7,23 @@ import net.minecraft.item.ItemStack;
 
 public class DragonScalesAPI {
 	public static class CauldronRecipe {
+		/**
+		 * This is the Default ItemStack that the Recipe use as Input Validator (Except Custom Recipes).
+		 * <br>Also, NEI Plugin depends on it.
+		 * <br>So, You this up, and NEI fuck you.
+		 */
 		public final ItemStack input;
+		/**
+		 * This is the Default ItemStack that the Recipe use as Pattern to Outputs (Except Custom Recipes).
+		 * <br>Also, NEI Plugin depends on it.
+		 * <br>So, You this up, and NEI fuck you.
+		 */
 		public final ItemStack output;
+		/**
+		 * This is the Default ItemStack that the Recipe use as Essentia Cost (Except Custom Recipes).
+		 * <br>Also, NEI Plugin depends on it.
+		 * <br>So, You this up, and NEI fuck you.
+		 */
 		public final int essentiaCost;
 		
 		public CauldronRecipe(ItemStack input, int essentiaCost, ItemStack output)

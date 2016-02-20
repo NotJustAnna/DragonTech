@@ -8,8 +8,8 @@ public class NEIConfig implements IConfigureNEI{
 
 	public void loadConfig() {
 		
-		API.registerRecipeHandler(new InfusionAltarHandler());
-		API.registerUsageHandler(new InfusionAltarHandler());
+		API.registerRecipeHandler(new CauldronHandler());
+		API.registerUsageHandler(new CauldronHandler());
 		//API.setGuiOffset(GuiInfusionAltar.class, 0, 0);
 	}
 
