@@ -11,15 +11,15 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDragonScaleOre extends BlockOre {
-	public BlockDragonScaleOre()
+public class BlockDragonEssenceOre extends BlockOre {
+	public BlockDragonEssenceOre()
 	{
 		super();
 	}
 	
 	public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
     {
-        return DragonScalesHandler.tinyDragonScale;
+        return DragonScalesHandler.dragonEssenceShard;
     }
 
     public int quantityDropped(Random rand)

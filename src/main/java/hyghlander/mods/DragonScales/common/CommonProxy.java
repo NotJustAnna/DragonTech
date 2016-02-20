@@ -35,4 +35,8 @@ public class CommonProxy {
 	public ModelBiped getArmorModel(int id) {
 		return null;
 	}
+	
+	public int getRenderType(String name) {
+		return 0;
+	}
 }

@@ -24,7 +24,7 @@ public class DragonScales {
 	
 	public static Logger logger = new SilentLogger();
 	
-	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {@Override public Item getTabIconItem(){return DragonScalesHandler.tinyDragonScale;}};
+	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {@Override public Item getTabIconItem(){return DragonScalesHandler.dragonEssenceShard;}};
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)

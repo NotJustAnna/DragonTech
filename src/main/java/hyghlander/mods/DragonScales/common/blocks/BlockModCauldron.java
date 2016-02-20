@@ -3,8 +3,13 @@ package hyghlander.mods.DragonScales.common.blocks;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
+
+import brazillianforgers.lib.ItemHelper;
+import brazillianforgers.lib.MathUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 import net.minecraft.block.Block;
@@ -31,7 +36,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockModCauldron extends BlockCauldron/*Container*/ {
+public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
 	@SideOnly(Side.CLIENT)
     private IIcon innerIcon;
     @SideOnly(Side.CLIENT)
@@ -41,8 +46,8 @@ public class BlockModCauldron extends BlockCauldron/*Container*/ {
 
     public BlockModCauldron()
     {
-        //super(Material.iron);
-    	super();
+        super(Material.iron);
+    	//super();
         this.setHardness(2.0F).setBlockName("essentiaCauldron").setBlockTextureName("cauldron");
     }
 
@@ -170,7 +175,7 @@ public class BlockModCauldron extends BlockCauldron/*Container*/ {
 		if (thisBlockMeta == 0)
 		{
 			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
-			this.func_150024_a(theWorld, x, y, z, 0);
+			this.setMetadataProperly(theWorld, x, y, z, 0);
 			return false;
 		}
 		
@@ -180,62 +185,78 @@ public class BlockModCauldron extends BlockCauldron/*Container*/ {
         }
         else
         {
-            ItemStack itemstack = player.inventory.getCurrentItem();
+            ItemStack stack = player.inventory.getCurrentItem();
 
-            if (itemstack == null)
+            if (stack == null)
             {
                 return true;
             }
             else
             {
                 int essentiaLevel = func_150027_b(thisBlockMeta);
+                ItemStack result = null;
+                int itemsToRemove = 0, essentiaToRemove = 0;
 
-                if (itemstack.getItem() == Items.leather)
+                if (stack.getItem() == Items.leather && essentiaLevel == 3) //Create a Dragon Scale
                 {
-                    if (essentiaLevel == 3)
+                    result = new ItemStack(DragonScalesHandler.dragonScale);
+                    itemsToRemove = 1;
+                    essentiaToRemove = 3;
+                }
+                else if (stack.getItem() == ItemHelper.toItem(Blocks.brick_block) && essentiaLevel >= (int)((float)(stack.stackSize / 64) * 3)) //Create Dragon Bricks from the Stack
+                {
+                    result = new ItemStack(DragonScalesHandler.dragonBricks, stack.stackSize);
+                    itemsToRemove = stack.stackSize;
+                    essentiaToRemove = MathUtils.clamp((int)((float)(stack.stackSize / 64) * 3), 1, 3);
+                }
+                else if (stack.getItem() == Items.gold_ingot && essentiaLevel == 3) //Create a Dragon Ingot
+                {
+                    result = new ItemStack(DragonScalesHandler.dragonMetal);
+                    itemsToRemove = 1;
+                    essentiaToRemove = 3;
+                }
+                else if (stack.getItem() == Items.stick && essentiaLevel > 0) //Create a Infused Stick
+                {
+                    result = new ItemStack(DragonScalesHandler.infusedStick, stack.stackSize);
+                    itemsToRemove = stack.stackSize;
+                    essentiaToRemove = 0;
+                }
+                else if (stack.getItem() == Items.emerald && essentiaLevel == 3) //Create a Dragon Crystal
+                {
+                    result = new ItemStack(DragonScalesHandler.dragonCrystal);
+                    itemsToRemove = 1;
+                    essentiaToRemove = 3;
+                }
+                
+                if (result != null)
+                {
+                    if (!player.inventory.addItemStackToInventory(result))
                     {
-                    	player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(DragonScalesHandler.dragonScale));
-                        this.func_150024_a(theWorld, x, y, z, 0);
+                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, result));
+                    }
+                    else if (player instanceof EntityPlayerMP)
+                    {
+                        ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
                     }
 
-                    return true;
-                }
-                else
-                {
-                    if ((itemstack.getItem() == Items.glass_bottle) && (essentiaLevel > 0))
+                    stack.stackSize -= itemsToRemove;
+
+                    if (stack.stackSize <= 0)
                     {
-                        if (!player.capabilities.isCreativeMode)
-                        {
-                            ItemStack itemstack1 = new ItemStack(Items.potionitem, 1, 0);
-
-                            if (!player.inventory.addItemStackToInventory(itemstack1))
-                            {
-                                theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, itemstack1));
-                            }
-                            else if (player instanceof EntityPlayerMP)
-                            {
-                                ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
-                            }
-
-                            --itemstack.stackSize;
-
-                            if (itemstack.stackSize <= 0)
-                            {
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-                            }
-                            
-                            this.func_150024_a(theWorld, x, y, z, essentiaLevel - 1);
-                        }
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
                     }
-                    return false;
+                    
+                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - essentiaToRemove);
                 }
+                return false;
             }
         }
     }
+
 	
-	public void func_150024_a(World theWorld, int x, int y, int z, int meta)
+	public void setMetadataProperly(World theWorld, int x, int y, int z, int meta)
     {
-		if (meta == 0)
+		if (meta < 1)
 		{
 			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 2);
 		}
@@ -246,8 +267,8 @@ public class BlockModCauldron extends BlockCauldron/*Container*/ {
 		}
     }
 	
-	//@Override
-	//public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-	//	return new TileEntityModCauldron();
-	//}
+	public int getRenderType()
+	{
+		return DragonScales.proxy.getRenderType("modCauldron");
+	}
 }

@@ -1,4 +1,4 @@
-package hyghlander.mods.DragonScales.common.blocks.tile;
+package hyghlander.mods.DragonScales.client.renderers;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

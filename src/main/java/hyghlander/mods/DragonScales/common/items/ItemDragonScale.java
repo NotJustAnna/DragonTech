@@ -9,10 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ItemDragonScale extends ModItem {
-	private boolean isTinyScale;
-	public ItemDragonScale(String name, boolean isTiny) {
+	public ItemDragonScale(String name) {
 		super(name);
-		this.isTinyScale = isTiny;
 	}
 	
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
@@ -23,16 +21,9 @@ public class ItemDragonScale extends ModItem {
 		if (theWorld.getBlock(x, y, z) != Blocks.cauldron ||theWorld.getBlockMetadata(x, y, z) != 3)
 			return false;
 		
-		if (isTinyScale && !(stack.stackSize < 3))
-			return false;
-		
 		theWorld.setBlock(x, y, z, DragonScalesHandler.essentiaCauldron, 3, 3);
 		
-		if (isTinyScale) {
-			stack.stackSize -= 4;
-		} else {
-			stack.stackSize -= 1;
-		}
+		stack.stackSize -= 1;
 		
 		if(stack.stackSize <= 0)
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);

@@ -2,6 +2,7 @@ package hyghlander.mods.DragonScales.common.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.Lib;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
 import net.minecraft.block.BlockContainer;

@@ -21,7 +21,7 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 
 	private void generateSurface(World world, Random random, int BlockX, int BlockZ) {
 		for(int i =0; i<10;i++)
-			new WorldGenMinable(DragonScalesHandler.dragonScaleOre, 4)
+			new WorldGenMinable(DragonScalesHandler.dragonEssenceOre, 4)
 			.generate(world, random, BlockX + random.nextInt(16), random.nextInt(16), BlockZ + random.nextInt(16));
 	}
 }

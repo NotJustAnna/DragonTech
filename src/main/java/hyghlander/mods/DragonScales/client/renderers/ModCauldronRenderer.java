@@ -1,5 +1,7 @@
-package hyghlander.mods.DragonScales.common.blocks.tile;
+package hyghlander.mods.DragonScales.client.renderers;
 
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
@@ -10,13 +12,17 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
-public class TileEntityModCauldronRenderer extends TileEntitySpecialRenderer {
+public class ModCauldronRenderer implements ISimpleBlockRenderingHandler {
+	@Override
+	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float size) {
-		RenderBlocks renderer = RenderBlocks.getInstance();
-		Block block =  te.blockType;
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		renderer.renderStandardBlock(block, (int)x, (int)y, (int)z);
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (int)x, (int)y, (int)z));
@@ -53,6 +59,17 @@ public class TileEntityModCauldronRenderer extends TileEntitySpecialRenderer {
             IIcon iicon = BlockLiquid.getLiquidIcon("lava_still");
             renderer.renderFaceYPos(block, (double)x, (double)((float)y - 1.0F + BlockModCauldron.getRenderLiquidLevel(i1)), (double)z, iicon);
         }
+		return true;
+	}
+
+	@Override
+	public boolean shouldRender3DInInventory(int modelId) {
+		return false;
+	}
+
+	@Override
+	public int getRenderId() {
+		return DragonScales.proxy.getRenderType("modCauldron");
 	}
 
 }
