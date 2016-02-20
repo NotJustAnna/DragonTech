@@ -47,7 +47,7 @@ public class CauldronHandler extends TemplateRecipeHandler{
             this.ingred1 = new PositionedStack(ingred, 47, 20);
             this.essentia = new PositionedStack(essentia, 70, 40);
             this.result = new PositionedStack(result, 103, 20);
-            this.cauld = new PositionedStack(new ItemStack(Blocks.cauldron), 72, 20);
+            this.cauld = new PositionedStack(new ItemStack(Items.cauldron), 72, 20);
         }
 
         public List<PositionedStack> getIngredients() {
