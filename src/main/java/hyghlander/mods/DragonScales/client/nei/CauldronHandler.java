@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,9 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler.CachedRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect;
 import hyghlander.mods.DragonScales.Lib;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 
 public class CauldronHandler extends TemplateRecipeHandler{
 	
@@ -31,16 +35,14 @@ public class CauldronHandler extends TemplateRecipeHandler{
 
 	public String getGuiTexture() {
 		
-		return new ResourceLocation(Lib.MODID, "textures/gui/infusionaltar.png").toString();
+		return new ResourceLocation(Lib.MODID, "textures/gui/NEICauldron.png").toString();
 	}
 	
 	public class SmeltingPair extends CachedRecipe
     {
-        public SmeltingPair(List<ItemStack> ingred, ItemStack result) {
+        public SmeltingPair(ItemStack ingred, ItemStack result) {
             
-            this.ingred1 = new PositionedStack(ingred.get(0), 48, 5);
-            this.ingred2 = new PositionedStack(ingred.get(1), 84, -5);
-            this.ingred3 = new PositionedStack(ingred.get(2), 120, 5);
+            this.ingred1 = new PositionedStack(ingred, 48, 5);
             
             this.result = new PositionedStack(result, 84, 46);
         }
@@ -48,8 +50,6 @@ public class CauldronHandler extends TemplateRecipeHandler{
         public List<PositionedStack> getIngredients() {
         	List<PositionedStack> l = new ArrayList<PositionedStack>();
         	l.add(ingred1);
-        	l.add(ingred2);
-        	l.add(ingred3);
         	
             return getCycledIngredients(cycleticks / 48, l);
         }
@@ -63,8 +63,6 @@ public class CauldronHandler extends TemplateRecipeHandler{
         }
 
         PositionedStack ingred1;
-        PositionedStack ingred2;
-        PositionedStack ingred3;
         PositionedStack result;
     }
 
@@ -87,7 +85,7 @@ public class CauldronHandler extends TemplateRecipeHandler{
     }
 
     public Class<? extends GuiContainer> getGuiClass() {
-    	return GuiInfusionAltar.class;
+    	return GuiFurnace.class;
     }
 
     public TemplateRecipeHandler newInstance() {
@@ -98,19 +96,19 @@ public class CauldronHandler extends TemplateRecipeHandler{
 
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("infusion") && getClass() == CauldronHandler.class) {//don't want subclasses getting a hold of this
-            Map<List<ItemStack>, ItemStack> recipes = (Map<List<ItemStack>, ItemStack>) InfusionAltarManager.getRecipeMap();
-            for (Entry<List<ItemStack>, ItemStack> recipe : recipes.entrySet())
-                arecipes.add(new SmeltingPair(recipe.getKey(), recipe.getValue()));
+            List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
+            for (CauldronRecipe recipe : recipes)
+                arecipes.add(new SmeltingPair(recipe.input, recipe.output));
             	
         } else
             super.loadCraftingRecipes(outputId, results);
     }
 
     public void loadCraftingRecipes(ItemStack result) {
-        Map<List<ItemStack>, ItemStack> recipes = (Map<List<ItemStack>, ItemStack>) InfusionAltarManager.getRecipeMap();
-        for (Entry<List<ItemStack>, ItemStack> recipe : recipes.entrySet())
-            if (NEIServerUtils.areStacksSameType(recipe.getValue(), result))
-            	arecipes.add(new SmeltingPair(recipe.getKey(), recipe.getValue()));
+    	 List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
+    	 for (CauldronRecipe recipe : recipes)
+            if (NEIServerUtils.areStacksSameType(recipe.output, result))
+            	arecipes.add(new SmeltingPair(recipe.input, recipe.output));
         	
     }
 
@@ -122,15 +120,13 @@ public class CauldronHandler extends TemplateRecipeHandler{
     }
 
     public void loadUsageRecipes(ItemStack ingredient) {
-        Map<List<ItemStack>, ItemStack> recipes = (Map<List<ItemStack>, ItemStack>) InfusionAltarManager.getRecipeMap();
-        for (Entry<List<ItemStack>, ItemStack> recipe : recipes.entrySet())
-            if (NEIServerUtils.areStacksSameTypeCrafting(recipe.getValue(), ingredient)) {
-                SmeltingPair arecipe = new SmeltingPair(recipe.getKey(), recipe.getValue());
+    	List<CauldronRecipe> recipes = DragonScalesAPI.cauldronRecipes;
+    	for (CauldronRecipe recipe : recipes)
+            if (NEIServerUtils.areStacksSameTypeCrafting(recipe.output, ingredient)) {
+                SmeltingPair arecipe = new SmeltingPair(recipe.input, recipe.output);
                 
                 List l = new ArrayList();
             	l.add(arecipe.ingred1);
-            	l.add(arecipe.ingred2);
-            	l.add(arecipe.ingred3);
             	
                 arecipe.setIngredientPermutation(l, ingredient);
                 arecipes.add(arecipe);
@@ -152,7 +148,7 @@ public class CauldronHandler extends TemplateRecipeHandler{
         Set<Item> efuels = excludedFuels();
         for (ItemStack item : ItemList.items)
             if (!efuels.contains(item.getItem())) {
-                int burnTime = TileEntityInfusionAltar.isMagicalItem(item);
+                int burnTime = 200;
                 if (burnTime > 0)
                 	afuels.add(new FuelPair(item, burnTime));
             }
