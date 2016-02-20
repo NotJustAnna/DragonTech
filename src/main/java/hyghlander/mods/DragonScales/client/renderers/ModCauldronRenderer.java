@@ -56,7 +56,7 @@ public class ModCauldronRenderer implements ISimpleBlockRenderingHandler {
 
         if (i1 > 0)
         {
-            IIcon iicon = BlockLiquid.getLiquidIcon("lava_still");
+            IIcon iicon = BlockModCauldron.getCauldronIcon("liquid");
             renderer.renderFaceYPos(block, (double)x, (double)((float)y - 1.0F + BlockModCauldron.getRenderLiquidLevel(i1)), (double)z, iicon);
         }
 		return true;

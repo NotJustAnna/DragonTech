@@ -10,6 +10,9 @@ import brazillianforgers.lib.MathUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import hyghlander.mods.DragonScales.DragonScales;
+import hyghlander.mods.DragonScales.Lib;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 import net.minecraft.block.Block;
@@ -43,6 +46,8 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
     private IIcon topIcon;
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon essenceLiquid;
 
     public BlockModCauldron()
     {
@@ -67,6 +72,7 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
         this.topIcon = iconRegister.registerIcon(this.getTextureName() + "_top");
         this.bottomIcon = iconRegister.registerIcon(this.getTextureName() + "_" + "bottom");
         this.blockIcon = iconRegister.registerIcon(this.getTextureName() + "_side");
+        this.essenceLiquid = iconRegister.registerIcon(Lib.TEXTURE_PATH + "dragonEssence");
     }
 
     /**
@@ -92,7 +98,13 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
     @SideOnly(Side.CLIENT)
     public static IIcon getCauldronIcon(String iconName)
     {
-        return iconName.equals("inner") ? ((BlockModCauldron) DragonScalesHandler.essentiaCauldron).innerIcon : (iconName.equals("bottom") ? ((BlockModCauldron) DragonScalesHandler.essentiaCauldron).bottomIcon : null);
+        return
+        		iconName.equals("inner") ?
+        				((BlockModCauldron) DragonScalesHandler.essentiaCauldron).innerIcon :
+        		iconName.equals("bottom") ?
+        				((BlockModCauldron) DragonScalesHandler.essentiaCauldron).bottomIcon :
+        		iconName.equals("liquid") ?
+        	    		((BlockModCauldron) DragonScalesHandler.essentiaCauldron).essenceLiquid :null;
     }
 
     /**
@@ -194,59 +206,29 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
             else
             {
                 int essentiaLevel = func_150027_b(thisBlockMeta);
-                ItemStack result = null;
-                int itemsToRemove = 0, essentiaToRemove = 0;
-
-                if (stack.getItem() == Items.leather && essentiaLevel == 3) //Create a Dragon Scale
-                {
-                    result = new ItemStack(DragonScalesHandler.dragonScale);
-                    itemsToRemove = 1;
-                    essentiaToRemove = 3;
-                }
-                else if (stack.getItem() == ItemHelper.toItem(Blocks.brick_block) && essentiaLevel >= (int)((float)(stack.stackSize / 64) * 3)) //Create Dragon Bricks from the Stack
-                {
-                    result = new ItemStack(DragonScalesHandler.dragonBricks, stack.stackSize);
-                    itemsToRemove = stack.stackSize;
-                    essentiaToRemove = MathUtils.clamp((int)((float)(stack.stackSize / 64) * 3), 1, 3);
-                }
-                else if (stack.getItem() == Items.gold_ingot && essentiaLevel == 3) //Create a Dragon Ingot
-                {
-                    result = new ItemStack(DragonScalesHandler.dragonMetal);
-                    itemsToRemove = 1;
-                    essentiaToRemove = 3;
-                }
-                else if (stack.getItem() == Items.stick && essentiaLevel > 0) //Create a Infused Stick
-                {
-                    result = new ItemStack(DragonScalesHandler.infusedStick, stack.stackSize);
-                    itemsToRemove = stack.stackSize;
-                    essentiaToRemove = 0;
-                }
-                else if (stack.getItem() == Items.emerald && essentiaLevel == 3) //Create a Dragon Crystal
-                {
-                    result = new ItemStack(DragonScalesHandler.dragonCrystal);
-                    itemsToRemove = 1;
-                    essentiaToRemove = 3;
-                }
                 
-                if (result != null)
+                CauldronRecipe recipe = DragonScalesAPI.getValidRecipe(stack, essentiaLevel);
+                
+                if (recipe != null)
                 {
-                    if (!player.inventory.addItemStackToInventory(result))
+                	//First remove the Item
+                	stack.stackSize -= recipe.getItemCost(stack);
+
+                    if (stack.stackSize <= 0)
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+                    
+                    //Then remove the Essentia
+                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack));
+                    
+                    //Then give the Item
+                    if (!player.inventory.addItemStackToInventory(recipe.getOutput(stack)))
                     {
-                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, result));
+                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack)));
                     }
                     else if (player instanceof EntityPlayerMP)
                     {
                         ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
                     }
-
-                    stack.stackSize -= itemsToRemove;
-
-                    if (stack.stackSize <= 0)
-                    {
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-                    }
-                    
-                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - essentiaToRemove);
                 }
                 return false;
             }

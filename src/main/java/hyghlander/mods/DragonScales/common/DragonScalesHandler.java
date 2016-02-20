@@ -6,6 +6,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.Lib;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI;
+import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.blocks.*;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
@@ -15,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,7 +37,7 @@ public class DragonScalesHandler {
 			EnumHelper.addArmorMaterial("DRAGONSCALE", 75, new int[] { 5, 16, 12, 6 }, 35);
 	
 	// All Items
-	public static Item dragonScale, dragonEssenceShard, dragonMetal, essentiaBottle, infusedStick,
+	public static Item dragonScale, dragonEssenceShard, dragonMetal, dragonEssenceBottle, infusedStick,
 		dragonSword, dragonMultiTool, dragonScepter,
 		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
@@ -79,15 +82,14 @@ public class DragonScalesHandler {
 	{
 		ModItem.set(DragonScales.tabDragonScales, Lib.MODID);
 
-		
-		dragonScale = ModItem.process(new ItemDragonScale("dragonScale"), "dragonScale");
+		dragonScale = new ModItemDragonScale("dragonScale", new ItemStack(Items.leather));
 		GameRegistry.registerItem(dragonScale, "dragonScale");
-		dragonEssenceShard = ModItem.process(new ItemDragonScale("dragonEssenceShard"), "dragonEssenceShard");
+		dragonEssenceShard = new ModItemDragonScale("dragonEssenceShard", null);
 		GameRegistry.registerItem(dragonEssenceShard, "dragonEssenceShard");
-		dragonMetal = new ModItem("dragonMetal");
+		dragonMetal = new ModItemDragonScale("dragonMetal", new ItemStack(Items.iron_ingot));
 		GameRegistry.registerItem(dragonMetal, "dragonMetal");
-		essentiaBottle = new ModItem("essentiaBottle");
-		GameRegistry.registerItem(essentiaBottle, "essentiaBottle");
+		dragonEssenceBottle = new ModItemEssenceBottle("dragonEssenceBottle");
+		GameRegistry.registerItem(dragonEssenceBottle, "dragonEssenceBottle");
 		infusedStick = new ModItem("infusedStick");
 		GameRegistry.registerItem(infusedStick, "infusedStick");
 		
@@ -120,6 +122,31 @@ public class DragonScalesHandler {
 	
 	public static void registerRecipes()
 	{
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.leather), 3, new ItemStack(dragonScale)));
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.gold_ingot), 3, new ItemStack(dragonMetal)));
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.emerald), 3, new ItemStack(dragonCrystal)));
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.glass_bottle), 1, new ItemStack(dragonEssenceBottle)));
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.stick), 0, new ItemStack(infusedStick)));
+		DragonScalesAPI.cauldronRecipes.add(
+			new CauldronRecipe(new ItemStack(Blocks.brick_block), 1, new ItemStack(dragonBricks)) {
+				public ItemStack getOutput(ItemStack input) {
+					ItemStack output = super.getOutput(input);
+					output.stackSize = input.stackSize;
+					return output;
+				}
+				
+				public int getEssentiaCost(ItemStack input)
+				{
+					return (int)((float)(input.stackSize / 64) * 3);
+				}
+				
+				public int getItemCost(ItemStack input)
+				{
+					return input.stackSize;
+				}
+			}
+		);
+		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonScaleBlock,1),
 				"DDD","DDD","DDD",
@@ -136,7 +163,7 @@ public class DragonScalesHandler {
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonSword,1), 
-				" M "," M ","DS ",
+				" M "," MD","DS ",
 				'M', dragonMetal,
 				'S', infusedStick,
 				'D', dragonScale
@@ -144,31 +171,35 @@ public class DragonScalesHandler {
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesHelm,1), 
-				"DDD","D D","   ",
-				'D', dragonScale
+				"DDD","DED","   ",
+				'D', dragonScale,
+				'E', dragonEssenceShard
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesChestplate,1), 
-				"D D","DDD","DDD",
-				'D', dragonScale
+				"DED","DDD","DDD",
+				'D', dragonScale,
+				'E', dragonEssenceShard
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesLeggings,1), 
-				"DDD","D D","D D",
-				'D', dragonScale
+				"DDD","DED","D D",
+				'D', dragonScale,
+				'E', dragonEssenceShard
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(scalesBoots,1), 
-				"   ","D D","D D",
-				'D', dragonScale
+				"   ","D D","DED",
+				'D', dragonScale,
+				'E', dragonEssenceShard
 		);
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonScepter,1), 
-				"DDM"," SM"," S ",
+				"MMD"," SD","DS ",
 				'D', dragonScale,
 				'M', dragonMetal,
 				'S', infusedStick

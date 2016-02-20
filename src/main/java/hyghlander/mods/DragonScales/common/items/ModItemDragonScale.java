@@ -3,14 +3,18 @@ package hyghlander.mods.DragonScales.common.items;
 import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemDragonScale extends ModItem {
-	public ItemDragonScale(String name) {
+public class ModItemDragonScale extends ModItem {
+	public ItemStack returnItemstack = null;
+	public ModItemDragonScale(String name, ItemStack returnedItemStackOnUse) {
 		super(name);
+		returnItemstack = returnedItemStackOnUse;
 	}
 	
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
@@ -27,6 +31,12 @@ public class ItemDragonScale extends ModItem {
 		
 		if(stack.stackSize <= 0)
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+        
+        if (returnItemstack != null)
+            if (!player.inventory.addItemStackToInventory(returnItemstack.copy()))
+                theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, returnItemstack.copy()));
+            else if (player instanceof EntityPlayerMP)
+                ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
         return false;
     }
 }
