@@ -3,7 +3,8 @@
 "modid": "DragonScalesEX",
 "name": "Dragon Scales EX Mod",
 "description": "EX means EXperimental!",
-"version": "1.0",
+"version": "${version}",
+"mcversion": "${mcversion}",
 "url": "",
 "authorList": ["Jakester12","Heltrato","Hyghlander"],
 "credits": "Thanks to y'all for downloading this mod and supporting me making it :)"
