@@ -4,6 +4,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import hyghlander.mods.DragonScales.common.events.PlayerTickHandler;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {
 	public void preInit()
@@ -25,7 +26,9 @@ public class CommonProxy {
 	}
 	
 	public void registerHandlers() {
-		FMLCommonHandler.instance().bus().register(new PlayerTickHandler());
+		Object handler = new PlayerTickHandler();
+		MinecraftForge.EVENT_BUS.register(handler);
+		FMLCommonHandler.instance().bus().register(handler);
 	}
 	
 	public void registerRenderThings(){

@@ -1,6 +1,7 @@
 package hyghlander.mods.DragonScales.common.items;
 
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
+import hyghlander.mods.DragonScales.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,12 +28,14 @@ public class ModItemEssenceBottle extends ModItemDragonScale {
 			return false;
 			
 		if (block == Blocks.cauldron && meta == 0)
-			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron,  1, 3);
+			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, 1, 3);
+			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, 1);
 		
 		if (block == DragonScalesHandler.modCauldron && meta < 3)
 		{
 			meta++;
 			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, meta, 3);
+			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, meta);
 		}
 		stack.stackSize--;
 		

@@ -14,6 +14,7 @@ import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
 import hyghlander.mods.DragonScales.common.items.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -59,13 +60,13 @@ public class DragonScalesHandler {
 		//Define ModBlock pattern
 		ModBlock.set(DragonScales.tabDragonScales, Lib.MODID, Material.rock);
 		
-		dragonBricks = new ModBlock("dragonBricks");
+		dragonBricks = new ModBlock("dragonBricks").setHardness(2.0F).setResistance(10.0F).setStepSound(dragonBricks.soundTypePiston);
 		GameRegistry.registerBlock(dragonBricks, "dragonBricks");
 		
-		dragonScaleBlock = new ModBlock("dragonScaleBlock");
+		dragonScaleBlock = new ModBlock("dragonScaleBlock").setHardness(0.8F).setStepSound(dragonScaleBlock.soundTypeCloth);
 		GameRegistry.registerBlock(dragonScaleBlock, "dragonScaleBlock");
 		
-		dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre(), "dragonEssenceOre");
+		dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(dragonBricks.soundTypePiston), "dragonEssenceOre");
 		GameRegistry.registerBlock(dragonEssenceOre, "dragonEssenceOre");
 		
 		modCauldron = new BlockModCauldron();

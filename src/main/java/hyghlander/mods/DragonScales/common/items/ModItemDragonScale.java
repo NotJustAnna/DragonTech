@@ -2,6 +2,7 @@ package hyghlander.mods.DragonScales.common.items;
 
 import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
+import hyghlander.mods.DragonScales.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +27,7 @@ public class ModItemDragonScale extends ModItem {
 			return false;
 		
 		theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
+		((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, 3);
 		
 		stack.stackSize -= 1;
 		

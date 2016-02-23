@@ -30,6 +30,7 @@ public class DragonScales {
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		logger = e.getModLog();
+		logger.info("Just DEBUG");
 		proxy.preInit();
 	}
 	

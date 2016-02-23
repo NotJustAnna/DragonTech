@@ -47,12 +47,6 @@ public class ClientProxy extends CommonProxy {
 		//RenderingRegistry.registerEntityRenderingHandler(EntityModDragon.class, new RenderModDragon(new ModelModDragon(), 0.5F));
 	}
 	
-	public void registerHandlers()
-	{
-		super.registerHandlers();
-		//KeyBindings.init();
-	}
-	
 	@Override
 	public ModelBiped getArmorModel(int id){
 		switch (id) {

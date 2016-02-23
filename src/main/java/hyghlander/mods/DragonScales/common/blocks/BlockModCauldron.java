@@ -236,11 +236,11 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
     {
 		if (meta < 1)
 		{
-			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 2);
+			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
 		}
 		else
 		{
-			theWorld.setBlockMetadataWithNotify(x, y, z, MathHelper.clamp_int(meta, 0, 3), 2);
+			theWorld.setBlockMetadataWithNotify(x, y, z, MathHelper.clamp_int(meta, 0, 3), 3);
         	theWorld.func_147453_f(x, y, z, this);
 		}
     }
