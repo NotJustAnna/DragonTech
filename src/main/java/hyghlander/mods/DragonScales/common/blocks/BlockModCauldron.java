@@ -12,7 +12,6 @@ import hyghlander.mods.DragonScales.Lib;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockContainer;
@@ -37,7 +36,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
+public class BlockModCauldron extends Block {
 	@SideOnly(Side.CLIENT)
     private IIcon innerIcon;
     @SideOnly(Side.CLIENT)
@@ -188,6 +187,10 @@ public class BlockModCauldron extends Block/*Cauldron*//*Container*/ {
 			this.setMetadataProperly(theWorld, x, y, z, 0);
 			return Blocks.cauldron.onBlockActivated(theWorld, x, y, z, player, ignored1, ignored2, ignored3, ignored4);
 		}
+		
+		Block upperBlock = theWorld.getBlock(x, y+1, z);
+		if (upperBlock.equals(DragonScalesHandler.cauldronConstruct) || upperBlock.equals(DragonScalesHandler.essenceCombiner))
+			return true;
 		
         if (theWorld.isRemote)
         {

@@ -29,7 +29,6 @@ import hyghlander.mods.DragonScales.Lib;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
 
 public class CauldronHandler extends TemplateRecipeHandler{
 	public class InfusionPair extends CachedRecipe

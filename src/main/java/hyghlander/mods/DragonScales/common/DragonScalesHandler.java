@@ -11,7 +11,7 @@ import hyghlander.mods.DragonScales.api.DragonScalesAPI;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.blocks.*;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCrystal;
 import hyghlander.mods.DragonScales.common.items.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
@@ -45,7 +45,7 @@ public class DragonScalesHandler {
 		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
 	// All Blocks
-	public static Block modCauldron, dragonBricks, dragonChest, dragonScaleBlock, dragonEssenceOre, dragonCrystal;
+	public static Block modCauldron, cauldronConstruct, essenceCombiner ,dragonBricks, dragonChest, dragonScaleBlock, dragonEssenceOre, dragonCrystal;
 	
 	public static void registerAll()
 	{
@@ -78,7 +78,7 @@ public class DragonScalesHandler {
 		
 		dragonCrystal = ModBlock.process(new BlockDragonCrystal(), "dragonCrystal");
 		GameRegistry.registerBlock(dragonCrystal, "dragonCrystal");
-		GameRegistry.registerTileEntity(TileEntityDragonCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
+		GameRegistry.registerTileEntity(TileCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
 	}
 	
 	private static void registerItems()

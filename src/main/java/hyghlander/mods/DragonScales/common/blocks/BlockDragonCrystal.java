@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import hyghlander.mods.DragonScales.DragonScales;
 import hyghlander.mods.DragonScales.Lib;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,7 +23,7 @@ public class BlockDragonCrystal extends BlockContainer{
 
 	@Override
 	public TileEntity createNewTileEntity(World ignored1, int ignored2) {
-		return new TileEntityDragonCrystal();
+		return new TileCrystal();
 	}
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack){

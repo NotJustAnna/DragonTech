@@ -8,12 +8,11 @@ import cpw.mods.fml.relauncher.Side;
 import hyghlander.mods.DragonScales.client.models.ModelDragonChestplate;
 import hyghlander.mods.DragonScales.client.models.ModelModDragon;
 import hyghlander.mods.DragonScales.client.models.RenderModDragon;
-import hyghlander.mods.DragonScales.client.renderers.TileEntityDragonCrystalRenderer;
-import hyghlander.mods.DragonScales.client.renderers.ModCauldronRenderer;
+import hyghlander.mods.DragonScales.client.renderers.TileCrystalRenderer;
+import hyghlander.mods.DragonScales.client.renderers.BlockModCauldronRenderer;
 import hyghlander.mods.DragonScales.common.CommonProxy;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonCrystal;
-import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityModCauldron;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCrystal;
 import hyghlander.mods.DragonScales.common.events.KeyBindings;
 import hyghlander.mods.DragonScales.common.events.PlayerTickHandler;
 import net.minecraft.client.model.ModelBiped;
@@ -36,11 +35,12 @@ public class ClientProxy extends CommonProxy {
 	
 	public void registerRenderThings(){
 		//Register Crystal TileEntity Renderer
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDragonCrystal.class, new TileEntityDragonCrystalRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
+		
 		
 		//Register Cauldron Renderer
 		cauldronRenderType = RenderingRegistry.getNextAvailableRenderId();
-		ISimpleBlockRenderingHandler cauldronRenderer = new ModCauldronRenderer();
+		ISimpleBlockRenderingHandler cauldronRenderer = new BlockModCauldronRenderer();
 		RenderingRegistry.registerBlockHandler(cauldronRenderType, cauldronRenderer);
 		
 		//Register Dragon Renderer

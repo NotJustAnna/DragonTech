@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 import hyghlander.mods.DragonScales.Lib;
 import hyghlander.mods.DragonScales.client.models.ModelDragonCrystal;
 
-public class TileEntityDragonCrystalRenderer extends TileEntitySpecialRenderer{
+public class TileCrystalRenderer extends TileEntitySpecialRenderer{
 
 	// the model of out block
 	public final ModelDragonCrystal model;
@@ -24,7 +24,7 @@ public class TileEntityDragonCrystalRenderer extends TileEntitySpecialRenderer{
 
 
 	// also gets model of out block
-	public TileEntityDragonCrystalRenderer(){
+	public TileCrystalRenderer(){
 		this.model = new ModelDragonCrystal();
 	}
 	//renders tile entity in world
