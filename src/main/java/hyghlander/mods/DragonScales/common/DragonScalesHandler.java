@@ -11,6 +11,8 @@ import hyghlander.mods.DragonScales.api.DragonScalesAPI;
 import hyghlander.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import hyghlander.mods.DragonScales.common.blocks.*;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCombiner;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileCrystal;
 import hyghlander.mods.DragonScales.common.items.*;
 import net.minecraft.block.Block;
@@ -71,6 +73,14 @@ public class DragonScalesHandler {
 		
 		modCauldron = new BlockModCauldron();
 		GameRegistry.registerBlock(modCauldron, "modCauldron");
+		
+		cauldronConstruct = new BlockCauldronConstruct();
+		GameRegistry.registerBlock(cauldronConstruct, "cauldronConstruct");
+		GameRegistry.registerTileEntity(TileCauldronConstruct.class, "Tile"+Lib.MODID+"ModelCauldronConstruct");
+		
+		essenceCombiner = new BlockCombiner();
+		GameRegistry.registerBlock(essenceCombiner, "essenceCombiner");
+		GameRegistry.registerTileEntity(TileCombiner.class, "Tile"+Lib.MODID+"Combiner");
 		
 		//dragonChest = ModBlock.process(new BlockDragonChest(), "dragonChest");
 		//GameRegistry.registerBlock(dragonChest, ItemBlock.class, "dragonChest");

@@ -10,8 +10,12 @@ import hyghlander.mods.DragonScales.client.models.ModelModDragon;
 import hyghlander.mods.DragonScales.client.models.RenderModDragon;
 import hyghlander.mods.DragonScales.client.renderers.TileCrystalRenderer;
 import hyghlander.mods.DragonScales.client.renderers.BlockModCauldronRenderer;
+import hyghlander.mods.DragonScales.client.renderers.TileCauldronConstructRenderer;
+import hyghlander.mods.DragonScales.client.renderers.TileCombinerRenderer;
 import hyghlander.mods.DragonScales.common.CommonProxy;
 import hyghlander.mods.DragonScales.common.DragonScalesHandler;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
+import hyghlander.mods.DragonScales.common.blocks.tile.TileCombiner;
 import hyghlander.mods.DragonScales.common.blocks.tile.TileCrystal;
 import hyghlander.mods.DragonScales.common.events.KeyBindings;
 import hyghlander.mods.DragonScales.common.events.PlayerTickHandler;
@@ -34,8 +38,10 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public void registerRenderThings(){
-		//Register Crystal TileEntity Renderer
+		//Register TileEntity Renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCombiner.class, new TileCombinerRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCauldronConstruct.class, new TileCauldronConstructRenderer());
 		
 		
 		//Register Cauldron Renderer

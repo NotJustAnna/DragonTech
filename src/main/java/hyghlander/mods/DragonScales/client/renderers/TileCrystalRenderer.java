@@ -37,43 +37,41 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer{
 		//this rotates your block otherwise will render upside down
 		GL11.glPushMatrix();
 		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-		rotateBlock(te.getWorldObj(),te.xCoord,te.yCoord,te.zCoord,te.blockType);
+		renderBlockWithRotation(te.getWorldObj(),te.xCoord,te.yCoord,te.zCoord,te.blockType);
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
 
 
 
 	}
-
-	// rotates block
 
 	private void rotateBlock(World world, int x, int y, int z, Block block){
 
 		if (world != null){
 			int dir = world.getBlockMetadata(x, y, z);
-
 			GL11.glPushMatrix();
-			//this line rotates renderer
-
 			GL11.glRotatef(dir * (90), 0F, 1F, 0F);
-			//gets texture
 			Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocal);
-
-			//renders model
 			this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-
 			GL11.glPopMatrix();
 		}else{
 			GL11.glPushMatrix();
-
 			Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocal);
-
 			this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-
 			GL11.glPopMatrix();
 		}
 	}
-
+	
+	private void renderBlockWithRotation(World world, int x, int y, int z, Block block) {
+		GL11.glPushMatrix();
+		
+		if (world != null)
+			GL11.glRotatef(world.getBlockMetadata(x, y, z) * (90), 0F, 1F, 0F);
+		
+		Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocal);
+		this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+		GL11.glPopMatrix();
+	}
 }
 
 

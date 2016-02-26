@@ -3,6 +3,7 @@ package hyghlander.mods.DragonScales.client.renderers;
 import org.lwjgl.opengl.GL11;
 
 import hyghlander.mods.DragonScales.Lib;
+import hyghlander.mods.DragonScales.client.models.ModelCauldronConstruct;
 import hyghlander.mods.DragonScales.client.models.ModelCombiner;
 import hyghlander.mods.DragonScales.client.models.ModelDragonCrystal;
 import net.minecraft.block.Block;
@@ -14,16 +15,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class TileCombinerRenderer extends TileEntitySpecialRenderer {
+public class TileCauldronConstructRenderer extends TileEntitySpecialRenderer {
 	//Block Model
 	public final ModelBase model;
 
 	//Texture Path
-	private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/combiner.png");
+	private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/cauldronConstruct.png");
 
 	// also gets model of out block
-	public TileCombinerRenderer(){
-		this.model = new ModelCombiner();
+	public TileCauldronConstructRenderer(){
+		this.model = new ModelCauldronConstruct();
 	}
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale) {

@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public class BlockCombiner extends BlockContainer {
 
-	protected BlockCombiner(Material p_i45394_1_) {
-		super(p_i45394_1_);
+	public BlockCombiner() {
+		super(Material.iron);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -26,5 +26,18 @@ public class BlockCombiner extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
 		return new TileCombiner();
+	}
+	
+	@Override
+	public int getRenderType(){
+		return -1;
+	}
+	
+	@Override
+	public boolean isOpaqueCube(){
+		return false;
+	}
+	public boolean renderAsNormalBlock(){
+		return false;
 	}
 }
