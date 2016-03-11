@@ -40,8 +40,6 @@ Essentially, take this and learn from it! Create addon mods that depend on it! I
 
 Don't be a jerk.
 
-See LICENSE-CODE.txt and LICENSE-ART.txt for license information.
-
 This license is based on CoFH DBaJ license:
 
 ©2015-2016 Adrian Todt Monteiro da Silva / TheFreeHigh / Hyghlander
