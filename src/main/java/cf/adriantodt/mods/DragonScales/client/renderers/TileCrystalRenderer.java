@@ -65,8 +65,15 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer{
 	private void renderBlockWithRotation(World world, int x, int y, int z, Block block) {
 		GL11.glPushMatrix();
 		
-		if (world != null)
+		if (world != null) {
 			GL11.glRotatef(world.getBlockMetadata(x, y, z) * (90), 0F, 1F, 0F);
+			if (world.getBlock(x, y-1, z).isAir(world, x, y-1, z)) {
+				if (!world.getBlock(x, y+1, z).isAir(world, x, y+1, z)) {
+					GL11.glRotatef(180, 1F, 0F, 0F);
+					GL11.glTranslatef(0.0F, -2.0F, 0.0F);
+				}
+			}
+		}
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocal);
 		this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);

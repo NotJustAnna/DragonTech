@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -21,6 +22,31 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDragonArmor extends ItemArmor
 {
+	public static boolean IsFullArmor(EntityPlayer player) {
+		boolean[] armor = ArmorEquipped(player);
+		return armor[0] && armor[1] && armor[2] && armor[3];
+	}
+	
+	public static boolean[] ArmorEquipped(EntityPlayer player) {
+		boolean[] result = new boolean[4];
+		for (int i = 0; i < result.length; i++)
+			result[i] = ArmorEquippedOnSlot(player, i);
+		return result;
+	}
+	
+	public static boolean ArmorEquippedOnSlot(EntityPlayer player, int slot) {
+		return player.getCurrentArmor(slot) != null && player.getCurrentArmor(slot).getItem() != null && player.getCurrentArmor(slot).getItem().equals(GetArmorForSlot(slot));
+	}
+	
+	public static Item GetArmorForSlot(int slot) {
+		switch (slot) {
+			case 0: return DragonScalesHandler.scalesBoots;
+			case 1: return DragonScalesHandler.scalesLeggings;
+			case 2: return DragonScalesHandler.scalesChestplate;
+			case 3: return DragonScalesHandler.scalesHelm;
+		}
+		return null;
+	}
 	
 	public ItemDragonArmor(ArmorMaterial armorMaterial, int armorType, String name)
 	{
@@ -103,12 +129,12 @@ public class ItemDragonArmor extends ItemArmor
 	}
 	
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack){
-		if(player.getCurrentArmor(3) != null && player.getCurrentArmor(3).getItem() == DragonScalesHandler.scalesHelm)
+		if(ArmorEquippedOnSlot(player,3))
 		{
 			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0));
 		}
 		
-		if(player.getCurrentArmor(2) != null && player.getCurrentArmor(2).getItem() == DragonScalesHandler.scalesChestplate)
+		if(ArmorEquippedOnSlot(player,2))
 		{
 			player.addPotionEffect(new PotionEffect(Potion.resistance.getId(), 40, 1));
 			player.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 40, 1));
@@ -117,26 +143,23 @@ public class ItemDragonArmor extends ItemArmor
 			player.capabilities.allowFlying = true;
 		}
 				
-		if(player.getCurrentArmor(1) != null && player.getCurrentArmor(1).getItem() == DragonScalesHandler.scalesLeggings)
+		if(ArmorEquippedOnSlot(player,1))
 		{
 			player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3));
 		}
 		
-		if(player.getCurrentArmor(0) != null && player.getCurrentArmor(0).getItem() == DragonScalesHandler.scalesBoots)
+		if(ArmorEquippedOnSlot(player,0))
 		{
 			player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3));
 			player.fallDistance = 0.0F;
 		}
 		
-		if((player.getCurrentArmor(2) == null || player.getCurrentArmor(2).getItem() != DragonScalesHandler.scalesChestplate) && player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true)
+		if (!ArmorEquippedOnSlot(player,2) && player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true)
 		{
 			player.capabilities.allowFlying = false;
 			player.capabilities.isFlying = false;
 		}
 	}
 	
-	public EnumRarity getRarity(ItemStack ignored)
-	{
-		return EnumRarity.rare;
-	}
+	public EnumRarity getRarity(ItemStack ignored) { return EnumRarity.rare; }
 }

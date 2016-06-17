@@ -68,8 +68,8 @@ public class DragonScalesHandler {
 		dragonScaleBlock = new ModBlock("dragonScaleBlock").setHardness(0.8F).setStepSound(dragonScaleBlock.soundTypeCloth);
 		GameRegistry.registerBlock(dragonScaleBlock, "dragonScaleBlock");
 		
-		dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(dragonBricks.soundTypePiston), "dragonEssenceOre");
-		GameRegistry.registerBlock(dragonEssenceOre, "dragonEssenceOre");
+		//dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(dragonBricks.soundTypePiston), "dragonEssenceOre");
+		//GameRegistry.registerBlock(dragonEssenceOre, "dragonEssenceOre");
 		
 		modCauldron = new BlockModCauldron();
 		GameRegistry.registerBlock(modCauldron, "modCauldron");

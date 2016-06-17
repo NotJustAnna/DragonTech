@@ -13,7 +13,7 @@ import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCombiner;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;
 import cf.adriantodt.mods.DragonScales.common.events.KeyBindings;
-import cf.adriantodt.mods.DragonScales.common.events.PlayerTickHandler;
+import cf.adriantodt.mods.DragonScales.common.events.EventHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;

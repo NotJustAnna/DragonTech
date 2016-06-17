@@ -1,6 +1,6 @@
 package cf.adriantodt.mods.DragonScales.common;
 
-import cf.adriantodt.mods.DragonScales.common.events.PlayerTickHandler;
+import cf.adriantodt.mods.DragonScales.common.events.EventHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.model.ModelBiped;
@@ -26,7 +26,7 @@ public class CommonProxy {
 	}
 	
 	public void registerHandlers() {
-		Object handler = new PlayerTickHandler();
+		Object handler = new EventHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
 		FMLCommonHandler.instance().bus().register(handler);
 	}

@@ -19,7 +19,7 @@ public class DragonScales {
 	@Mod.Instance
 	public static DragonScales instance;
 	
-	@SidedProxy(clientSide = "hyghlander.mods.DragonScales.client.ClientProxy", serverSide = "hyghlander.mods.DragonScales.common.CommonProxy")
+	@SidedProxy(clientSide = "cf.adriantodt.mods.DragonScales.client.ClientProxy", serverSide = "cf.adriantodt.mods.DragonScales.common.CommonProxy")
 	public static CommonProxy proxy;
 	
 	public static Logger logger = new SilentLogger();
