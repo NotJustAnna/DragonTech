@@ -1,6 +1,5 @@
 package cf.adriantodt.mods.DragonScales.common.items;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cf.adriantodt.mods.DragonScales.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
@@ -18,16 +17,16 @@ public class ModItemDragonScale extends ModItem {
 		returnItemstack = returnedItemStackOnUse;
 	}
 	
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
 		if (!player.canPlayerEdit(x, y, z, side, stack))
             return false;
 		
-		if (theWorld.getBlock(x, y, z) != Blocks.cauldron ||theWorld.getBlockMetadata(x, y, z) != 3)
+		if (world.getBlock(x, y, z) != Blocks.cauldron ||world.getBlockMetadata(x, y, z) != 3)
 			return false;
 		
-		theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
-		((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, 3);
+		world.setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
+		BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DragonScalesHandler.modCauldron);
 		
 		stack.stackSize -= 1;
 		
@@ -36,7 +35,7 @@ public class ModItemDragonScale extends ModItem {
         
         if (returnItemstack != null)
             if (!player.inventory.addItemStackToInventory(returnItemstack.copy()))
-                theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, returnItemstack.copy()));
+                world.spawnEntityInWorld(new EntityItem(world, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, returnItemstack.copy()));
             else if (player instanceof EntityPlayerMP)
                 ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
         return false;

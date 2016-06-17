@@ -1,19 +1,16 @@
 package cf.adriantodt.mods.DragonScales.client;
 
+import brforgers.core.lib.ItemHelper;
 import cf.adriantodt.mods.DragonScales.client.models.ModelDragonChestplate;
-import cf.adriantodt.mods.DragonScales.client.models.ModelModDragon;
-import cf.adriantodt.mods.DragonScales.client.models.RenderModDragon;
 import cf.adriantodt.mods.DragonScales.client.renderers.BlockModCauldronRenderer;
+import cf.adriantodt.mods.DragonScales.client.renderers.ItemTileEntityRenderer;
 import cf.adriantodt.mods.DragonScales.client.renderers.TileCauldronConstructRenderer;
-import cf.adriantodt.mods.DragonScales.client.renderers.TileCombinerRenderer;
 import cf.adriantodt.mods.DragonScales.client.renderers.TileCrystalRenderer;
 import cf.adriantodt.mods.DragonScales.common.CommonProxy;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
+import cf.adriantodt.mods.DragonScales.common.blocks.BlockModCauldron;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
-import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCombiner;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;
-import cf.adriantodt.mods.DragonScales.common.events.KeyBindings;
-import cf.adriantodt.mods.DragonScales.common.events.EventHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -21,6 +18,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonChestplate = new ModelDragonChestplate(1.0f);
@@ -40,9 +38,12 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderThings(){
 		//Register TileEntity Renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new TileCrystalRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCombiner.class, new TileCombinerRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCauldronConstruct.class, new TileCauldronConstructRenderer());
 		
+		
+		//Tweak to Render at Inventory
+		ItemTileEntityRenderer.newItemTileRenderer(DragonScalesHandler.dragonCrystal);
+		ItemTileEntityRenderer.newItemTileRenderer(DragonScalesHandler.cauldronConstruct);
 		
 		//Register Cauldron Renderer
 		cauldronRenderType = RenderingRegistry.getNextAvailableRenderId();

@@ -56,9 +56,9 @@ public class ItemDragonMulti extends ItemPickaxe
     	return Collections.max(
     		Arrays.asList(
     			new Float[]{
-    				Float.valueOf(pickaxe.func_150893_a(stack, block)),
-    				Float.valueOf(axe.func_150893_a(stack, block)),
-    				Float.valueOf(shovel.func_150893_a(stack, block))
+    				pickaxe.func_150893_a(stack, block),
+        			axe.func_150893_a(stack, block),
+        			shovel.func_150893_a(stack, block)
     			}
     		)
     	).floatValue();

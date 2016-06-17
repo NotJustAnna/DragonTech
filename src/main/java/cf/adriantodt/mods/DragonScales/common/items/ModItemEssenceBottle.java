@@ -26,16 +26,12 @@ public class ModItemEssenceBottle extends ModItemDragonScale {
 		
 		if ((block == Blocks.cauldron && meta > 0) || (block == DragonScalesHandler.modCauldron && meta == 3))
 			return false;
-			
-		if (block == Blocks.cauldron && meta == 0)
-			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, 1, 3);
-			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, 1);
 		
-		if (block == DragonScalesHandler.modCauldron && meta < 3)
+		if (block == DragonScalesHandler.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0)
 		{
 			meta++;
-			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, meta, 3);
-			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, meta);
+			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, meta&3, 3);
+			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, meta&3, DragonScalesHandler.modCauldron);
 		}
 		stack.stackSize--;
 		

@@ -24,9 +24,9 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.1.1"
-group= "hyghlander" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "DragonScalesEXMod"
+version = "1.2"
+group= "cf.adriantodt" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "DragonScalesEX"
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"

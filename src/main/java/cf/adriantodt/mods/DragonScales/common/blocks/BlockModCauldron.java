@@ -7,8 +7,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 
 import cf.adriantodt.mods.DragonScales.DragonScales;
 import cf.adriantodt.mods.DragonScales.Lib;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
+import cf.adriantodt.mods.DragonScales.common.CauldronAPIHandler;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -177,65 +176,13 @@ public class BlockModCauldron extends Block {
 	/**
 	 * Overrides for Dragon Essentia
 	 */
-	public boolean onBlockActivated(World theWorld, int  x, int y, int z, EntityPlayer player, int ignored1, float ignored2, float ignored3, float ignored4)
+	public boolean onBlockActivated(World world, int  x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
     {
-		//Fix the Cauldron if it is with no Water
-		int thisBlockMeta = theWorld.getBlockMetadata(x, y, z);
-		if (thisBlockMeta == 0)
-		{
-			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
-			this.setMetadataProperly(theWorld, x, y, z, 0);
-			return Blocks.cauldron.onBlockActivated(theWorld, x, y, z, player, ignored1, ignored2, ignored3, ignored4);
-		}
-		
-		Block upperBlock = theWorld.getBlock(x, y+1, z);
-		if (upperBlock.equals(DragonScalesHandler.cauldronConstruct) || upperBlock.equals(DragonScalesHandler.essenceCombiner))
-			return true;
-		
-        if (theWorld.isRemote)
-        {
-            return true;
-        }
-        else
-        {
-            ItemStack stack = player.inventory.getCurrentItem();
-
-            if (stack == null)
-            {
-                return true;
-            }
-            else
-            {
-                int essentiaLevel = func_150027_b(thisBlockMeta);
-                
-                CauldronRecipe recipe = DragonScalesAPI.getValidRecipe(stack, essentiaLevel);
-                
-                if (recipe != null)
-                {
-                	if (!player.inventory.addItemStackToInventory(recipe.getOutput(stack, essentiaLevel)))
-                    {
-                        theWorld.spawnEntityInWorld(new EntityItem(theWorld, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack, essentiaLevel)));
-                    }
-                    else if (player instanceof EntityPlayerMP)
-                    {
-                        ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
-                    }
-                	
-                	stack.stackSize -= recipe.getItemCost(stack, essentiaLevel);
-
-                    if (stack.stackSize <= 0)
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-                    
-                    this.setMetadataProperly(theWorld, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel));
-                    return true;
-                }
-                return /*false*/true;
-            }
-        }
+		return CauldronAPIHandler.performCauldronInteraction(this, world, x, y, z, player, side, hitX, hitY, hitZ);
     }
 
 	
-	public void setMetadataProperly(World theWorld, int x, int y, int z, int meta)
+	public static void setMetadataProperly(World theWorld, int x, int y, int z, int meta, Block block)
     {
 		if (meta < 1)
 		{
@@ -244,7 +191,7 @@ public class BlockModCauldron extends Block {
 		else
 		{
 			theWorld.setBlockMetadataWithNotify(x, y, z, MathHelper.clamp_int(meta, 0, 3), 3);
-        	theWorld.func_147453_f(x, y, z, this);
+        	theWorld.func_147453_f(x, y, z, block);
 		}
     }
 	
