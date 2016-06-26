@@ -1,6 +1,5 @@
 package cf.adriantodt.mods.DragonScales.client;
 
-import brforgers.core.lib.ItemHelper;
 import cf.adriantodt.mods.DragonScales.client.models.ModelDragonChestplate;
 import cf.adriantodt.mods.DragonScales.client.renderers.BlockModCauldronRenderer;
 import cf.adriantodt.mods.DragonScales.client.renderers.ItemTileEntityRenderer;

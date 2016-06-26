@@ -3,12 +3,12 @@ package cf.adriantodt.mods.DragonScales.client.renderers;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import brforgers.core.lib.ItemHelper;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemTileEntityRenderer implements IItemRenderer {
@@ -46,6 +46,6 @@ public class ItemTileEntityRenderer implements IItemRenderer {
 	
 	public static void newItemTileRenderer(Block block, TileEntity tile)
 	{
-		MinecraftForgeClient.registerItemRenderer(ItemHelper.toItem(block), new ItemTileEntityRenderer(tile));
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(block), new ItemTileEntityRenderer(tile));
 	}
 }

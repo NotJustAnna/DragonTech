@@ -108,9 +108,9 @@ public class DragonScalesHandler {
 		
 		dragonSword = ModItem.process(new ItemDragonSword(DRAGONALLOY_TOOL_MATERIAL), "dragonSword");
 		GameRegistry.registerItem(dragonSword, "dragonSword");
-		dragonMultiTool = ModItem.process(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL), "dragonMultiTool");
+		dragonMultiTool = ModItem.process(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL).setCustomSpeed(Blocks.obsidian, 10f), "dragonMultiTool");
 		GameRegistry.registerItem(dragonMultiTool, "dragonMultiTool");
-		dragonScepter = ModItem.process(new ItemDragonScepter(), "dragonScepter");
+		dragonScepter = ModItem.process(new ItemDragonScepter(DRAGONALLOY_TOOL_MATERIAL), "dragonScepter");
 		GameRegistry.registerItem(dragonScepter, "dragonScepter");
 		
 		scalesHelm = ModItem.process(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 0, "scalesHelm"), "scalesHelm");

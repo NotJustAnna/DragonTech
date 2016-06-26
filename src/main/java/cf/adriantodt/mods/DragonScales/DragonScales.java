@@ -2,10 +2,9 @@ package cf.adriantodt.mods.DragonScales;
 
 import org.apache.logging.log4j.Logger;
 
-import brforgers.core.UpdateManager;
-import brforgers.core.lib.SilentLogger;
 import cf.adriantodt.mods.DragonScales.common.CommonProxy;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -22,7 +21,7 @@ public class DragonScales {
 	@SidedProxy(clientSide = "cf.adriantodt.mods.DragonScales.client.ClientProxy", serverSide = "cf.adriantodt.mods.DragonScales.common.CommonProxy")
 	public static CommonProxy proxy;
 	
-	public static Logger logger = new SilentLogger();
+	public static Logger logger;// = new SilentLogger();
 	
 	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {@Override public Item getTabIconItem(){return DragonScalesHandler.dragonEssenceShard;}};
 	
@@ -37,7 +36,8 @@ public class DragonScales {
 	public void init(FMLInitializationEvent e)
 	{
 		proxy.init();
-		UpdateManager.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
+		if(Loader.isModLoaded("BRCore"))
+			brforgers.core.UpdateManager.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
 	}
 	
 	@Mod.EventHandler

@@ -75,7 +75,9 @@ Temporary Items
 ## BRForgersMods
 !/libs
 !/libs/*.jar
-/mergedSrc
+
+#
+!.java
 
 
 
