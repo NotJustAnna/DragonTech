@@ -2,10 +2,11 @@ package cf.adriantodt.mods.DragonScales.common;
 
 import org.apache.http.impl.conn.tsccm.WaitingThreadAborter;
 
+import brforgers.core.lib.ItemHelper;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI.CauldronRecipe;
 import cf.adriantodt.mods.DragonScales.DragonScales;
 import cf.adriantodt.mods.DragonScales.Lib;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
 import cf.adriantodt.mods.DragonScales.common.blocks.*;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCombiner;
@@ -53,8 +54,14 @@ public class DragonScalesHandler {
 	{
 		registerBlocks();
 		registerItems();
+		registerMaterialHandling();
 		registerEntities();
 		GameRegistry.registerWorldGenerator(new DragonScalesWorldGenerator(), 1);
+	}
+	
+	private static void registerMaterialHandling() {
+		DRAGONALLOY_TOOL_MATERIAL.setRepairItem(ItemHelper.toStack(dragonMetal));
+		DRAGONSCALES_ARMOR_MATERIAL.customCraftingMaterial = dragonScale;
 	}
 
 	private static void registerBlocks()
@@ -108,8 +115,11 @@ public class DragonScalesHandler {
 		
 		dragonSword = ModItem.process(new ItemDragonSword(DRAGONALLOY_TOOL_MATERIAL), "dragonSword");
 		GameRegistry.registerItem(dragonSword, "dragonSword");
-		dragonMultiTool = ModItem.process(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL).setCustomSpeed(Blocks.obsidian, 10f), "dragonMultiTool");
+		dragonMultiTool = ModItem.process(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL), "dragonMultiTool");
 		GameRegistry.registerItem(dragonMultiTool, "dragonMultiTool");
+
+		DragonScalesAPI.setCustomSpeed(Blocks.obsidian, 10f);
+		
 		dragonScepter = ModItem.process(new ItemDragonScepter(DRAGONALLOY_TOOL_MATERIAL), "dragonScepter");
 		GameRegistry.registerItem(dragonScepter, "dragonScepter");
 		

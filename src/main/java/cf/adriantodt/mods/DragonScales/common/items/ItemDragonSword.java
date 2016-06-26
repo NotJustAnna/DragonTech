@@ -21,17 +21,6 @@ public class ItemDragonSword extends ItemSword
 		super(material);
 	}
 	
-	public float func_150931_i()
-    {
-		//Base Damage: 3/4 of Material
-		//Random Bonus: 0 to 1/2 of Material
-		
-		//Unluckiest: 3/4 of Material
-		//Luckiest: 5/4 of Material
-		//Normal: 4/4 of Material
-        return DRAGONALLOY_TOOL_MATERIAL.getDamageVsEntity()/4 * 3 + new Random().nextFloat() * DRAGONALLOY_TOOL_MATERIAL.getDamageVsEntity()/2;
-    }
-	
 	public EnumRarity getRarity(ItemStack ignored)
 	{
 		return EnumRarity.rare;

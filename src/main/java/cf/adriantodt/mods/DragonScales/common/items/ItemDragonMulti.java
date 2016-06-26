@@ -29,6 +29,7 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
+import cf.adriantodt.api.DragonScales.DragonScalesAPI;
 import cf.adriantodt.mods.DragonScales.DragonScales;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -36,17 +37,6 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ItemDragonMulti extends ItemPickaxe
 {
-	private Map<Block, Float> customBlocks = new HashMap<Block, Float>();
-	public Item setCustomSpeed(Block block, float speed) {
-		customBlocks.put(block, speed);
-		return this;
-	}
-	public float getSpeed(Block block) {
-		Float f = customBlocks.get(block);
-		if(f==null) return 1.0f;
-		return f;
-	}
-	
 	private Item pickaxe, axe, shovel, hoe;
 	
 	private class InternalMultiToolPickaxe extends ItemPickaxe {public InternalMultiToolPickaxe(ToolMaterial material) {super(material);efficiencyOnProperMaterial *= 16.0F;}}
@@ -78,7 +68,7 @@ public class ItemDragonMulti extends ItemPickaxe
         			axe.func_150893_a(stack, block),
         			shovel.func_150893_a(stack, block),
         			hoe.func_150893_a(stack, block),
-        			getSpeed(block),
+        			DragonScalesAPI.getSpeed(block),
         			4.0f
     			}
     		)

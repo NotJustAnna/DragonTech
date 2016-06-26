@@ -12,7 +12,9 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ISpecialArmor;
 import cf.adriantodt.mods.DragonScales.DragonScales;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.client.models.ModelDragonChestplate;
@@ -20,7 +22,7 @@ import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemDragonArmor extends ItemArmor
+public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 {
 	public static boolean IsFullArmor(EntityPlayer player) {
 		boolean[] armor = ArmorEquipped(player);
@@ -46,6 +48,14 @@ public class ItemDragonArmor extends ItemArmor
 			case 3: return DragonScalesHandler.scalesHelm;
 		}
 		return null;
+	}
+	
+	public static int GetSlotForItem(ItemStack stack) {
+		if (stack.getItem().equals(DragonScalesHandler.scalesBoots)) return 0;
+		if (stack.getItem().equals(DragonScalesHandler.scalesLeggings)) return 1;
+		if (stack.getItem().equals(DragonScalesHandler.scalesChestplate)) return 2;
+		if (stack.getItem().equals(DragonScalesHandler.scalesHelm)) return 3;
+		return -1;
 	}
 	
 	public ItemDragonArmor(ArmorMaterial armorMaterial, int armorType, String name)
@@ -162,4 +172,23 @@ public class ItemDragonArmor extends ItemArmor
 	}
 	
 	public EnumRarity getRarity(ItemStack ignored) { return EnumRarity.rare; }
+
+	@Override
+	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+		if (source.isUnblockable() || source.isDamageAbsolute() || source.isMagicDamage())
+            return new ArmorProperties(0, damageReduceAmount / 100D, 15);
+        return new ArmorProperties(0, damageReduceAmount / 24.5D, armor.getMaxDamage() * 2);
+	}
+
+	@Override
+	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+		int[] v = { 5, 16, 12, 6 };
+		
+		return v[GetSlotForItem(armor)];
+	}
+
+	@Override
+	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+		stack.damageItem(damage/2, entity);
+	}
 }
