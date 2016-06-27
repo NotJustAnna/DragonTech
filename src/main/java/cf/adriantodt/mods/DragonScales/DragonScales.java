@@ -37,7 +37,7 @@ public class DragonScales {
 	{
 		proxy.init();
 		if(Loader.isModLoaded("BRCore"))
-			brforgers.core.UpdateManager.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
+			cf.brforgers.core.UpdateManager.addToUpdateChecker(Lib.MODID, Lib.FANCYNAME, Lib.UPDATEURL, Lib.VERSION, logger);
 	}
 	
 	@Mod.EventHandler

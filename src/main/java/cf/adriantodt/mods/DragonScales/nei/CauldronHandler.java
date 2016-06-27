@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import cf.adriantodt.mods.DragonScales.Lib;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI.CauldronRecipe;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;

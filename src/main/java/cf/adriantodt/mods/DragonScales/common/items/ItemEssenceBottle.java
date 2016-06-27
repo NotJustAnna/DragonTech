@@ -8,16 +8,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ModItemEssenceBottle extends ModItemDragonScale {
-
-	public ModItemEssenceBottle(String name) {
-		super(name, new ItemStack(Items.glass_bottle));
+public class ItemEssenceBottle extends Item {
+	public ItemStack returnItemstack = null;
+	public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
+		super();
+		returnItemstack = returnedItemStackOnUse;
 	}
 	
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
 		if (!player.canPlayerEdit(x, y, z, side, stack))
             return false;

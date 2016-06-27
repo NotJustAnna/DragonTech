@@ -3,10 +3,10 @@ package cf.adriantodt.mods.DragonScales.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI;
-import cf.adriantodt.mods.DragonScales.api.DragonScalesAPI.CauldronRecipe;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI;
+import cf.adriantodt.api.DragonScales.DragonScalesAPI.CauldronRecipe;
 import cf.adriantodt.mods.DragonScales.common.blocks.BlockModCauldron;
-import cf.adriantodt.mods.DragonScales.common.items.ModItemEssenceBottle;
+import cf.adriantodt.mods.DragonScales.common.items.ItemEssenceBottle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

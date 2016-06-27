@@ -1,8 +1,10 @@
 package cf.adriantodt.mods.DragonScales.common;
 
-import org.apache.http.impl.conn.tsccm.WaitingThreadAborter;
+import cf.brforgers.core.lib.FastFactory;
+import cf.brforgers.core.lib.ItemHelper;
 
-import brforgers.core.lib.ItemHelper;
+import javax.xml.stream.FactoryConfigurationError;
+
 import cf.adriantodt.api.DragonScales.DragonScalesAPI;
 import cf.adriantodt.api.DragonScales.DragonScalesAPI.CauldronRecipe;
 import cf.adriantodt.mods.DragonScales.DragonScales;
@@ -41,6 +43,7 @@ public class DragonScalesHandler {
 			EnumHelper.addToolMaterial("DRAGONSCALE", 10, 2000, 50.0F, 15.0F, 35);
 	public static final ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL = 
 			EnumHelper.addArmorMaterial("DRAGONSCALE", 75, new int[] { 5, 16, 12, 6 }, 35);
+	public static FastFactory factory;
 	
 	// All Items
 	public static Item dragonScale, dragonEssenceShard, dragonMetal, dragonEssenceBottle, infusedStick,
@@ -52,6 +55,8 @@ public class DragonScalesHandler {
 	
 	public static void registerAll()
 	{
+		factory = FastFactory.newFactory(DragonScales.tabDragonScales, Lib.TEXTURE_PATH, Material.rock);
+		
 		registerBlocks();
 		registerItems();
 		registerMaterialHandling();
@@ -65,14 +70,11 @@ public class DragonScalesHandler {
 	}
 
 	private static void registerBlocks()
-	{
-		//Define ModBlock pattern
-		ModBlock.set(DragonScales.tabDragonScales, Lib.MODID, Material.rock);
-		
-		dragonBricks = new ModBlock("dragonBricks").setHardness(2.0F).setResistance(10.0F).setStepSound(dragonBricks.soundTypePiston);
+	{		
+		dragonBricks = factory.newBlock("dragonBricks").setHardness(2.0F).setResistance(10.0F).setStepSound(dragonBricks.soundTypePiston);
 		GameRegistry.registerBlock(dragonBricks, "dragonBricks");
 		
-		dragonScaleBlock = new ModBlock("dragonScaleBlock").setHardness(0.8F).setStepSound(dragonScaleBlock.soundTypeCloth);
+		dragonScaleBlock = factory.newBlock("dragonScaleBlock").setHardness(0.8F).setStepSound(dragonScaleBlock.soundTypeCloth);
 		GameRegistry.registerBlock(dragonScaleBlock, "dragonScaleBlock");
 		
 		//dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(dragonBricks.soundTypePiston), "dragonEssenceOre");
@@ -93,43 +95,41 @@ public class DragonScalesHandler {
 		//GameRegistry.registerBlock(dragonChest, ItemBlock.class, "dragonChest");
 		//GameRegistry.registerTileEntity(TileEntityDragonChest.class, "dragonchestTileEntity");
 		
-		dragonCrystal = ModBlock.process(new BlockDragonCrystal(), "dragonCrystal");
+		dragonCrystal = factory.processBlock(new BlockDragonCrystal(), "dragonCrystal");
 		GameRegistry.registerBlock(dragonCrystal, "dragonCrystal");
 		GameRegistry.registerTileEntity(TileCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
 	}
 	
 	private static void registerItems()
 	{
-		ModItem.set(DragonScales.tabDragonScales, Lib.MODID);
-
-		dragonScale = new ModItemDragonScale("dragonScale", new ItemStack(Items.leather));
+		dragonScale = factory.processItem(new ItemDragonScale(new ItemStack(Items.leather)), "dragonScale");
 		GameRegistry.registerItem(dragonScale, "dragonScale");
-		dragonEssenceShard = new ModItemDragonScale("dragonEssenceShard", null);
+		dragonEssenceShard = factory.processItem(new ItemDragonScale(null),"dragonEssenceShard");
 		GameRegistry.registerItem(dragonEssenceShard, "dragonEssenceShard");
-		dragonMetal = new ModItemDragonScale("dragonMetal", new ItemStack(Items.iron_ingot));
+		dragonMetal = factory.processItem(new ItemDragonScale(new ItemStack(Items.iron_ingot)),"dragonMetal");
 		GameRegistry.registerItem(dragonMetal, "dragonMetal");
-		dragonEssenceBottle = new ModItemEssenceBottle("dragonEssenceBottle");
+		dragonEssenceBottle = factory.processItem(new ItemEssenceBottle(new ItemStack(Items.glass_bottle)),"dragonEssenceBottle");
 		GameRegistry.registerItem(dragonEssenceBottle, "dragonEssenceBottle");
-		infusedStick = new ModItem("infusedStick");
+		infusedStick = factory.newItem("infusedStick");
 		GameRegistry.registerItem(infusedStick, "infusedStick");
 		
-		dragonSword = ModItem.process(new ItemDragonSword(DRAGONALLOY_TOOL_MATERIAL), "dragonSword");
+		dragonSword = factory.processItem(new ItemDragonSword(DRAGONALLOY_TOOL_MATERIAL), "dragonSword");
 		GameRegistry.registerItem(dragonSword, "dragonSword");
-		dragonMultiTool = ModItem.process(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL), "dragonMultiTool");
+		dragonMultiTool = factory.processItem(new ItemDragonMulti(DRAGONALLOY_TOOL_MATERIAL), "dragonMultiTool");
 		GameRegistry.registerItem(dragonMultiTool, "dragonMultiTool");
 
 		DragonScalesAPI.setCustomSpeed(Blocks.obsidian, 10f);
 		
-		dragonScepter = ModItem.process(new ItemDragonScepter(DRAGONALLOY_TOOL_MATERIAL), "dragonScepter");
+		dragonScepter = factory.processItem(new ItemDragonScepter(DRAGONALLOY_TOOL_MATERIAL), "dragonScepter");
 		GameRegistry.registerItem(dragonScepter, "dragonScepter");
 		
-		scalesHelm = ModItem.process(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 0, "scalesHelm"), "scalesHelm");
+		scalesHelm = factory.processItem(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 0, "scalesHelm"), "scalesHelm");
 		GameRegistry.registerItem(scalesHelm, "scalesHelm");
-		scalesChestplate = ModItem.process(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 1, "scalesChestplate"), "scalesChestplate");
+		scalesChestplate = factory.processItem(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 1, "scalesChestplate"), "scalesChestplate");
 		GameRegistry.registerItem(scalesChestplate, "scalesChestplate");
-		scalesLeggings = ModItem.process(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 2, "scalesLeggings"), "scalesLeggings");
+		scalesLeggings = factory.processItem(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 2, "scalesLeggings"), "scalesLeggings");
 		GameRegistry.registerItem(scalesLeggings, "scalesLeggings");
-		scalesBoots = ModItem.process(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 3, "scalesBoots"), "scalesBoots");
+		scalesBoots = factory.processItem(new ItemDragonArmor(DRAGONSCALES_ARMOR_MATERIAL, 3, "scalesBoots"), "scalesBoots");
 		GameRegistry.registerItem(scalesBoots, "scalesBoots");
 	}
 	
