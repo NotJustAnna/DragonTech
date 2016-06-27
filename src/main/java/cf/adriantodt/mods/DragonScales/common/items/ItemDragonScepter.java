@@ -16,14 +16,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class ItemDragonScepter extends ItemTool
+public class ItemDragonScepter extends Item//Tool
 {
 	public ItemDragonScepter(ToolMaterial material)
 	{
-		super(-8,material,ImmutableSet.of());
+		super(/*-8,material,ImmutableSet.of()*/);
 		setMaxStackSize(1);
 		setMaxDamage(325);
-		efficiencyOnProperMaterial = 32.0f;
 	}
 	
 	public EnumRarity getRarity(ItemStack par1ItemStack)
@@ -31,11 +30,11 @@ public class ItemDragonScepter extends ItemTool
 		return EnumRarity.rare;
 	}
 	
-//	@SideOnly(Side.CLIENT)
-//    public boolean isFull3D()
-//    {
-//        return true;
-//    }
+	@SideOnly(Side.CLIENT)
+    public boolean isFull3D()
+    {
+        return true;
+    }
 	
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
