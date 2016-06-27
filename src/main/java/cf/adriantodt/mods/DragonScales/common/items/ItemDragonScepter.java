@@ -20,7 +20,7 @@ public class ItemDragonScepter extends ItemTool
 {
 	public ItemDragonScepter(ToolMaterial material)
 	{
-		super(-2,material,ImmutableSet.of(DragonScalesHandler.dragonCrystal));
+		super(-8,material,ImmutableSet.of());
 		setMaxStackSize(1);
 		setMaxDamage(325);
 		efficiencyOnProperMaterial = 32.0f;
@@ -37,18 +37,18 @@ public class ItemDragonScepter extends ItemTool
 //        return true;
 //    }
 	
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player)
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		itemstack.damageItem(1, player);
+		stack.damageItem(1, player);
 		if (!world.isRemote)
 		{
 			Vec3 look = player.getLookVec();
 			EntityLargeFireball fireBall = new EntityLargeFireball(world, player, 1, 1, 1);
 			fireBall.field_92057_e = player.worldObj.rand.nextInt(5) + 2;
 			fireBall.setPosition(
-				player.posX + look.xCoord * 3,
+				player.posX + look.xCoord * 2.5,
 				player.posY + look.yCoord + 1,
-				player.posZ + look.zCoord * 3
+				player.posZ + look.zCoord * 2.5
 			);
 			double speed = 0.1 + MathHelper.clamp_double(player.worldObj.rand.nextDouble()/5 - 0.1, 0.0, 1.0); 
 			fireBall.accelerationX = look.xCoord * speed;
@@ -57,6 +57,6 @@ public class ItemDragonScepter extends ItemTool
 			world.spawnEntityInWorld(fireBall);
 		}
 		
-		return itemstack;
+		return stack;
 	}
 }

@@ -40,9 +40,9 @@ import net.minecraftforge.common.util.EnumHelper;
  */
 public class DragonScalesHandler {
 	public static final ToolMaterial DRAGONALLOY_TOOL_MATERIAL = 
-			EnumHelper.addToolMaterial("DRAGONSCALE", 10, 2000, 50.0F, 15.0F, 35);
+			EnumHelper.addToolMaterial("DRAGONSCALE", 10, 2000, 50.0F, 16.0F, 35);
 	public static final ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL = 
-			EnumHelper.addArmorMaterial("DRAGONSCALE", 75, new int[] { 5, 16, 12, 6 }, 35);
+			EnumHelper.addArmorMaterial("DRAGONSCALE", 50, new int[] { 5, 16, 12, 6 }, 35);
 	public static FastFactory factory;
 	
 	// All Items
@@ -51,7 +51,7 @@ public class DragonScalesHandler {
 		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
 	// All Blocks
-	public static Block modCauldron, cauldronConstruct, essenceCombiner ,dragonBricks, dragonChest, dragonScaleBlock, dragonEssenceOre, dragonCrystal;
+	public static Block modCauldron, cauldronConstruct, essenceCombiner, dragonBricks, dragonChest, dragonScaleBlock, dragonCrystal;
 	
 	public static void registerAll()
 	{

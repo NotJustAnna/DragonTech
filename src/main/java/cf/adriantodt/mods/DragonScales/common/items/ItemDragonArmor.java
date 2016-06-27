@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import cf.adriantodt.mods.DragonScales.DragonScales;
@@ -141,30 +143,30 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack){
 		if(ArmorEquippedOnSlot(player,3))
 		{
-			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0));
+			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0, true));
 		}
 		
 		if(ArmorEquippedOnSlot(player,2))
 		{
-			player.addPotionEffect(new PotionEffect(Potion.resistance.getId(), 40, 1));
-			player.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 40, 1));
-			player.fallDistance = 0.0F;
+			player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 0, true));
 			
-			player.capabilities.allowFlying = true;
 		}
 				
 		if(ArmorEquippedOnSlot(player,1))
 		{
-			player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3));
+			player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3, true));
 		}
 		
 		if(ArmorEquippedOnSlot(player,0))
 		{
-			player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3));
+			player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3, true));
 			player.fallDistance = 0.0F;
 		}
 		
-		if (!ArmorEquippedOnSlot(player,2) && player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true)
+		if(IsFullArmor(player)) {
+			player.capabilities.allowFlying = true;
+		}
+		else if (player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true)
 		{
 			player.capabilities.allowFlying = false;
 			player.capabilities.isFlying = false;
@@ -175,9 +177,11 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
-		if (source.isUnblockable() || source.isDamageAbsolute() || source.isMagicDamage())
+		if (source.damageType.equals("cactus") || source.damageType.equals("anvil") || source.damageType.equals("fallingBlock") || source.isUnblockable() || source.isFireDamage() || source.isDamageAbsolute() || source.isMagicDamage() || (source.isProjectile() && (source.damageType.equals("onFire") || source.damageType.equals("fireball"))))
             return new ArmorProperties(0, damageReduceAmount / 100D, 15);
-        return new ArmorProperties(0, damageReduceAmount / 24.5D, armor.getMaxDamage() * 2);
+		if (source.damageType.equals("mob"))
+			return new ArmorProperties(0, damageReduceAmount / 50D, 15);
+        return new ArmorProperties(0, damageReduceAmount / 24.5D, armor.getMaxDamage()*2);
 	}
 
 	@Override
@@ -190,5 +194,11 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 	@Override
 	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
 		stack.damageItem(damage/2, entity);
+	}
+	
+	public static int floorFixed(float f) {
+		int r = MathHelper.floor_float(f);
+		if (f-r!=0) r++;
+		return r;
 	}
 }
