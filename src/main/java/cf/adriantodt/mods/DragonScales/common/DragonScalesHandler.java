@@ -14,7 +14,13 @@ import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCombiner;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
+import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconyLeaves;
+import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconyLog;
+import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconySapling;
+import cf.adriantodt.mods.DragonScales.common.blocks.world.DragonGrass;
 import cf.adriantodt.mods.DragonScales.common.items.*;
+import cf.adriantodt.mods.DragonScales.common.world.DragonScalesWorldGenerator;
+import cf.adriantodt.mods.DragonScales.common.world.WorldGenTree;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -30,9 +36,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -47,11 +55,13 @@ public class DragonScalesHandler {
 	
 	// All Items
 	public static Item dragonScale, dragonEssenceShard, dragonMetal, dragonEssenceBottle, infusedStick,
-		dragonSword, dragonMultiTool, dragonScepter,
-		scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
+		dragonSword, dragonMultiTool, dragonScepter;
+	
+	public static ItemArmor scalesHelm, scalesChestplate, scalesLeggings, scalesBoots;
 	
 	// All Blocks
-	public static Block modCauldron, cauldronConstruct, essenceCombiner, dragonBricks, dragonChest, dragonScaleBlock, dragonCrystal;
+	public static Block modCauldron, cauldronConstruct, essenceCombiner, dragonBricks, dragonChest, dragonScaleBlock,
+		dragonCrystal, dragonGrass, dragonDirt, dragonStone, draconyLeaves, draconyLog, draconySapling, draconyPlanks;
 	
 	public static void registerAll()
 	{
@@ -61,7 +71,7 @@ public class DragonScalesHandler {
 		registerItems();
 		registerMaterialHandling();
 		registerEntities();
-		GameRegistry.registerWorldGenerator(new DragonScalesWorldGenerator(), 1);
+		GameRegistry.registerWorldGenerator(new DragonScalesWorldGenerator(), 20);
 	}
 	
 	private static void registerMaterialHandling() {
@@ -98,6 +108,31 @@ public class DragonScalesHandler {
 		dragonCrystal = factory.processBlock(new BlockDragonCrystal(), "dragonCrystal");
 		GameRegistry.registerBlock(dragonCrystal, "dragonCrystal");
 		GameRegistry.registerTileEntity(TileCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
+		
+		dragonStone = factory.newBlock("dragonStone");
+		GameRegistry.registerBlock(dragonStone, "dragonStone");
+		
+		factory.defaultMaterial = Material.ground;
+		dragonDirt = factory.newBlock("dragonDirt");
+		GameRegistry.registerBlock(dragonDirt, "dragonDirt");
+		factory.defaultMaterial = Material.rock;
+		
+		dragonGrass = factory.processBlock(new DragonGrass(), "dragonGrass");
+		GameRegistry.registerBlock(dragonGrass, "dragonGrass");
+		
+		draconyLeaves = factory.processBlock(new DraconyLeaves(), "draconyLeaves");
+		GameRegistry.registerBlock(draconyLeaves, "draconyLeaves");
+		
+		draconyLog = factory.processBlock(new DraconyLog(), "draconyLog");
+		GameRegistry.registerBlock(draconyLog, "draconyLog");
+		
+		draconySapling = factory.processBlock(new DraconySapling(), "draconySapling");
+		GameRegistry.registerBlock(draconySapling, "draconySapling");
+		
+		factory.defaultMaterial = Material.wood;
+		draconyPlanks = factory.newBlock("draconyPlanks").setHardness(2.0F).setResistance(5.0F).setStepSound(draconyLog.soundTypeWood);
+		GameRegistry.registerBlock(draconyPlanks, "draconyPlanks");
+		factory.defaultMaterial = Material.rock;
 	}
 	
 	private static void registerItems()

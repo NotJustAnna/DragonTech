@@ -1,6 +1,7 @@
 package cf.adriantodt.mods.DragonScales.common;
 
 import cf.adriantodt.mods.DragonScales.common.events.EventHandler;
+import cf.adriantodt.mods.DragonScales.common.world.DraconyVirus;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.model.ModelBiped;
@@ -29,6 +30,8 @@ public class CommonProxy {
 		Object handler = new EventHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
 		FMLCommonHandler.instance().bus().register(handler);
+		
+		DraconyVirus.Register();
 	}
 	
 	public void registerRenderThings(){

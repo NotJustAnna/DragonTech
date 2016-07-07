@@ -52,14 +52,6 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 		return null;
 	}
 	
-	public static int GetSlotForItem(ItemStack stack) {
-		if (stack.getItem().equals(DragonScalesHandler.scalesBoots)) return 0;
-		if (stack.getItem().equals(DragonScalesHandler.scalesLeggings)) return 1;
-		if (stack.getItem().equals(DragonScalesHandler.scalesChestplate)) return 2;
-		if (stack.getItem().equals(DragonScalesHandler.scalesHelm)) return 3;
-		return -1;
-	}
-	
 	public ItemDragonArmor(ArmorMaterial armorMaterial, int armorType, String name)
 	{
 		super(armorMaterial, 0, armorType);
@@ -87,18 +79,20 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 			armorModel.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3;
 			armorModel.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3;
 
-			armorModel.isSneak = entityLiving.isSneaking();
-			armorModel.isRiding = entityLiving.isRiding();
-			armorModel.isChild = entityLiving.isChild();
-			if(entityLiving instanceof EntityLiving)
-			{
-				armorModel.heldItemRight = ((EntityPlayer) entityLiving).getCurrentArmor(0) != null ? 1 :0;
-			}
+			if (entityLiving != null) {
+				armorModel.isSneak = entityLiving.isSneaking();
+				armorModel.isRiding = entityLiving.isRiding();
+				armorModel.isChild = entityLiving.isChild();
+				if(entityLiving instanceof EntityLiving)
+				{
+					armorModel.heldItemRight = ((EntityLiving)entityLiving).getHeldItem() != null ? 1 : 0;
+				}
 			
-			if(entityLiving instanceof EntityPlayer){
-				armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
+				if(entityLiving instanceof EntityPlayer){
+					//armorModel.heldItemRight = ((EntityPlayer) entityLiving).getCurrentArmor(0) != null ? 1 :0;
+					armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
+				}
 			}
-
 			return armorModel;	
 		}
 		
@@ -188,7 +182,7 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
 		int[] v = { 5, 16, 12, 6 };
 		
-		return v[GetSlotForItem(armor)];
+		return v[((ItemArmor)armor.getItem()).armorType];
 	}
 
 	@Override

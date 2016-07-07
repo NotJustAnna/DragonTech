@@ -10,6 +10,7 @@ import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cf.adriantodt.mods.DragonScales.common.blocks.BlockModCauldron;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;
+import cf.brforgers.core.lib.client.Armor3DRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -48,6 +49,12 @@ public class ClientProxy extends CommonProxy {
 		cauldronRenderType = RenderingRegistry.getNextAvailableRenderId();
 		ISimpleBlockRenderingHandler cauldronRenderer = new BlockModCauldronRenderer();
 		RenderingRegistry.registerBlockHandler(cauldronRenderType, cauldronRenderer);
+		
+		//Register the Armor
+		Armor3DRenderer.Register(DragonScalesHandler.scalesBoots);
+		Armor3DRenderer.Register(DragonScalesHandler.scalesChestplate);
+		Armor3DRenderer.Register(DragonScalesHandler.scalesHelm);
+		Armor3DRenderer.Register(DragonScalesHandler.scalesLeggings);
 		
 		//Register Dragon Renderer
 		//RenderingRegistry.registerEntityRenderingHandler(EntityModDragon.class, new RenderModDragon(new ModelModDragon(), 0.5F));
