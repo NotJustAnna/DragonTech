@@ -2,7 +2,8 @@ package cf.adriantodt.mods.DragonScales.common.world;
 
 import java.util.Random;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
+import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -21,7 +22,7 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 		chunkX*=16; chunkZ*=16;
 		switch(world.provider.dimensionId){
 			case -1: generateNether(world, random,chunkX,chunkZ); break;
-			case 0 : generateSurface(world, random,chunkX,chunkZ); generateBiome(world, random,chunkX,chunkZ); break;
+			case 0 : generateSurface(world, random,chunkX,chunkZ); generateVirus(world, random,chunkX,chunkZ); break;
 			case 1 : generateEnd(world, random,chunkX,chunkZ); break;
 		}
 	}
@@ -86,17 +87,21 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 	 */
 	int fails = 0;
 	
-	private void generateBiome(World world, Random rand, int BlockX, int BlockZ) {
-		int chance = rand.nextInt(10)-5, spread = 28 +  + rand.nextInt(8);
+	private void generateVirus(World world, Random rand, int BlockX, int BlockZ) {
+		if (Lib.Config.DraconyVirus_ChanceMultiplier == 0) return;
+		
+		int chance = rand.nextInt(20)-(16/(Lib.Config.DraconyVirus_ChanceMultiplier+1)), spread = 7 + rand.nextInt(2);
 		if(world.getBiomeGenForCoords(BlockX, BlockZ).equals(BiomeGenBase.extremeHills)) {
-			chance = 28 + rand.nextInt(8); spread = 20 + rand.nextInt(8);
+			chance = 7 + rand.nextInt(8); spread = 5 + rand.nextInt(2);
 		}
 		if(world.getBiomeGenForCoords(BlockX, BlockZ).equals(BiomeGenBase.extremeHillsEdge)) {
-			chance = 20 + rand.nextInt(8); spread = 28 +  + rand.nextInt(8); 
+			chance = 5 + rand.nextInt(8); spread = 7 + rand.nextInt(2); 
 		}
 		if(world.getBiomeGenForCoords(BlockX, BlockZ).equals(BiomeGenBase.extremeHillsPlus)) {
-			chance = 40; spread = 44 + rand.nextInt(8); 
+			chance = 10; spread = 11 + rand.nextInt(2); 
 		}
+		chance *= Lib.Config.DraconyVirus_ChanceMultiplier;
+		spread *= Lib.Config.DraconyVirus_SpreadingMultiplier;
 		
 		if (rand.nextInt(1000) <= (chance + fails * chance)) {
 			for (int y = 128; y > 63; y--) {

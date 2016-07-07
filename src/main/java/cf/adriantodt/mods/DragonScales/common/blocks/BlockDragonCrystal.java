@@ -2,7 +2,7 @@ package cf.adriantodt.mods.DragonScales.common.blocks;
 
 import java.util.Random;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;

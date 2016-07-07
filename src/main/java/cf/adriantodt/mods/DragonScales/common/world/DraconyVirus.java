@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
+import cf.adriantodt.mods.DragonScales.Lib.Config;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
+import cf.adriantodt.mods.DragonScales.common.events.EventHandler;
 import cf.brforgers.core.lib.Utils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -17,34 +19,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class DraconyVirus {
-	private static DraconyVirus instance = null;
-	public static DraconyVirus Instance() {
-		if (instance == null) instance = new DraconyVirus();
-		return instance;
-	}
-	public static void Register() {
-		Utils.addEventsToBus(Instance());
-	}
-	private List<Runnable> executions = new ArrayList<Runnable>();
-	public List<Runnable> nextTickExecutions = new ArrayList<Runnable>();
-	@SubscribeEvent
-	public void tickEvent(ServerTickEvent e) {
-		executions.addAll(nextTickExecutions);
-		nextTickExecutions = new ArrayList<Runnable>();
-		long masterStarted = System.currentTimeMillis();
-		int runs = 0, total = executions.size();
-		for (Iterator riterator = executions.iterator(); riterator.hasNext();) {
-			Runnable runnable = (Runnable) riterator.next();
-			if (System.currentTimeMillis() < (masterStarted + 4)) {
-				runnable.run();
-				runs++;
-				riterator.remove();
-			}
-			else break;
-		}
-		if (runs > 0) DragonScales.logger.info("Runned "+runs+" Generations from "+total+" ("+(runs*100/total)+"%)");
-	}
-	
 	private DraconyVirus() {}
 	
 	public static boolean ConvertBlock(World world, int x, int y, int z) {
@@ -141,7 +115,7 @@ public class DraconyVirus {
 	 * @param Spread
 	 */
 	public static void InfectBiome(World world, int BlockX, int BlockY, int BlockZ, int Spread) {
-		DragonScales.logger.info("Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
+		if(Config.Debug) DragonScalesEX.logger.info("Non-Async Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
 		InfectBiomeRecursive(world, BlockX, BlockY, BlockZ, Spread, System.currentTimeMillis());
 	}
 	
@@ -166,8 +140,7 @@ public class DraconyVirus {
 	 * @param Spread
 	 */
 	public static void InfectBiomeAsync(World world, int BlockX, int BlockY, int BlockZ, int Spread) {
-		DragonScales.logger.info("Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
-		DraconyVirus spreader = new DraconyVirus();
+		if(Config.Debug) DragonScalesEX.logger.info("Async Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
 		InfectBiomeRecursiveAsync(world, BlockX, BlockY, BlockZ, Spread);
 	}
 	
@@ -185,15 +158,14 @@ public class DraconyVirus {
             final int x2 = x + random.nextInt(3) - 1;
             final int y2 = y + random.nextInt(5) - 3;
             final int z2 = z + random.nextInt(3) - 1;
-				Instance().nextTickExecutions.add(new Runnable() { public void run() {
+				//EventHandler.AddRunnablesToBeExecutedASAP(new Runnable() { public void run() {
 					if(ConvertBlock(world, x2, y2, z2)) {
-						Instance().nextTickExecutions.add(new Runnable() { public void run() {
-								InfectBiomeRecursiveAsync(world, x2, y2, z2, spreadDepth-1);
-							}
-						});
+						EventHandler.AddRunnablesToBeExecutedASAP(new Runnable() { public void run() {
+							InfectBiomeRecursiveAsync(world, x2, y2, z2, spreadDepth-1);
+						}});
 					}
-				}
-				});
+				//}
+				//});
 			}
 	}
 }

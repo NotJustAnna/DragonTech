@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.common.CauldronAPIHandler;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
@@ -197,6 +197,6 @@ public class BlockModCauldron extends Block {
 	
 	public int getRenderType()
 	{
-		return DragonScales.proxy.getRenderType("modCauldron");
+		return DragonScalesEX.proxy.getRenderType("modCauldron");
 	}
 }

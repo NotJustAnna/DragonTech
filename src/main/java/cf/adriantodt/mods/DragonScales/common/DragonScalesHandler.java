@@ -7,7 +7,7 @@ import javax.xml.stream.FactoryConfigurationError;
 
 import cf.adriantodt.api.DragonScales.DragonScalesAPI;
 import cf.adriantodt.api.DragonScales.DragonScalesAPI.CauldronRecipe;
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.common.blocks.*;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
@@ -65,7 +65,7 @@ public class DragonScalesHandler {
 	
 	public static void registerAll()
 	{
-		factory = FastFactory.newFactory(DragonScales.tabDragonScales, Lib.TEXTURE_PATH, Material.rock);
+		factory = FastFactory.newFactory(DragonScalesEX.tabDragonScales, Lib.TEXTURE_PATH, Material.rock);
 		
 		registerBlocks();
 		registerItems();

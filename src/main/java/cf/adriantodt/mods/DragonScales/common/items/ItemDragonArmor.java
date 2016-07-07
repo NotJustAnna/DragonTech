@@ -17,7 +17,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cf.adriantodt.mods.DragonScales.client.models.ModelDragonChestplate;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
@@ -69,7 +69,7 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
 		if (itemStack != null && itemStack.getItem() instanceof ItemDragonArmor)
 		{
-			ModelBiped armorModel = DragonScales.proxy.getArmorModel(armorSlot);
+			ModelBiped armorModel = DragonScalesEX.proxy.getArmorModel(armorSlot);
 			
 			armorModel.bipedHead.showModel = armorSlot == 0;
 			armorModel.bipedHeadwear.showModel = armorSlot == 0;

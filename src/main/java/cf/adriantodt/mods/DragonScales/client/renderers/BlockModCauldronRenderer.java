@@ -1,6 +1,6 @@
 package cf.adriantodt.mods.DragonScales.client.renderers;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.common.blocks.BlockModCauldron;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -69,7 +69,7 @@ public class BlockModCauldronRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public int getRenderId() {
-		return DragonScales.proxy.getRenderType("modCauldron");
+		return DragonScalesEX.proxy.getRenderType("modCauldron");
 	}
 
 }

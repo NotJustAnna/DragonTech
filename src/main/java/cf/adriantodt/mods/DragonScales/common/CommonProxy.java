@@ -30,8 +30,6 @@ public class CommonProxy {
 		Object handler = new EventHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
 		FMLCommonHandler.instance().bus().register(handler);
-		
-		DraconyVirus.Register();
 	}
 	
 	public void registerRenderThings(){

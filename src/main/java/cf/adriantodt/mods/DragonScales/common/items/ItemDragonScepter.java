@@ -2,7 +2,7 @@ package cf.adriantodt.mods.DragonScales.common.items;
 
 import com.google.common.collect.ImmutableSet;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

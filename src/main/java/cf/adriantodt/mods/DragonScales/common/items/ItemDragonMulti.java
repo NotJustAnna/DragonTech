@@ -30,7 +30,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 import cf.adriantodt.api.DragonScales.DragonScalesAPI;
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
@@ -50,7 +50,7 @@ public class ItemDragonMulti extends ItemPickaxe
         shovel = new InternalMultiToolShovel(material);
         axe = new InternalMultiToolAxe(material);
         hoe = new InternalMultiToolHoe(material);
-        this.setCreativeTab(DragonScales.tabDragonScales);
+        this.setCreativeTab(DragonScalesEX.tabDragonScales);
 	}
 
 	@Override

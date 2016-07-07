@@ -1,9 +1,13 @@
 package cf.adriantodt.mods.DragonScales.common.events;
 
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
 
-import cf.adriantodt.mods.DragonScales.DragonScales;
+import cf.adriantodt.mods.DragonScales.DragonScalesEX;
+import cf.adriantodt.mods.DragonScales.Lib.Config;
 import cf.adriantodt.mods.DragonScales.common.DragonScalesHandler;
 import cf.adriantodt.mods.DragonScales.common.items.ItemDragonArmor;
 import net.minecraft.entity.EntityList;
@@ -13,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import scala.actors.threadpool.Arrays;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -21,6 +26,36 @@ import cpw.mods.fml.relauncher.Side;
 
 public class EventHandler
 {
+	private static List<Runnable> executions = new ArrayList<Runnable>(), nextTickExecutions = new ArrayList<Runnable>();
+	
+	/**
+	 * Add {@link Runnable}(s) that will be executed AsSoonAsPossibleTM to the BatchRunnableExecutor
+	 */
+	public static void AddRunnablesToBeExecutedASAP(Runnable... runnables) {
+		nextTickExecutions.addAll(Arrays.asList(runnables));
+	}
+	
+	@SubscribeEvent
+	public void batchRunnableExecutor(ServerTickEvent event) {
+		if(nextTickExecutions.size()>0) {
+			executions.addAll(nextTickExecutions);
+			nextTickExecutions = new ArrayList<Runnable>();
+		}
+		
+		long masterStarted = System.currentTimeMillis();
+		int runs = 0, total = executions.size();
+		for (Iterator riterator = executions.iterator(); riterator.hasNext();) {
+			Runnable runnable = (Runnable) riterator.next();
+			if (System.currentTimeMillis() < (masterStarted + Math.min(Config.BatchExecutor_Timeout,4))) {
+				runnable.run();
+				runs++;
+				riterator.remove();
+			}
+			else break;
+		}
+		if (runs > 0 && Config.Debug) DragonScalesEX.logger.info("Runned "+runs+" Generations from "+total+" ("+(runs*100/total)+"%)");
+	}
+	
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent event)
 	{
@@ -32,7 +67,6 @@ public class EventHandler
 		}
 		else if (!player.capabilities.isCreativeMode)
 		{
-			//DragonScales.logger.info("FALSE");
 			player.capabilities.allowFlying = false;
 			player.capabilities.isFlying = false;
 		}
