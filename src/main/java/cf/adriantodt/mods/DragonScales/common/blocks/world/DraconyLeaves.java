@@ -225,7 +225,7 @@ public class DraconyLeaves extends BlockLeavesBase implements IShearable
         if (world.isRemote)
             return;
         
-        DraconyVirus.ProcriateAt(world, x, y, z, random);
+        BlockVirusBase.randomTick(world, x, y, z, random);
         
         final int metadata = world.getBlockMetadata(x, y, z);
         

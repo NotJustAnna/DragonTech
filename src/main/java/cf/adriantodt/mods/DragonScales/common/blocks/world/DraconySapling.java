@@ -175,7 +175,7 @@ public class DraconySapling extends BlockBush implements IGrowable
         if (!world.isRemote)
         {
             super.updateTick(world, x, y, z, rand);
-            DraconyVirus.ProcriateAt(world, x, y, z, rand);
+            BlockVirusBase.randomTick(world, x, y, z, rand);
             attemptGrowTree(world, x, y, z, rand);
         }
     }

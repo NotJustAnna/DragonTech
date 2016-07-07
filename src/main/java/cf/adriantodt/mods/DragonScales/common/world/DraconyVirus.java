@@ -41,18 +41,23 @@ public class DraconyVirus {
         	return true;
         }
         
-        if(b == Blocks.stone) {
+        if(b == Blocks.stone || b == Blocks.monster_egg) {
         	world.setBlock(x, y, z, DragonScalesHandler.dragonStone);
         	return true;
 		}
         
         if (b == Blocks.log || b == Blocks.log2) {
-            world.setBlock(x, y, z, DragonScalesHandler.draconyLog);
+            world.setBlock(x, y, z, DragonScalesHandler.draconyLog,world.getBlockMetadata(x, y, z), 3);
             return true;
         }
         
         if (b == Blocks.leaves || b == Blocks.leaves2) {
             world.setBlock(x, y, z, DragonScalesHandler.draconyLeaves);
+            return true;
+        }
+        
+        if (b == Blocks.planks) {
+            world.setBlock(x, y, z, DragonScalesHandler.draconyPlanks);
             return true;
         }
         
@@ -106,31 +111,6 @@ public class DraconyVirus {
 	}
 	
 	/**
-	 * Massively Procriates the Virus. The Spread is how much blocks it will be spread<br>
-	 * Should be primarily used for World Gen.
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param Spread
-	 */
-	public static void InfectBiome(World world, int BlockX, int BlockY, int BlockZ, int Spread) {
-		if(Config.Debug) DragonScalesEX.logger.info("Non-Async Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
-		InfectBiomeRecursive(world, BlockX, BlockY, BlockZ, Spread, System.currentTimeMillis());
-	}
-	
-	private static void InfectBiomeRecursive(World world, int x, int y, int z, int Spread, long timeAtStartup) {
-		Spread = Math.min(Spread, 512);
-		if (world.rand.nextInt(10)>Spread) return;
-		for(int x1 = -1; x1 <=1; x1++) for(int y1 = 1; y1 >=-1; y1--) for(int z1 = -1; z1 <=1; z1++) {
-			if(ConvertBlock(world, x+x1, y+y1, z+z1)) {
-				if (System.currentTimeMillis() >= (timeAtStartup + 1500)) return;
-				InfectBiomeRecursive(world, x+x1, y+y1, z+z1, Spread-1, timeAtStartup);
-			}
-		}
-	}
-	
-	/**
 	 * Massively Procriates the Virus, Running it. The Spread is how much blocks it will be spread<br>
 	 * Should be primarily used for World Gen.
 	 * @param world
@@ -140,12 +120,13 @@ public class DraconyVirus {
 	 * @param Spread
 	 */
 	public static void InfectBiomeAsync(World world, int BlockX, int BlockY, int BlockZ, int Spread) {
+		Spread = Math.min(Spread, 32);
 		if(Config.Debug) DragonScalesEX.logger.info("Async Spread begun at ["+(BlockX)+","+BlockY+","+(BlockZ)+"] with Rate (" + Spread + ")");
-		InfectBiomeRecursiveAsync(world, BlockX, BlockY, BlockZ, Spread);
+		if (ConvertBlock(world, BlockX, BlockY, BlockZ))
+			InfectBiomeRecursiveAsync(world, BlockX, BlockY, BlockZ, Spread);
 	}
 	
-	private static void InfectBiomeRecursiveAsync(final World world, final int x, final int y, final int z, int Spread) {
-		final int spreadDepth = Math.min(Spread, 512);
+	private static void InfectBiomeRecursiveAsync(final World world, final int x, final int y, final int z, final int Spread) {
 		Random random = world.rand;
 		if (world.rand.nextInt(10)>Spread) return;
 		//for(int x1 = -1; x1 <=1; x1++) for(int y1 = 1; y1 >=-1; y1--) for(int z1 = -1; z1 <=1; z1++)
@@ -160,8 +141,9 @@ public class DraconyVirus {
             final int z2 = z + random.nextInt(3) - 1;
 				//EventHandler.AddRunnablesToBeExecutedASAP(new Runnable() { public void run() {
 					if(ConvertBlock(world, x2, y2, z2)) {
+						if(Spread-1 != 0)
 						EventHandler.AddRunnablesToBeExecutedASAP(new Runnable() { public void run() {
-							InfectBiomeRecursiveAsync(world, x2, y2, z2, spreadDepth-1);
+							InfectBiomeRecursiveAsync(world, x2, y2, z2, Spread-1);
 						}});
 					}
 				//}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import cf.adriantodt.mods.DragonScales.DragonScalesEX;
 import cf.adriantodt.mods.DragonScales.Lib.Config;
@@ -15,6 +16,7 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import scala.actors.threadpool.Arrays;
@@ -29,31 +31,37 @@ public class EventHandler
 	private static List<Runnable> executions = new ArrayList<Runnable>(), nextTickExecutions = new ArrayList<Runnable>();
 	
 	/**
-	 * Add {@link Runnable}(s) that will be executed AsSoonAsPossibleTM to the BatchRunnableExecutor
+	 * Add {@link Runnable}(s) that will be executed AsSoonAsPossibleTM to the BatchRunnableExecutor<br>
+	 * Also, not sure if will actually run if surpass 100000 Runnables (It might skip some to actually accelerate)
 	 */
 	public static void AddRunnablesToBeExecutedASAP(Runnable... runnables) {
 		nextTickExecutions.addAll(Arrays.asList(runnables));
 	}
-	
 	@SubscribeEvent
 	public void batchRunnableExecutor(ServerTickEvent event) {
-		if(nextTickExecutions.size()>0) {
+		if((nextTickExecutions.size()+executions.size())>0) {
 			executions.addAll(nextTickExecutions);
 			nextTickExecutions = new ArrayList<Runnable>();
 		}
 		
-		long masterStarted = System.currentTimeMillis();
-		int runs = 0, total = executions.size();
+		long thisTickStarted = System.currentTimeMillis();
+		int runs = 0, skippedNow = 0, total = executions.size();
 		for (Iterator riterator = executions.iterator(); riterator.hasNext();) {
 			Runnable runnable = (Runnable) riterator.next();
-			if (System.currentTimeMillis() < (masterStarted + Math.min(Config.BatchExecutor_Timeout,4))) {
-				runnable.run();
-				runs++;
+			if (System.currentTimeMillis() < (thisTickStarted + Math.min(Config.BatchExecutor_Timeout,4))) {
+				if(executions.size() < 100000 || new Random().nextBoolean()){
+					if(runnable!=null)runnable.run();
+					runs++;
+				}
+				else skippedNow++;
+				
 				riterator.remove();
 			}
 			else break;
 		}
-		if (runs > 0 && Config.Debug) DragonScalesEX.logger.info("Runned "+runs+" Generations from "+total+" ("+(runs*100/total)+"%)");
+		if (runs > 0) {
+			if (Config.Debug) DragonScalesEX.logger.info("Runned "+runs+" and Skipped "+skippedNow+" Generations from "+total);
+		}
 	}
 	
 	@SubscribeEvent

@@ -18,7 +18,7 @@ import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class DragonGrass extends Block implements IGrowable {
+public class DragonGrass extends BlockVirusBase implements IGrowable {
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
 
@@ -51,7 +51,7 @@ public class DragonGrass extends Block implements IGrowable {
             }
             else if (world.getBlockLightValue(x, y + 1, z) >= 9)
             {
-                DraconyVirus.ProcriateAt(world, x, y, z, random);
+                super.updateTick(world, x, y, z, random);
             }
         }
     }

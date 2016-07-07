@@ -46,24 +46,19 @@ public class DraconyLog extends BlockLog
      */
     public void updateTick(World world, int x, int y, int z, Random random)
     {
-        DraconyVirus.ProcriateAt(world, x, y, z, random);
+        BlockVirusBase.randomTick(world, x, y, z, random);
     }
     
     @Override
     public IIcon getIcon(int side, int metadata)
     {
         final int orientation = metadata & 12;
-        int type = metadata & 3;
-        if (type > 3)
-            type = 0;
         if (orientation == 0 && (side == 1 || side == 0) || orientation == 4 && (side == 5 || side == 4) || orientation == 8 && (side == 2 || side == 3))
         {
-            //return texturesMap.get(index + 16 + type);
-            return textures[(type * 2) + 1];
+            return textures[1];
         }
         
-        return textures[type * 2];
-        //return texturesMap.get(index + type);
+        return textures[0];
     }
     
     @Override

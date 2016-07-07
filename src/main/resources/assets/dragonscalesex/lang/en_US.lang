@@ -4,9 +4,14 @@ recipe.essenceInfusion=Essence Infusion
 
 //Blocks
 tile.dragonScaleBlock.name=Dragon Scale Block
-tile.dragonEssenceOre.name=Draconic Essence Ore
-tile.dragonBricks.name=Draconic Bricks
-tile.dragonCrystal.name=Draconic Crystal
+tile.dragonEssenceBlock.name=Dragon Essence Block
+tile.dragonBricks.name=Dragon Bricks
+tile.dragonCrystal.name=Dragon Crystal
+
+tile.dragonStone.name=Dragon Stone
+tile.draconyPlanks.name=DraconyPlanks
+
+tile.
 
 //Items
 item.dragonScale.name=Dragon Scale

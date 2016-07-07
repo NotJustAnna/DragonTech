@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public class DragonScalesAPI {
 	public static class CauldronRecipe {
@@ -37,22 +39,22 @@ public class DragonScalesAPI {
 			this.essentiaCost = essentiaCost;
 		}
 		
-		public boolean isValidInput(ItemStack input, int essentiaLevel)
+		public boolean isValidInput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 		{
-			return this.input.isItemEqual(input) && (getItemCost(input, essentiaLevel) <= input.stackSize) && (getEssentiaCost(input,essentiaLevel) <= essentiaLevel);
+			return this.input.isItemEqual(input) && (getItemCost(input, essentiaLevel, world, z, z, z, player) <= input.stackSize) && (getEssentiaCost(input,essentiaLevel, world, z, z, z, player) <= essentiaLevel);
 		}
 		
-		public ItemStack getOutput(ItemStack input, int essentiaLevel)
+		public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 		{
 			return this.output.copy();
 		}
 		
-		public int getEssentiaCost(ItemStack input, int essentiaLevel)
+		public int getEssentiaCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 		{
 			return this.essentiaCost;
 		}
 		
-		public int getItemCost(ItemStack input, int essentiaLevel)
+		public int getItemCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 		{
 			return this.input.stackSize;
 		}
@@ -60,10 +62,10 @@ public class DragonScalesAPI {
 	
 	public static final List<CauldronRecipe> cauldronRecipes = new ArrayList<CauldronRecipe>();
 	
-	public static CauldronRecipe getValidRecipe(ItemStack input, int essentiaLevel) {
+	public static CauldronRecipe getValidRecipe(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
 		for (CauldronRecipe recipe : cauldronRecipes)
 		{
-			if (recipe.isValidInput(input, essentiaLevel)) return recipe;
+			if (recipe.isValidInput(input, essentiaLevel, world, z, z, z, player)) return recipe;
 		}
 		return null;
 	}

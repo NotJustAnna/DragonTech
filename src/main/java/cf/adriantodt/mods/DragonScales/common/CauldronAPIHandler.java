@@ -61,25 +61,26 @@ public class CauldronAPIHandler {
 	{
 		int essentiaLevel = BlockModCauldron.func_150027_b(meta);
         
-        CauldronRecipe recipe = DragonScalesAPI.getValidRecipe(stack, essentiaLevel);
+        CauldronRecipe recipe = DragonScalesAPI.getValidRecipe(stack, essentiaLevel, world, x, y, z, player);
         
         if (recipe != null)
         {
-        	if (!player.inventory.addItemStackToInventory(recipe.getOutput(stack, essentiaLevel)))
+        	ItemStack out = recipe.getOutput(stack, essentiaLevel, world, x, y, z, player);
+        	if (!player.inventory.addItemStackToInventory(out))
             {
-                world.spawnEntityInWorld(new EntityItem(world, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack, essentiaLevel)));
+        		if (out != null) world.spawnEntityInWorld(new EntityItem(world, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player)));
             }
             else if (player instanceof EntityPlayerMP)
             {
                 ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
             }
         	
-        	stack.stackSize -= recipe.getItemCost(stack, essentiaLevel);
+        	stack.stackSize -= recipe.getItemCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player);
 
             if (stack.stackSize <= 0)
                 player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
             
-            BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel), block);
+            BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player), block);
         }
 	}
 }

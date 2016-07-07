@@ -26,14 +26,13 @@ public class ItemEssenceBottle extends Item {
 		Block block = theWorld.getBlock(x, y, z);
 		int meta = theWorld.getBlockMetadata(x, y, z);
 		
-		if ((block == Blocks.cauldron && meta > 0) || (block == DragonScalesHandler.modCauldron && meta == 3))
-			return false;
-		
 		if (block == DragonScalesHandler.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0)
 		{
 			meta++;
 			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, meta&3, 3);
 			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, meta&3, DragonScalesHandler.modCauldron);
+		} else {
+			return false;
 		}
 		stack.stackSize--;
 		

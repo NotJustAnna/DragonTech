@@ -90,7 +90,7 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 	private void generateVirus(World world, Random rand, int BlockX, int BlockZ) {
 		if (Lib.Config.DraconyVirus_ChanceMultiplier == 0) return;
 		
-		int chance = rand.nextInt(20)-(16/(Lib.Config.DraconyVirus_ChanceMultiplier+1)), spread = 7 + rand.nextInt(2);
+		int chance = rand.nextInt(5)-(4/(Lib.Config.DraconyVirus_ChanceMultiplier+1)), spread = 7 + rand.nextInt(2);
 		if(world.getBiomeGenForCoords(BlockX, BlockZ).equals(BiomeGenBase.extremeHills)) {
 			chance = 7 + rand.nextInt(8); spread = 5 + rand.nextInt(2);
 		}

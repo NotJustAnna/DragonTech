@@ -14,11 +14,13 @@ import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCauldronConstruct;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCombiner;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileCrystal;
 import cf.adriantodt.mods.DragonScales.common.blocks.tile.TileEntityDragonChest;
+import cf.adriantodt.mods.DragonScales.common.blocks.world.BlockVirusBase;
 import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconyLeaves;
 import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconyLog;
 import cf.adriantodt.mods.DragonScales.common.blocks.world.DraconySapling;
 import cf.adriantodt.mods.DragonScales.common.blocks.world.DragonGrass;
 import cf.adriantodt.mods.DragonScales.common.items.*;
+import cf.adriantodt.mods.DragonScales.common.world.DraconyVirus;
 import cf.adriantodt.mods.DragonScales.common.world.DragonScalesWorldGenerator;
 import cf.adriantodt.mods.DragonScales.common.world.WorldGenTree;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -30,6 +32,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,9 +41,14 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -61,7 +69,8 @@ public class DragonScalesHandler {
 	
 	// All Blocks
 	public static Block modCauldron, cauldronConstruct, essenceCombiner, dragonBricks, dragonChest, dragonScaleBlock,
-		dragonCrystal, dragonGrass, dragonDirt, dragonStone, draconyLeaves, draconyLog, draconySapling, draconyPlanks;
+		dragonCrystal, dragonGrass, dragonDirt, dragonStone, draconyLeaves, draconyLog, draconySapling, draconyPlanks,
+		dragonEssenceBlock;
 	
 	public static void registerAll()
 	{
@@ -109,13 +118,11 @@ public class DragonScalesHandler {
 		GameRegistry.registerBlock(dragonCrystal, "dragonCrystal");
 		GameRegistry.registerTileEntity(TileCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
 		
-		dragonStone = factory.newBlock("dragonStone");
+		dragonStone = factory.processBlock(new BlockVirusBase(Material.rock), "dragonStone");
 		GameRegistry.registerBlock(dragonStone, "dragonStone");
 		
-		factory.defaultMaterial = Material.ground;
-		dragonDirt = factory.newBlock("dragonDirt");
+		dragonDirt = factory.processBlock(new BlockVirusBase(Material.ground), "dragonDirt");
 		GameRegistry.registerBlock(dragonDirt, "dragonDirt");
-		factory.defaultMaterial = Material.rock;
 		
 		dragonGrass = factory.processBlock(new DragonGrass(), "dragonGrass");
 		GameRegistry.registerBlock(dragonGrass, "dragonGrass");
@@ -128,11 +135,14 @@ public class DragonScalesHandler {
 		
 		draconySapling = factory.processBlock(new DraconySapling(), "draconySapling");
 		GameRegistry.registerBlock(draconySapling, "draconySapling");
-		
-		factory.defaultMaterial = Material.wood;
-		draconyPlanks = factory.newBlock("draconyPlanks").setHardness(2.0F).setResistance(5.0F).setStepSound(draconyLog.soundTypeWood);
+
+		draconyPlanks = factory.processBlock(new BlockVirusBase(Material.wood), "draconyPlanks");
+		draconyPlanks.setHardness(2.0F).setResistance(5.0F).setStepSound(draconyPlanks.soundTypeWood);
 		GameRegistry.registerBlock(draconyPlanks, "draconyPlanks");
-		factory.defaultMaterial = Material.rock;
+		
+		dragonEssenceBlock = factory.processBlock(new BlockVirusBase(Material.iron), "dragonEssenceBlock");
+		dragonEssenceBlock.setHardness(5.0F).setResistance(10.0F).setStepSound(dragonEssenceBlock.soundTypeMetal);
+		GameRegistry.registerBlock(dragonEssenceBlock, "dragonEssenceBlock");
 	}
 	
 	private static void registerItems()
@@ -187,18 +197,18 @@ public class DragonScalesHandler {
 		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.stick), 0, new ItemStack(infusedStick)));
 		DragonScalesAPI.cauldronRecipes.add(
 			new CauldronRecipe(new ItemStack(Blocks.brick_block), 1, new ItemStack(dragonBricks)) {
-				public ItemStack getOutput(ItemStack input, int essentiaLevel) {
-					ItemStack output = super.getOutput(input, essentiaLevel);
+				public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+					ItemStack output = super.getOutput(input, essentiaLevel, world, z, z, z, player);
 					output.stackSize = input.stackSize;
 					return output;
 				}
 				
-				public int getEssentiaCost(ItemStack input, int essentiaLevel)
+				public int getEssentiaCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 				{
 					return MathHelper.clamp_int((int)((float)(input.stackSize / 64) * 3)+1, 1, 3);
 				}
 				
-				public int getItemCost(ItemStack input, int essentiaLevel)
+				public int getItemCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 				{
 					return input.stackSize;
 				}
@@ -206,23 +216,36 @@ public class DragonScalesHandler {
 		);
 		DragonScalesAPI.cauldronRecipes.add(
 				new CauldronRecipe(new ItemStack(Blocks.soul_sand), 1, new ItemStack(Blocks.end_stone)) {
-					public ItemStack getOutput(ItemStack input, int essentiaLevel) {
-						ItemStack output = super.getOutput(input, essentiaLevel);
+					public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+						ItemStack output = super.getOutput(input, essentiaLevel, world, z, z, z, player);
 						output.stackSize = MathHelper.clamp_int(input.stackSize,0,16);
 						return output;
 					}
 					
-					public int getEssentiaCost(ItemStack input, int essentiaLevel)
+					public int getEssentiaCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 					{
 						return MathHelper.clamp_int((int)((float)(input.stackSize / 16) * 3)+1, 1, 3);
 					}
 					
-					public int getItemCost(ItemStack input, int essentiaLevel)
+					public int getItemCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player)
 					{
 						return MathHelper.clamp_int(input.stackSize,0,16);
 					}
 				}
 			);
+		
+		ItemStack neiFakeInput = new ItemStack(Items.paper);
+		ItemHelper.getCompound(neiFakeInput, "display", false).setString("Name", "§fEvent <Dracony Virus>");
+		ItemHelper.getList(neiFakeInput, "Lore", Constants.NBT.TAG_STRING, false).appendTag(new NBTTagString("§7(This won't return anything, but actually do an world event)"));
+		
+		DragonScalesAPI.cauldronRecipes.add(
+				new CauldronRecipe(new ItemStack(dragonEssenceBlock), 3, neiFakeInput) {
+					public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+						DraconyVirus.InfectBiomeAsync(world, x, y-1, z, (7 + world.rand.nextInt(10)));
+						return null;
+					}
+				}
+		);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(dragonEssenceBottle), new ItemStack(Items.potionitem,1,0), new ItemStack(dragonEssenceShard));
 		
@@ -233,6 +256,12 @@ public class DragonScalesHandler {
 		);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(dragonScale,9), dragonScaleBlock);
+		GameRegistry.addShapelessRecipe(new ItemStack(dragonEssenceShard,9), dragonEssenceBlock);
+		GameRegistry.addShapelessRecipe(new ItemStack(draconyPlanks, 6),  draconyLog);
+		GameRegistry.addShapedRecipe(new ItemStack(infusedStick, 4),
+				"P","P",
+				'P', draconyPlanks
+		); 
 		
 		GameRegistry.addShapedRecipe(
 				new ItemStack(dragonMultiTool,1),
