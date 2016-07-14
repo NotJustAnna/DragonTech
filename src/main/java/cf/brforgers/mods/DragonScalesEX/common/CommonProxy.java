@@ -22,7 +22,7 @@ public class CommonProxy {
 	
 	public void postInit()
 	{
-		
+		CauldronAPIHandler.processDispensingBehaviour();
 	}
 	
 	public void registerHandlers() {

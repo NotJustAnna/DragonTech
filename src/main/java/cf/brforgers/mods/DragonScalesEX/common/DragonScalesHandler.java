@@ -1,23 +1,19 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.core.lib.FastFactory;
-import cf.brforgers.core.lib.ItemHelper;
-
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI;
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI.CauldronRecipe;
-import cf.brforgers.core.lib.Utils;
-import cf.brforgers.core.lib.batch.TickBatchExecutor;
+import cf.brforgers.core.lib.FastFactory;
+import cf.brforgers.core.lib.ItemHelper;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.*;
+import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockCauldronConstruct;
+import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockCombiner;
+import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockDragonCrystal;
+import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCauldronConstruct;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCombiner;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.BlockVirusBase;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.DraconyLeaves;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.DraconyLog;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.DraconySapling;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.DragonGrass;
+import cf.brforgers.mods.DragonScalesEX.common.blocks.world.*;
 import cf.brforgers.mods.DragonScalesEX.common.items.*;
 import cf.brforgers.mods.DragonScalesEX.common.world.DraconyVirus;
 import cf.brforgers.mods.DragonScalesEX.common.world.DragonScalesWorldGenerator;
@@ -28,14 +24,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -200,11 +194,11 @@ public class DragonScalesHandler {
 	
 	public static void registerRecipes()
 	{
-		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.leather), 3, new ItemStack(dragonScale)));
-		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.gold_ingot), 3, new ItemStack(dragonMetal)));
-		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.emerald), 3, new ItemStack(dragonCrystal)));
-		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.glass_bottle), 1, new ItemStack(dragonEssenceBottle)));
-		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.stick), 0, new ItemStack(infusedStick)));
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.leather), 3, new ItemStack(dragonScale)).registerDefaultDispenserBehaviour());
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.gold_ingot), 3, new ItemStack(dragonMetal)).registerDefaultDispenserBehaviour());
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.emerald), 3, new ItemStack(dragonCrystal)).registerDefaultDispenserBehaviour());
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.glass_bottle), 1, new ItemStack(dragonEssenceBottle)).registerDefaultDispenserBehaviour());
+		DragonScalesAPI.cauldronRecipes.add(new CauldronRecipe(new ItemStack(Items.stick), 0, new ItemStack(infusedStick)).registerDefaultDispenserBehaviour());
 		DragonScalesAPI.cauldronRecipes.add(
 			new CauldronRecipe(new ItemStack(Blocks.brick_block), 1, new ItemStack(dragonBricks)) {
 				public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
@@ -222,7 +216,7 @@ public class DragonScalesHandler {
 				{
 					return input.stackSize;
 				}
-			}
+			}.registerDefaultDispenserBehaviour()
 		);
 		DragonScalesAPI.cauldronRecipes.add(
 				new CauldronRecipe(new ItemStack(Blocks.soul_sand), 1, new ItemStack(Blocks.end_stone)) {
@@ -241,8 +235,8 @@ public class DragonScalesHandler {
 					{
 						return MathHelper.clamp_int(input.stackSize,0,16);
 					}
-				}
-        );
+				}.registerDefaultDispenserBehaviour()
+		);
 
 		DragonScalesAPI.cauldronRecipes.add(
 				new CauldronRecipe(new ItemStack(dragonEssenceBlock), 3, new ItemStack(dragonGrass)) {
@@ -250,7 +244,7 @@ public class DragonScalesHandler {
 						DraconyVirus.InfectBiomeAsync(world, x, y-1, z, (7 + world.rand.nextInt(10)));
 						return null;
 					}
-				}
+				}.registerDefaultDispenserBehaviour()
 		);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(dragonEssenceBottle), new ItemStack(Items.potionitem,1,0), new ItemStack(dragonEssenceShard));

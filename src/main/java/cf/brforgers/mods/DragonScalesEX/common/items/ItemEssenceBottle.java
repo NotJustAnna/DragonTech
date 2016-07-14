@@ -3,19 +3,48 @@ package cf.brforgers.mods.DragonScalesEX.common.items;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.dispenser.IBehaviorDispenseItem;
+import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class ItemEssenceBottle extends Item {
+	private static IBehaviorDispenseItem dispenserBehavior = new IBehaviorDispenseItem() {
+		@Override
+		public ItemStack dispense(IBlockSource blockSource, ItemStack stack) {
+			EnumFacing facing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata()); //Get Facing
+			int x = blockSource.getXInt() + facing.getFrontOffsetX();
+			int y = blockSource.getYInt() + facing.getFrontOffsetY();
+			int z = blockSource.getZInt() + facing.getFrontOffsetZ();
+
+			Block block = blockSource.getWorld().getBlock(x, y, z);
+			int meta = blockSource.getWorld().getBlockMetadata(x, y, z);
+
+			if (block == DragonScalesHandler.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
+				meta++;
+				meta &= 3;
+				blockSource.getWorld().setBlock(x, y, z, DragonScalesHandler.modCauldron, meta, 3);
+				((BlockModCauldron) DragonScalesHandler.modCauldron).setMetadataProperly(blockSource.getWorld(), x, y, z, meta, DragonScalesHandler.modCauldron);
+			} else {
+				return stack;
+			}
+			stack.stackSize -= 1;
+			return stack;
+		}
+	};
+
 	public ItemStack returnItemstack = null;
 	public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
 		super();
 		returnItemstack = returnedItemStackOnUse;
+		BlockDispenser.dispenseBehaviorRegistry.putObject(this, dispenserBehavior);
 	}
 	
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
