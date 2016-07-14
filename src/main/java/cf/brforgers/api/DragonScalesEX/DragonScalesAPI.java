@@ -16,7 +16,7 @@ public class DragonScalesAPI {
 	private static Map<Block, Float> customMultiToolMiningSpeed = new HashMap<Block, Float>();
 
 	public static void registerDispenserRecipeBehaviour(CauldronRecipe recipe) {
-		if (!recipesAddedToDispenserBehaviour.contains(recipe)) recipesAddedToDispenserBehaviour.add(recipe);
+		recipesAddedToDispenserBehaviour.add(recipe);
 	}
 
 	public static CauldronRecipe getValidRecipe(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {

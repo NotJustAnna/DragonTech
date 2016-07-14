@@ -3,7 +3,9 @@ package cf.brforgers.mods.DragonScalesEX.common;
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI;
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI.CauldronRecipe;
 import cf.brforgers.core.lib.utils.DoubleReturn;
+import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -15,21 +17,24 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.RegistryDefaulted;
 import net.minecraft.world.World;
 
 public class CauldronAPIHandler {
     public static void processDispensingBehaviour() {
-        for (final CauldronRecipe recipe : DragonScalesAPI.recipesAddedToDispenserBehaviour) {
-            final IBehaviorDispenseItem registeredBehaviour = (IBehaviorDispenseItem) BlockDispenser.dispenseBehaviorRegistry.getObject(recipe.input);
-            BlockDispenser.dispenseBehaviorRegistry.putObject(recipe.input, new IBehaviorDispenseItem() {
-                @Override
-                public ItemStack dispense(IBlockSource blockSource, ItemStack stack) {
+        DragonScalesEX.logger.info("Reflecting Dispenser...");
+        RegistryDefaulted dispenserRegistry = (RegistryDefaulted) BlockDispenser.dispenseBehaviorRegistry;
+        final IBehaviorDispenseItem originalBehaviour = (IBehaviorDispenseItem) ObfuscationReflectionHelper.getPrivateValue(RegistryDefaulted.class, dispenserRegistry, "defaultObject");
+        DragonScalesEX.logger.info("Overwriting Dispenser Default Behaviour...");
+        ObfuscationReflectionHelper.setPrivateValue(RegistryDefaulted.class, dispenserRegistry, new IBehaviorDispenseItem() {
+            @Override
+            public ItemStack dispense(IBlockSource blockSource, ItemStack stack) {
                     DoubleReturn<ItemStack, Boolean> returned = performDispenserInteraction(blockSource, stack);
-                    if (!returned.object2) return registeredBehaviour.dispense(blockSource, stack);
+                if (!returned.object2) return originalBehaviour.dispense(blockSource, stack);
                     return returned.object1;
                 }
-            });
-        }
+        }, "defaultObject");
+        DragonScalesEX.logger.info("Done");
     }
 
     public static boolean performCauldronInteraction(Block block, World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
@@ -81,28 +86,33 @@ public class CauldronAPIHandler {
         	ItemStack out = recipe.getOutput(stack, essentiaLevel, world, x, y, z, player);
         	if (!player.inventory.addItemStackToInventory(out))
             {
-        		if (out != null) world.spawnEntityInWorld(new EntityItem(world, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, recipe.getOutput(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player)));
+                if (out != null)
+                    world.spawnEntityInWorld(new EntityItem(world, (double) x + 0.5D, (double) y + 1.5D, (double) z + 0.5D, recipe.getOutput(stack, essentiaLevel, world, x, y, z, player)));
             }
             else if (player instanceof EntityPlayerMP)
             {
                 ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
             }
-        	
-        	stack.stackSize -= recipe.getItemCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player);
+
+            stack.stackSize -= recipe.getItemCost(stack, essentiaLevel, world, x, y, z, player);
 
             if (stack.stackSize <= 0)
                 player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-            
-            BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, player), block);
+
+            BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel, world, x, y, z, player), block);
         }
 	}
 
     public static DoubleReturn<ItemStack, Boolean> performDispenserInteraction(IBlockSource blockSource, ItemStack stack) {
         EnumFacing facing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata()); //Get Facing
-        int x = blockSource.getXInt() + facing.getFrontOffsetX();
+        int x = blockSource.getXInt() + facing.getFrontOffsetX(); //Get Cauldron Coords
         int y = blockSource.getYInt() + facing.getFrontOffsetY();
         int z = blockSource.getZInt() + facing.getFrontOffsetZ();
         World world = blockSource.getWorld();
+
+        if (world.getBlock(x, y, z) != DragonScalesHandler.modCauldron) {
+            return new DoubleReturn<ItemStack, Boolean>(stack, false);
+        }
 
         //Fix the Cauldron if it is with no Water
         int thisBlockMeta = world.getBlockMetadata(x, y, z);
@@ -111,10 +121,8 @@ public class CauldronAPIHandler {
             BlockModCauldron.setMetadataProperly(world, x, y, z, 0, world.getBlock(x, y, z));
             return new DoubleReturn<ItemStack, Boolean>(stack, false);
         }
-
         if (world.getBlock(x, y + 1, z).equals(DragonScalesHandler.cauldronConstruct))
             return new DoubleReturn<ItemStack, Boolean>(stack, false);
-
         if (world.isRemote) {
             return new DoubleReturn<ItemStack, Boolean>(stack, false);
         } else if (stack != null) {
@@ -122,18 +130,13 @@ public class CauldronAPIHandler {
                 return new DoubleReturn<ItemStack, Boolean>(stack, false);
             } else {
                 int essentiaLevel = BlockModCauldron.func_150027_b(thisBlockMeta);
-
                 CauldronRecipe recipe = DragonScalesAPI.getValidRecipe(stack, essentiaLevel, world, x, y, z, null);
-
                 if (recipe != null) {
                     ItemStack out = recipe.getOutput(stack, essentiaLevel, world, x, y, z, null);
 
-                    stack.stackSize -= recipe.getItemCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, null);
+                    stack.stackSize = Math.max(0, stack.stackSize - recipe.getItemCost(stack, essentiaLevel, world, x, y, z, null));
 
-                    BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel, world, essentiaLevel, essentiaLevel, essentiaLevel, null), world.getBlock(x, y, z));
-                    if (stack.stackSize <= 0) {
-                        return new DoubleReturn<ItemStack, Boolean>(out, true);
-                    }
+                    BlockModCauldron.setMetadataProperly(world, x, y, z, essentiaLevel - recipe.getEssentiaCost(stack, essentiaLevel, world, x, y, z, null), world.getBlock(x, y, z));
 
                     if (out != null && out.stackSize > 0) {
                         TileEntityDispenser tileDispenser = (TileEntityDispenser) blockSource.getBlockTileEntity();
@@ -152,7 +155,7 @@ public class CauldronAPIHandler {
                         item.motionZ = mm * ((((float) world.rand.nextInt(100)) / 100F) - 0.5F);
                         world.spawnEntityInWorld(item);
                     }
-
+                    DragonScalesEX.logger.info("Success");
                     return new DoubleReturn<ItemStack, Boolean>(stack, true);
                 }
             }
