@@ -1,3 +1,5 @@
+println "****************************"
+println " BRForgers GradleBuilding:"
 buildscript {
     repositories {
         mavenCentral()
@@ -24,23 +26,27 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.2"
-group= "cf.adriantodt" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "1.3"
+group= "cf.brforgers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "DragonScalesEX"
 
 minecraft {
     version = "1.7.10-10.13.4.1614-1.7.10"
+    println " Minecraft: " + version
     runDir = "eclipse"
 }
+println " Building: ${archivesBaseName} v${version}"
 
 dependencies {
     // you may put jars on which you depend on in ./libs
-    println(" Adding dependencies!") 
+    println("[DragonScalesEX] Adding dependencies...") 
     compile "codechicken:CodeChickenLib:1.7.10-1.1.3.138:dev" 
     compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev" 
     compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev" 
-    println(" Finished adding dependencies!") 
+    println("[DragonScalesEX] Done.") 
 }
+
+idea.module.inheritOutputDirs = true
 
 processResources
 {

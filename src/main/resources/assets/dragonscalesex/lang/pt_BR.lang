@@ -1,14 +1,22 @@
 //Interface
-itemGroup.tabDragonScalesEX=Dragon Scales EX Mod
+itemGroup.tabDragonScalesEX=Dragon Scales EX
 recipe.essenceInfusion=Infusão de Essência
 
-//Blocks
+//Blocos
 tile.dragonScaleBlock.name=Bloco de Escamas de Dragão
-tile.dragonEssenceOre.name=Minério de Essência Draconiana
-tile.dragonBricks.name=Tijolos Draconiano
+tile.dragonEssenceBlock.name=Bloco de Essência Draconiana
+tile.dragonBricks.name=Tijolos Draconianos
 tile.dragonCrystal.name=Cristal Draconiano
 
-//Items
+tile.dragonStone.name=Pedra Draconiaca
+tile.dragonDirt.name=Terra Draconiana
+tile.dragonGrass.name=Grama Draconiana
+tile.draconyLeaves.name=Folhas de Dracony
+tile.draconyLog.name=Madeira de Dracony
+tile.draconySapling.name=Muda de Dracony
+tile.draconyPlanks.name=Tábuas de Dracony
+
+//Itens
 item.dragonScale.name=Escamas de Dragão
 item.dragonEssenceShard.name=Fragmento de Essência Draconiana
 item.dragonMetal.name=Liga de Metal Draconiano
@@ -19,7 +27,7 @@ item.dragonScepter.name=Cetro do Dragão
 item.dragonSword.name=Espada de Metal Draconiano
 item.dragonMultiTool.name=Ferramenta Universal de Metal Draconiano
 
-item.scalesHelm.name=Capacete de Escamas de Dragão
-item.scalesChestplate.name=Peitoral de Escamas de Dragão
+item.scalesHelm.name=Coifa de Escamas de Dragão
+item.scalesChestplate.name=Túnica de Escamas de Dragão
 item.scalesLeggings.name=Calças de Escamas de Dragão
 item.scalesBoots.name=Botas de Escamas de Dragão
