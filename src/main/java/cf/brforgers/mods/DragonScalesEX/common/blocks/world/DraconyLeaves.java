@@ -1,8 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks.world;
 
-import java.util.ArrayList;
-import java.util.Random;
-
+import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
@@ -16,19 +14,29 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class DraconyLeaves extends BlockLeavesBase implements IShearable
 {
-    private ItemStack sapling = new ItemStack(Blocks.sapling);
-    
     private static final int METADATA_BITMASK       = 0x1; // 0001
     private static final int METADATA_USERPLACEDBIT = 0x2; // 0010
     private static final int METADATA_DECAYBIT      = 0x4; // 0100
     private static final int METADATA_CLEARDECAYBIT = -METADATA_DECAYBIT - 1;
+    int[] adjacentTreeBlocks;
+    private ItemStack sapling = new ItemStack(Blocks.sapling);
+    private IIcon[] textures = {null, null};
+
+    public DraconyLeaves() {
+        super(Material.leaves, false);
+        this.setTickRandomly(true);
+        this.setHardness(0.2F);
+        this.setLightOpacity(1);
+        this.setStepSound(soundTypeGrass);
+    }
     
     static private int clearDecayOnMetadata(int metadata)
     {
@@ -53,19 +61,6 @@ public class DraconyLeaves extends BlockLeavesBase implements IShearable
     private static int unmarkedMetadata(int metadata)
     {
         return metadata & METADATA_BITMASK;
-    }
-    
-    int[] adjacentTreeBlocks;
-    
-    private IIcon[] textures = { null, null };
-    
-    public DraconyLeaves()
-    {
-        super(Material.leaves, false);
-        this.setTickRandomly(true);
-        this.setHardness(0.2F);
-        this.setLightOpacity(1);
-        this.setStepSound(soundTypeGrass);
     }
     
     @Override
@@ -329,8 +324,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;

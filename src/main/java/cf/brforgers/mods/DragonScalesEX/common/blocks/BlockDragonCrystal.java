@@ -1,12 +1,8 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks;
 
-import java.util.Random;
-
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,8 +13,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockDragonCrystal extends BlockContainer {
+
+    private Random rand = new Random();
 
 	public BlockDragonCrystal() {
 		super(Material.rock);
@@ -29,7 +31,8 @@ public class BlockDragonCrystal extends BlockContainer {
 	public TileEntity createNewTileEntity(World ignored1, int ignored2) {
 		return new TileCrystal();
 	}
-	@Override
+
+    @Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack){
 		int dir = MathHelper.floor_double((double)((player.rotationYaw * 4F)/ 360F) + 0.5D) & 3;
 		world.setBlockMetadataWithNotify(x,y,z,dir,0);
@@ -39,13 +42,14 @@ public class BlockDragonCrystal extends BlockContainer {
 	public int getRenderType(){
 		return -1;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(){
 		return false;
 		//renders as normal block (false otherwise error)
 	}
-	public boolean renderAsNormalBlock(){
+
+    public boolean renderAsNormalBlock(){
 		return false;
 	}
 	
@@ -56,8 +60,8 @@ public class BlockDragonCrystal extends BlockContainer {
 		this.blockIcon = register.registerIcon(Lib.TEXTURE_PATH + (this.getUnlocalizedName().substring(5)));
 		this.setBlockTextureName(Lib.TEXTURE_PATH +":dragonscaleentity");
 	}
-	
-	public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
+
+    public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
     {
         return DragonScalesHandler.dragonEssenceShard;
     }
@@ -66,8 +70,6 @@ public class BlockDragonCrystal extends BlockContainer {
     {
         return MathHelper.getRandomIntegerInRange(rand, 1, 4);
     }
-
-    private Random rand = new Random();
     
     @Override
     public int getExpDrop(IBlockAccess ignored1, int ignored2, int ignored3)

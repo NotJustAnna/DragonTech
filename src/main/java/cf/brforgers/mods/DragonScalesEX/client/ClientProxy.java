@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.client;
 
+import cf.brforgers.core.lib.client.Armor3DRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.models.ModelDragonChestplate;
-import cf.brforgers.mods.DragonScalesEX.client.renderers.BlockModCauldronRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.renderers.ItemTileEntityRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCauldronConstructRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCrystalRenderer;
@@ -9,13 +9,12 @@ import cf.brforgers.mods.DragonScalesEX.common.CommonProxy;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCauldronConstruct;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
-import cf.brforgers.core.lib.client.Armor3DRenderer;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Loader;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Loader;
 
 public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonChestplate = new ModelDragonChestplate(1.0f);
@@ -30,6 +29,7 @@ public class ClientProxy extends CommonProxy {
 		//Tweak to Remove the Cauldron from NEI
 		if (Loader.isModLoaded("NotEnoughItems"));
 		codechicken.nei.api.API.hideItem(new ItemStack(DragonScalesHandler.modCauldron));
+
 	}
 	
 	public void registerRenderThings(){

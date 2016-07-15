@@ -15,9 +15,10 @@ import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCombiner;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.world.*;
 import cf.brforgers.mods.DragonScalesEX.common.items.*;
+import cf.brforgers.mods.DragonScalesEX.common.utils.GridSystem;
+import cf.brforgers.mods.DragonScalesEX.common.utils.RegisterHelper;
 import cf.brforgers.mods.DragonScalesEX.common.world.DraconyVirus;
-import cf.brforgers.mods.DragonScalesEX.common.world.DragonScalesWorldGenerator;
-import cpw.mods.fml.common.registry.GameRegistry;
+import cf.brforgers.mods.DragonScalesEX.common.world.EnumVirusState;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,18 +32,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Dragon Scales Main Handler
  */
 public class DragonScalesHandler {
-	public static final ToolMaterial DRAGONALLOY_TOOL_MATERIAL = 
+	public static final ToolMaterial DRAGONALLOY_TOOL_MATERIAL =
 			EnumHelper.addToolMaterial("DRAGONSCALE", 10, 2000, 50.0F, 16.0F, 35);
-	public static final ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL = 
+	public static final ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL =
 			EnumHelper.addArmorMaterial("DRAGONSCALE", 50, new int[] { 5, 16, 12, 6 }, 35);
+	public static GridSystem<EnumVirusState>
 	public static FastFactory factory;
-	
+	public static RegisterHelper register;
 	// All Items
 	public static Item dragonScale, dragonEssenceShard, dragonMetal, dragonEssenceBottle, infusedStick,
 		dragonSword, dragonMultiTool, dragonScepter;
@@ -53,16 +56,11 @@ public class DragonScalesHandler {
 	public static Block modCauldron, cauldronConstruct, essenceCombiner, dragonBricks, dragonChest, dragonScaleBlock,
 		dragonCrystal, dragonGrass, dragonDirt, dragonStone, draconyLeaves, draconyLog, draconySapling, draconyPlanks,
 		dragonEssenceBlock;
-	
-	public static void registerAll()
+
+	public static void registerHelpers()
 	{
-		factory = FastFactory.newFactory(DragonScalesEX.tabDragonScales, Lib.TEXTURE_PATH, Material.rock);
-		
-		registerBlocks();
-		registerItems();
-		registerMaterialHandling();
-		registerEntities();
-		GameRegistry.registerWorldGenerator(new DragonScalesWorldGenerator(), 20);
+		factory = FastFactory.newFactory(DragonScalesEX.tabDragonScales, Lib.TEXTURE_PATH, Material.ROCK);
+		register = RegisterHelper.fromMod(Lib.MODID);
 	}
 	
 	private static void registerMaterialHandling() {
@@ -70,9 +68,9 @@ public class DragonScalesHandler {
 		DRAGONSCALES_ARMOR_MATERIAL.customCraftingMaterial = dragonScale;
 	}
 
-	private static void registerBlocks()
-	{		
-		dragonBricks = factory.newBlock("dragonBricks").setHardness(2.0F).setResistance(10.0F).setStepSound(dragonBricks.soundTypePiston);
+	public static void registerBlocks() {
+		dragonBricks = factory.newBlock("dragonBricks").setHardness(2.0F).setResistance(10.0F);//setStepSound(dragonBricks.soundTypePiston);
+
 		GameRegistry.registerBlock(dragonBricks, "dragonBricks");
 		
 		dragonScaleBlock = factory.newBlock("dragonScaleBlock").setHardness(0.8F).setStepSound(dragonScaleBlock.soundTypeCloth);
@@ -126,8 +124,8 @@ public class DragonScalesHandler {
 		dragonEssenceBlock.setHardness(5.0F).setResistance(10.0F).setStepSound(dragonEssenceBlock.soundTypeMetal);
 		GameRegistry.registerBlock(dragonEssenceBlock, "dragonEssenceBlock");
 	}
-	
-	private static void registerItems()
+
+	public static void registerItems()
 	{
 		dragonScale = factory.processItem(new ItemDragonScale(new ItemStack(Items.leather)), "dragonScale");
 		GameRegistry.registerItem(dragonScale, "dragonScale");

@@ -1,14 +1,9 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks;
 
-import java.util.List;
-import java.util.Random;
-
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.common.CauldronAPIHandler;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -21,6 +16,11 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockModCauldron extends Block {
 	@SideOnly(Side.CLIENT)
@@ -37,6 +37,36 @@ public class BlockModCauldron extends Block {
         super(Material.iron);
     	//super();
         this.setHardness(2.0F).setBlockName("cauldron").setBlockTextureName("cauldron");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static IIcon getCauldronIcon(String iconName) {
+        return
+                iconName.equals("inner") ?
+                        ((BlockModCauldron) DragonScalesHandler.modCauldron).innerIcon :
+                        iconName.equals("bottom") ?
+                                ((BlockModCauldron) DragonScalesHandler.modCauldron).bottomIcon :
+                                iconName.equals("liquid") ?
+                                        ((BlockModCauldron) DragonScalesHandler.modCauldron).essenceLiquid : null;
+    }
+
+    public static int func_150027_b(int p_150027_0_) {
+        return p_150027_0_;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static float getRenderLiquidLevel(int p_150025_0_) {
+        int j = MathHelper.clamp_int(p_150025_0_, 0, 3);
+        return (float) (6 + 3 * j) / 16.0F;
+    }
+
+    public static void setMetadataProperly(World theWorld, int x, int y, int z, int meta, Block block) {
+        if (meta < 1) {
+            theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
+        } else {
+            theWorld.setBlockMetadataWithNotify(x, y, z, MathHelper.clamp_int(meta, 0, 3), 3);
+            theWorld.func_147453_f(x, y, z, block);
+        }
     }
 
     /**
@@ -76,18 +106,6 @@ public class BlockModCauldron extends Block {
         this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
         super.addCollisionBoxesToList(theWorld, x, y, z, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static IIcon getCauldronIcon(String iconName)
-    {
-        return
-        		iconName.equals("inner") ?
-        				((BlockModCauldron) DragonScalesHandler.modCauldron).innerIcon :
-        		iconName.equals("bottom") ?
-        				((BlockModCauldron) DragonScalesHandler.modCauldron).bottomIcon :
-        		iconName.equals("liquid") ?
-        	    		((BlockModCauldron) DragonScalesHandler.modCauldron).essenceLiquid :null;
     }
 
     /**
@@ -148,38 +166,12 @@ public class BlockModCauldron extends Block {
         return func_150027_b(i1);
     }
 
-    public static int func_150027_b(int p_150027_0_)
-    {
-        return p_150027_0_;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static float getRenderLiquidLevel(int p_150025_0_)
-    {
-        int j = MathHelper.clamp_int(p_150025_0_, 0, 3);
-        return (float)(6 + 3 * j) / 16.0F;
-    }
-    
 	/**
 	 * Overrides for Dragon Essentia
 	 */
 	public boolean onBlockActivated(World world, int  x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
     {
 		return CauldronAPIHandler.performCauldronInteraction(this, world, x, y, z, player, side, hitX, hitY, hitZ);
-    }
-
-	
-	public static void setMetadataProperly(World theWorld, int x, int y, int z, int meta, Block block)
-    {
-		if (meta < 1)
-		{
-			theWorld.setBlock(x, y, z, Blocks.cauldron, 0, 3);
-		}
-		else
-		{
-			theWorld.setBlockMetadataWithNotify(x, y, z, MathHelper.clamp_int(meta, 0, 3), 3);
-        	theWorld.func_147453_f(x, y, z, block);
-		}
     }
 	
 	public int getRenderType()

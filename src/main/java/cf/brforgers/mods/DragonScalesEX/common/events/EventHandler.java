@@ -1,13 +1,8 @@
 package cf.brforgers.mods.DragonScalesEX.common.events;
 
 
-import java.util.*;
-
-import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
-import cf.brforgers.mods.DragonScalesEX.Lib.Config;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
 import cf.brforgers.mods.DragonScalesEX.common.items.ItemDragonArmor;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
@@ -15,10 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import scala.actors.threadpool.Arrays;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class EventHandler
 {

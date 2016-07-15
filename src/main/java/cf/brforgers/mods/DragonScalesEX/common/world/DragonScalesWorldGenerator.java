@@ -2,13 +2,13 @@ package cf.brforgers.mods.DragonScalesEX.common.world;
 
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
-import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 

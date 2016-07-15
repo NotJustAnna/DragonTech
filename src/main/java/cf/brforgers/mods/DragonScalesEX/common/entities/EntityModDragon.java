@@ -33,10 +33,10 @@ package cf.brforgers.mods.DragonScalesEX.common.entities;
 //import net.minecraft.world.World;
 //import Jakester12.DragonScalesEX.KeyBindings;
 //import Jakester12.DragonScalesEX.MainClass;
-//import cpw.mods.fml.common.FMLCommonHandler;
-//import cpw.mods.fml.common.network.Player;
-//import cpw.mods.fml.relauncher.Side;
-//import cpw.mods.fml.relauncher.SideOnly;
+//import net.minecraftforge.fml.common.FMLCommonHandler;
+//import net.minecraftforge.fml.common.network.Player;
+//import net.minecraftforge.fml.relauncher.Side;
+//import net.minecraftforge.fml.relauncher.SideOnly;
 //import hyghlander.mods.DragonScalesEX.common.events.PlayerTickHandler;
 //
 //public class EntityModDragon extends EntityTameable
