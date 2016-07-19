@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks.world;
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -32,7 +32,7 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta)
     {
-        return side == 1 ? this.topIcon : (side == 0 ? DragonScalesHandler.dragonDirt.getBlockTextureFromSide(side) : this.blockIcon);
+        return side == 1 ? this.topIcon : (side == 0 ? DSEXManager.dragonDirt.getBlockTextureFromSide(side) : this.blockIcon);
     }
 
     /**
@@ -44,7 +44,7 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
         {
             if (world.getBlockLightValue(x, y + 1, z) < 4 && world.getBlockLightOpacity(x, y + 1, z) > 2)
             {
-                world.setBlock(x, y, z, DragonScalesHandler.dragonDirt);
+                world.setBlock(x, y, z, DSEXManager.dragonDirt);
             }
             else if (world.getBlockLightValue(x, y + 1, z) >= 9)
             {
@@ -55,7 +55,7 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
 
     public Item getItemDropped(int p_149650_1_, Random random, int p_149650_3_)
     {
-        return DragonScalesHandler.dragonDirt.getItemDropped(0, random, p_149650_3_);
+        return DSEXManager.dragonDirt.getItemDropped(0, random, p_149650_3_);
     }
 
     public boolean func_149851_a(World world, int x, int y, int z, boolean flag)

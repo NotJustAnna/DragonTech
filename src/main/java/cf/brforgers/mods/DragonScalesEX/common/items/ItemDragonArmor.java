@@ -2,7 +2,7 @@ package cf.brforgers.mods.DragonScalesEX.common.items;
 
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import com.google.common.collect.Lists;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,10 +52,14 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 	
 	public static Item GetArmorForSlot(int slot) {
 		switch (slot) {
-			case 0: return DragonScalesHandler.scalesBoots;
-			case 1: return DragonScalesHandler.scalesLeggings;
-			case 2: return DragonScalesHandler.scalesChestplate;
-			case 3: return DragonScalesHandler.scalesHelm;
+			case 0:
+				return DSEXManager.scalesBoots;
+			case 1:
+				return DSEXManager.scalesLeggings;
+			case 2:
+				return DSEXManager.scalesChestplate;
+			case 3:
+				return DSEXManager.scalesHelm;
 		}
 		return null;
 	}
@@ -91,15 +94,9 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
         }
     }
 
-    public static int floorFixed(float f) {
-        int r = MathHelper.floor_float(f);
-        if (f - r != 0) r++;
-        return r;
-    }
-
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		int id = stack.getItem().equals(DragonScalesHandler.scalesLeggings) ? 2 : stack.getItem().equals(DragonScalesHandler.scalesChestplate) ? 3 : 1;
+		int id = stack.getItem().equals(DSEXManager.scalesLeggings) ? 2 : stack.getItem().equals(DSEXManager.scalesChestplate) ? 3 : 1;
 		return Lib.TEXTURE_PATH + "textures/models/armor/scalesArmor"+id+".png";
 	}
 

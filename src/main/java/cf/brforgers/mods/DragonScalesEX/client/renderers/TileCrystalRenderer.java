@@ -1,5 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.client.renderers;
 
+import cf.brforgers.mods.DragonScalesEX.Lib;
+import cf.brforgers.mods.DragonScalesEX.client.models.ModelDragonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -7,19 +9,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
 import org.lwjgl.opengl.GL11;
-
-import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.client.models.ModelDragonCrystal;
 
 public class TileCrystalRenderer extends TileEntitySpecialRenderer{
 
-	// the model of out block
+    // the model texture of our block
+    private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/DRAGON_CRYSTAL.png");
+    // the model of out block
 	public final ModelDragonCrystal model;
-
-	// the model texture of our block
-	private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/dragonCrystal.png");
 
 
 

@@ -1,23 +1,34 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks.world;
 
-import java.util.Random;
-
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.world.WorldGenBigTree;
 import cf.brforgers.mods.DragonScalesEX.common.world.WorldGenTree;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import java.util.Random;
+
 public class DraconySapling extends BlockBush implements IGrowable
 {
 	/* Metadata System */
 	private static final int METADATA_BITMASK = 0x1; //0001
     private static final int METADATA_MARKBIT = 0x2; //0010
-	
+
+    /* Block Declaration */
+    public DraconySapling() {
+        this.setStepSound(soundTypeGrass);
+        this.setHardness(0.0F);
+        this.setTickRandomly(true);
+        float f = 0.4F;
+        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
+    }
+    
     private static boolean isEnoughLightToGrow(World world, int x, int y, int z)
     {return world.getBlockLightValue(x, y, z) >= 9;}
     
@@ -30,20 +41,10 @@ public class DraconySapling extends BlockBush implements IGrowable
     private static int unmarkedMetadata(int metadata)
     {return metadata & METADATA_BITMASK;}
     
-    /* Block Declaration */
-    public DraconySapling()
-    {
-        this.setStepSound(soundTypeGrass);
-        this.setHardness(0.0F);
-        this.setTickRandomly(true);
-        float f = 0.4F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
-    }
-    
     /* Override for DragonLands Grass */
     protected boolean canPlaceBlockOn(Block block)
     {
-        return block == Blocks.grass || block == Blocks.dirt || block == DragonScalesHandler.dragonGrass;
+        return block == Blocks.grass || block == Blocks.dirt || block == DSEXManager.dragonGrass;
     }
 
     public void growTree(World world, int x, int y, int z, Random r)
@@ -71,7 +72,7 @@ public class DraconySapling extends BlockBush implements IGrowable
         
         if (isHuge)
         {
-        	tree = new WorldGenBigTree(true, DragonScalesHandler.draconyLog, DragonScalesHandler.draconyLeaves, this);
+            tree = new WorldGenBigTree(true, DSEXManager.draconyLog, DSEXManager.draconyLeaves, this);
             world.setBlock(x + offX, y, z + offZ, Blocks.air);
             world.setBlock(x + offX + 1, y, z + offZ, Blocks.air);
             world.setBlock(x + offX, y, z + offZ + 1, Blocks.air);
@@ -79,7 +80,7 @@ public class DraconySapling extends BlockBush implements IGrowable
         }
         else
         {
-            tree = new WorldGenTree(true, DragonScalesHandler.draconyLog, DragonScalesHandler.draconyLeaves, this);
+            tree = new WorldGenTree(true, DSEXManager.draconyLog, DSEXManager.draconyLeaves, this);
             world.setBlock(x, y, z, Blocks.air);
         }
             

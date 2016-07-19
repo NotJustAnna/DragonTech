@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.items;
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -26,9 +26,9 @@ public class ItemDragonScale extends Item {
 			if (blockSource.getWorld().getBlock(x, y, z) != Blocks.cauldron || blockSource.getWorld().getBlockMetadata(x, y, z) != 3)
 				return stack;
 
-			blockSource.getWorld().setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
-			BlockModCauldron.setMetadataProperly(blockSource.getWorld(), x, y, z, 3, DragonScalesHandler.modCauldron);
-			stack.stackSize -= 1;
+            blockSource.getWorld().setBlock(x, y, z, DSEXManager.modCauldron, 3, 3);
+            BlockModCauldron.setMetadataProperly(blockSource.getWorld(), x, y, z, 3, DSEXManager.modCauldron);
+            stack.stackSize -= 1;
 			return stack;
 		}
 	};
@@ -47,11 +47,11 @@ public class ItemDragonScale extends Item {
 		
 		if (world.getBlock(x, y, z) != Blocks.cauldron ||world.getBlockMetadata(x, y, z) != 3)
 			return false;
-		
-		world.setBlock(x, y, z, DragonScalesHandler.modCauldron, 3, 3);
-		BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DragonScalesHandler.modCauldron);
-		
-		stack.stackSize -= 1;
+
+        world.setBlock(x, y, z, DSEXManager.modCauldron, 3, 3);
+        BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DSEXManager.modCauldron);
+
+        stack.stackSize -= 1;
 		
 		if(stack.stackSize <= 0)
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);

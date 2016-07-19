@@ -6,7 +6,7 @@ import cf.brforgers.mods.DragonScalesEX.client.renderers.ItemTileEntityRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCauldronConstructRenderer;
 import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCrystalRenderer;
 import cf.brforgers.mods.DragonScalesEX.common.CommonProxy;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCauldronConstruct;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
 import net.minecraft.client.model.ModelBiped;
@@ -28,7 +28,7 @@ public class ClientProxy extends CommonProxy {
 		
 		//Tweak to Remove the Cauldron from NEI
 		if (Loader.isModLoaded("NotEnoughItems"));
-		codechicken.nei.api.API.hideItem(new ItemStack(DragonScalesHandler.modCauldron));
+        codechicken.nei.api.API.hideItem(new ItemStack(DSEXManager.modCauldron));
 
 	}
 	
@@ -39,21 +39,21 @@ public class ClientProxy extends CommonProxy {
 		
 		
 		//Tweak to Render at Inventory
-		ItemTileEntityRenderer.newItemTileRenderer(DragonScalesHandler.dragonCrystal);
-		ItemTileEntityRenderer.newItemTileRenderer(DragonScalesHandler.cauldronConstruct);
-		
-		//Register Cauldron Renderer
+        ItemTileEntityRenderer.newItemTileRenderer(DSEXManager.dragonCrystal);
+        ItemTileEntityRenderer.newItemTileRenderer(DSEXManager.cauldronConstruct);
+
+        //Register Cauldron Renderer
 		cauldronRenderType = RenderingRegistry.getNextAvailableRenderId();
 		ISimpleBlockRenderingHandler cauldronRenderer = new BlockModCauldronRenderer();
 		RenderingRegistry.registerBlockHandler(cauldronRenderType, cauldronRenderer);
 		
 		//Register the Armor
-		Armor3DRenderer.register(DragonScalesHandler.scalesBoots);
-		Armor3DRenderer.register(DragonScalesHandler.scalesChestplate);
-		Armor3DRenderer.register(DragonScalesHandler.scalesHelm);
-		Armor3DRenderer.register(DragonScalesHandler.scalesLeggings);
-		
-		//Register Dragon Renderer
+        Armor3DRenderer.register(DSEXManager.scalesBoots);
+        Armor3DRenderer.register(DSEXManager.scalesChestplate);
+        Armor3DRenderer.register(DSEXManager.scalesHelm);
+        Armor3DRenderer.register(DSEXManager.scalesLeggings);
+
+        //Register Dragon Renderer
 		//RenderingRegistry.registerEntityRenderingHandler(EntityModDragon.class, new RenderModDragon(new ModelModDragon(), 0.5F));
 	}
 	
@@ -74,8 +74,8 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public int getRenderType(String name) {
-		if (name.equals("modCauldron"))
-			return cauldronRenderType;
+        if (name.equals("CAULDRON"))
+            return cauldronRenderType;
 		
 		return 0;
 	}

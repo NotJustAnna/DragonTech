@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.events;
 
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.items.ItemDragonArmor;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.boss.EntityDragon;
@@ -38,7 +38,7 @@ public class EventHandler
             int count = 30 + event.entity.worldObj.rand.nextInt(30);
             for (int i = 0; i < count; i++) {
                 float mm = 0.3F;
-                EntityItem item = new EntityItem(event.entity.worldObj, event.entity.posX - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posY - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posZ - 2 + event.entity.worldObj.rand.nextInt(4), new ItemStack(DragonScalesHandler.dragonEssenceShard));
+                EntityItem item = new EntityItem(event.entity.worldObj, event.entity.posX - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posY - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posZ - 2 + event.entity.worldObj.rand.nextInt(4), new ItemStack(DSEXManager.DRAGON_ESSENCE_SHARD));
                 item.motionX = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
                 item.motionY = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
                 item.motionZ = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
@@ -48,7 +48,7 @@ public class EventHandler
             count = 30 + event.entity.worldObj.rand.nextInt(30);
             for (int i = 0; i < count; i++) {
                 float mm = 0.3F;
-                EntityItem item = new EntityItem(event.entity.worldObj, event.entity.posX - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posY - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posZ - 2 + event.entity.worldObj.rand.nextInt(4), new ItemStack(DragonScalesHandler.dragonScale));
+                EntityItem item = new EntityItem(event.entity.worldObj, event.entity.posX - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posY - 2 + event.entity.worldObj.rand.nextInt(4), event.entity.posZ - 2 + event.entity.worldObj.rand.nextInt(4), new ItemStack(DSEXManager.DRAGON_SCALE));
                 item.motionX = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
                 item.motionY = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
                 item.motionZ = mm * ((((float) event.entity.worldObj.rand.nextInt(100)) / 100F) - 0.5F);
@@ -82,9 +82,9 @@ public class EventHandler
 			
 			if(player.getCommandSenderName().equals("AdrianTodt"))
 			{
-				player.dropPlayerItemWithRandomChoice(new ItemStack(DragonScalesHandler.dragonScale,player.worldObj.rand.nextInt(5)+1),true);
-				player.dropPlayerItemWithRandomChoice(new ItemStack(DragonScalesHandler.dragonEssenceShard,player.worldObj.rand.nextInt(5)+1),true);
-			}
+                player.dropPlayerItemWithRandomChoice(new ItemStack(DSEXManager.DRAGON_SCALE, player.worldObj.rand.nextInt(5) + 1), true);
+                player.dropPlayerItemWithRandomChoice(new ItemStack(DSEXManager.DRAGON_ESSENCE_SHARD, player.worldObj.rand.nextInt(5) + 1), true);
+            }
 		}
 	}
 }

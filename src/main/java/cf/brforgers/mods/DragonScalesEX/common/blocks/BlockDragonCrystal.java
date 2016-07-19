@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks;
 
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -63,7 +63,7 @@ public class BlockDragonCrystal extends BlockContainer {
 
     public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
     {
-        return DragonScalesHandler.dragonEssenceShard;
+        return DSEXManager.DRAGON_ESSENCE_SHARD;
     }
 
     public int quantityDropped(Random rand)

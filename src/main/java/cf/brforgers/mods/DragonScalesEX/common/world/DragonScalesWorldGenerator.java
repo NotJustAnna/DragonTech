@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.world;
 
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -135,7 +135,7 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
                             if (world.rand.nextInt(4) == 3) j = -j;
                             if (world.rand.nextInt(4) == 3) k = -k;
                             if (world.getBlock(BaseX + i, BaseY + j, BaseZ + k).isAir(world, BaseX + i, BaseY + j, BaseZ + k) && (world.getBlock(BaseX + i, BaseY + j - 1, BaseZ + k) == underBlock || world.getBlock(BaseX + i, BaseY + j + 1, BaseZ + k) == underBlock)) {
-                                world.setBlock(BaseX + i, BaseY + j, BaseZ + k, DragonScalesHandler.dragonCrystal, i * j * k & 0x0F, 3);
+                                world.setBlock(BaseX + i, BaseY + j, BaseZ + k, DSEXManager.dragonCrystal, i * j * k & 0x0F, 3);
                                 return;
                             }
                         }

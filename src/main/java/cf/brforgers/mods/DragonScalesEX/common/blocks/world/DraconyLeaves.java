@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks.world;
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
@@ -203,7 +203,7 @@ public class DraconyLeaves extends BlockLeavesBase implements IShearable
     @Override
     public boolean shouldSideBeRendered(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5)
     {
-        this.field_150121_P = !DragonScalesHandler.draconyLeaves.isOpaqueCube(); // fix leaf render
+        this.field_150121_P = !DSEXManager.draconyLeaves.isOpaqueCube(); // fix leaf render
                                                       // bug
         return super.shouldSideBeRendered(par1iBlockAccess, par2, par3, par4, par5);
     }

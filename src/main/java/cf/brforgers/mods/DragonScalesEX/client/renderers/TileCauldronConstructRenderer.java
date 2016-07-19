@@ -1,7 +1,5 @@
 package cf.brforgers.mods.DragonScalesEX.client.renderers;
 
-import org.lwjgl.opengl.GL11;
-
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.client.models.ModelCauldronConstruct;
 import net.minecraft.block.Block;
@@ -12,13 +10,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class TileCauldronConstructRenderer extends TileEntitySpecialRenderer {
-	//Block Model
+    //Texture Path
+    private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/CAULDRON_CONSTRUCT.png");
+    //Block Model
 	public final ModelBase model;
-
-	//Texture Path
-	private static final ResourceLocation resourceLocal = new ResourceLocation(Lib.TEXTURE_PATH + "textures/models/cauldronConstruct.png");
 
 	// also gets model of out block
 	public TileCauldronConstructRenderer(){

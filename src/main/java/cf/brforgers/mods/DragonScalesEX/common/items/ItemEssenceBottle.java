@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.items;
 
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -27,11 +27,11 @@ public class ItemEssenceBottle extends Item {
 			Block block = blockSource.getWorld().getBlock(x, y, z);
 			int meta = blockSource.getWorld().getBlockMetadata(x, y, z);
 
-			if (block == DragonScalesHandler.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
+			if (block == DSEXManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
 				meta++;
 				meta &= 3;
-				blockSource.getWorld().setBlock(x, y, z, DragonScalesHandler.modCauldron, meta, 3);
-				((BlockModCauldron) DragonScalesHandler.modCauldron).setMetadataProperly(blockSource.getWorld(), x, y, z, meta, DragonScalesHandler.modCauldron);
+				blockSource.getWorld().setBlock(x, y, z, DSEXManager.modCauldron, meta, 3);
+				((BlockModCauldron) DSEXManager.modCauldron).setMetadataProperly(blockSource.getWorld(), x, y, z, meta, DSEXManager.modCauldron);
 			} else {
 				return stack;
 			}
@@ -53,12 +53,12 @@ public class ItemEssenceBottle extends Item {
             return false;
 		Block block = theWorld.getBlock(x, y, z);
 		int meta = theWorld.getBlockMetadata(x, y, z);
-		
-		if (block == DragonScalesHandler.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0)
+
+		if (block == DSEXManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0)
 		{
 			meta++;
-			theWorld.setBlock(x, y, z, DragonScalesHandler.modCauldron, meta&3, 3);
-			((BlockModCauldron)DragonScalesHandler.modCauldron).setMetadataProperly(theWorld, x, y, z, meta&3, DragonScalesHandler.modCauldron);
+			theWorld.setBlock(x, y, z, DSEXManager.modCauldron, meta & 3, 3);
+			((BlockModCauldron) DSEXManager.modCauldron).setMetadataProperly(theWorld, x, y, z, meta & 3, DSEXManager.modCauldron);
 		} else {
 			return false;
 		}

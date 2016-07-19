@@ -1,17 +1,16 @@
 package cf.brforgers.mods.DragonScalesEX.common.world;
 
-import java.util.Random;
-
 import cf.brforgers.core.lib.Utils;
 import cf.brforgers.core.lib.batch.TickBatchExecutor;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.Lib.Config;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
-import cf.brforgers.mods.DragonScalesEX.common.events.EventHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class DraconyVirus {
 	public static TickBatchExecutor.Base batchExecutor = new TickBatchExecutor.Server() {{
@@ -25,41 +24,41 @@ public class DraconyVirus {
 	
 	public static boolean ConvertBlock(World world, int x, int y, int z) {
 		Block b = world.getBlock(x, y, z);
-		if (b == DragonScalesHandler.dragonDirt || b == Blocks.dirt || b == Blocks.grass)
+        if (b == DSEXManager.dragonDirt || b == Blocks.dirt || b == Blocks.grass)
         {
         	if (world.getBlockLightValue(x, y + 1, z) >= 4 && world.getBlockLightOpacity(x, y + 1, z) <= 2) {
-        		world.setBlock(x, y, z, DragonScalesHandler.dragonGrass);
-        		if (world.getBlock(x, y + 1, z)==Blocks.snow_layer) {
+                world.setBlock(x, y, z, DSEXManager.dragonGrass);
+                if (world.getBlock(x, y + 1, z)==Blocks.snow_layer) {
 					if (world.rand.nextInt(10)==1) {
-						world.setBlock(x, y + 1, z, DragonScalesHandler.dragonCrystal);
-					} else {
+                        world.setBlock(x, y + 1, z, DSEXManager.dragonCrystal);
+                    } else {
 						world.setBlockToAir(x, y + 1, z);
 					}
 				}
         	} else {
-        		world.setBlock(x, y, z, DragonScalesHandler.dragonDirt);
-        		
-        	}
+                world.setBlock(x, y, z, DSEXManager.dragonDirt);
+
+            }
         	return true;
         }
         
         if(b == Blocks.stone || b == Blocks.monster_egg) {
-        	world.setBlock(x, y, z, DragonScalesHandler.dragonStone);
-        	return true;
+            world.setBlock(x, y, z, DSEXManager.dragonStone);
+            return true;
 		}
         
         if (b == Blocks.log || b == Blocks.log2) {
-            world.setBlock(x, y, z, DragonScalesHandler.draconyLog,world.getBlockMetadata(x, y, z), 3);
+            world.setBlock(x, y, z, DSEXManager.draconyLog, world.getBlockMetadata(x, y, z), 3);
             return true;
         }
         
         if (b == Blocks.leaves || b == Blocks.leaves2) {
-            world.setBlock(x, y, z, DragonScalesHandler.draconyLeaves);
+            world.setBlock(x, y, z, DSEXManager.draconyLeaves);
             return true;
         }
         
         if (b == Blocks.planks) {
-            world.setBlock(x, y, z, DragonScalesHandler.draconyPlanks);
+            world.setBlock(x, y, z, DSEXManager.draconyPlanks);
             return true;
         }
         
@@ -68,7 +67,7 @@ public class DraconyVirus {
 	
 	public static boolean CanConvertBlock(World world, int x, int y, int z) {
 		Block b = world.getBlock(x, y, z);
-		if (b == DragonScalesHandler.dragonDirt || b == Blocks.dirt || b == Blocks.grass)
+        if (b == DSEXManager.dragonDirt || b == Blocks.dirt || b == Blocks.grass)
         {
         	return true;
         }

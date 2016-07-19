@@ -8,17 +8,17 @@ import net.minecraftforge.common.MinecraftForge;
 public class CommonProxy {
 	public void preInit()
 	{
-		DragonScalesHandler.registerHelpers(); //Helpers (FastFactory and RegisterHelper)
-		DragonScalesHandler.registerItems();   //Items
-		DragonScalesHandler.registerBlocks();  //Blocks
-		DragonScalesHandler.registerOredict(); //Oredict
-	}
+        DSEXManager.registerHelpers(); //Helpers (FastFactory and RegisterHelper)
+        DSEXManager.registerItems();   //Items
+        DSEXManager.registerBlocks();  //Blocks
+        DSEXRecipes.registerOredict(); //Oredict
+    }
 	
 	public void init()
 	{
-	    DragonScalesHandler.registerOredict();
-		DragonScalesHandler.registerRecipes();
-		registerRenderThings();
+        DSEXRecipes.registerOredict();
+        DSEXRecipes.registerRecipes();
+        registerRenderThings();
 		registerHandlers();
 	}
 	

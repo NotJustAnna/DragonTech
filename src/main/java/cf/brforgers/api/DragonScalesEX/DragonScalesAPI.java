@@ -26,8 +26,8 @@ public class DragonScalesAPI {
 		return null;
 	}
 
-	public static void setCustomSpeed(Block block, float speed) {
-		customMultiToolMiningSpeed.put(block, speed);
+    public static void setMultitoolCustomSpeed(Block block, float speed) {
+        customMultiToolMiningSpeed.put(block, speed);
 	}
 
 	public static float getSpeed(Block block) {

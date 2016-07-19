@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX;
 
 import cf.brforgers.mods.DragonScalesEX.common.CommonProxy;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -18,8 +18,8 @@ public class DragonScalesEX {
 	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {
 		@Override
 		public Item getTabIconItem() {
-			return DragonScalesHandler.dragonEssenceShard;
-		}
+            return DSEXManager.DRAGON_ESSENCE_SHARD;
+        }
 	};
 	@Mod.Instance
 	public static DragonScalesEX instance;

@@ -3,7 +3,7 @@ package cf.brforgers.mods.DragonScalesEX.common.blocks;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.common.CauldronAPIHandler;
-import cf.brforgers.mods.DragonScalesEX.common.DragonScalesHandler;
+import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -43,11 +43,11 @@ public class BlockModCauldron extends Block {
     public static IIcon getCauldronIcon(String iconName) {
         return
                 iconName.equals("inner") ?
-                        ((BlockModCauldron) DragonScalesHandler.modCauldron).innerIcon :
+                        ((BlockModCauldron) DSEXManager.modCauldron).innerIcon :
                         iconName.equals("bottom") ?
-                                ((BlockModCauldron) DragonScalesHandler.modCauldron).bottomIcon :
+                                ((BlockModCauldron) DSEXManager.modCauldron).bottomIcon :
                                 iconName.equals("liquid") ?
-                                        ((BlockModCauldron) DragonScalesHandler.modCauldron).essenceLiquid : null;
+                                        ((BlockModCauldron) DSEXManager.modCauldron).essenceLiquid : null;
     }
 
     public static int func_150027_b(int p_150027_0_) {
@@ -176,6 +176,6 @@ public class BlockModCauldron extends Block {
 	
 	public int getRenderType()
 	{
-		return DragonScalesEX.proxy.getRenderType("modCauldron");
-	}
+        return DragonScalesEX.proxy.getRenderType("CAULDRON");
+    }
 }

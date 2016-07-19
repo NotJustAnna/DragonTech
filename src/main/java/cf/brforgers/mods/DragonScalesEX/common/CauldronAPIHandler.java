@@ -22,9 +22,9 @@ public class CauldronAPIHandler {
 			BlockModCauldron.setMetadataProperly(world, x, y, z, 0, block);
 			return Blocks.cauldron.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
 		}
-		
-		if (world.getBlock(x, y+1, z).equals(DragonScalesHandler.cauldronConstruct))
-			return true;
+
+        if (world.getBlock(x, y + 1, z).equals(DSEXManager.cauldronConstruct))
+            return true;
 		
         if (world.isRemote)
         {
@@ -36,8 +36,8 @@ public class CauldronAPIHandler {
 
             if (stack != null)
             {
-            	if(stack.getItem().equals(DragonScalesHandler.dragonEssenceBottle)) {
-            		return false;
+                if (stack.getItem().equals(DSEXManager.dragonEssenceBottle)) {
+                    return false;
                 } else {
                 	tryPerformCauldronRecipe(block, world, x, y, z, thisBlockMeta, player, stack);
                 }
