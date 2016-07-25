@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX;
 
 import cf.brforgers.mods.DragonScalesEX.common.CommonProxy;
-import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
+import cf.brforgers.mods.DragonScalesEX.common.DSEX;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -18,7 +18,7 @@ public class DragonScalesEX {
 	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {
 		@Override
 		public Item getTabIconItem() {
-            return DSEXManager.DRAGON_ESSENCE_SHARD;
+            return DSEX.DRAGON_ESSENCE_SHARD;
         }
 	};
 	@Mod.Instance
@@ -35,11 +35,11 @@ public class DragonScalesEX {
 		
 		Configuration cfg = new Configuration(e.getSuggestedConfigurationFile());
 		cfg.load();
-		
-		Lib.Config.DraconyVirus_SpreadingMultiplier = cfg.getInt("SpreadingMultiplier", "DraconyVirus", 3, 1, 4, "Determines how big the Virus World Gen will be (The bigger, the Longer it takes to Generate)");
-		Lib.Config.DraconyVirus_ChanceMultiplier = cfg.getInt("ChanceMultiplier", "DraconyVirus", 1, 0, 4, "Determines how rare the Virus World Gen will be (Less = rarer; 0 disables)");
-		Lib.Config.DraconyVirus_ForceGeneration = cfg.getBoolean("ForceGeneration", "DraconyVirus", false, "Force Generation after 500 Chunks non-generated. Used to Debug more easily the World Gen");
-		Lib.Config.BatchExecutor_Timeout = cfg.getInt("BatchExecutorTimeout", "Optimization", 3, 1, 4, "Determines how much of the tick it will reserve to proccess the Runnables (1=1/5 of the Tick;4 = Almost Full Tick Free Time). Reduce number if the Server can't handle. Lower Numbers tend to make AsyncGeneration a lot slower");
+
+        Lib.Config.DraconyVirus_SpreadingMultiplier = cfg.getInt("SpreadingMultiplier", "DVUtils", 3, 1, 4, "Determines how big the Virus World Gen will be (The bigger, the Longer it takes to Generate)");
+        Lib.Config.DraconyVirus_ChanceMultiplier = cfg.getInt("ChanceMultiplier", "DVUtils", 1, 0, 4, "Determines how rare the Virus World Gen will be (Less = rarer; 0 disables)");
+        Lib.Config.DraconyVirus_ForceGeneration = cfg.getBoolean("ForceGeneration", "DVUtils", false, "Force Generation after 500 Chunks non-generated. Used to Debug more easily the World Gen");
+        Lib.Config.BatchExecutor_Timeout = cfg.getInt("BatchExecutorTimeout", "Optimization", 3, 1, 4, "Determines how much of the tick it will reserve to proccess the Runnables (1=1/5 of the Tick;4 = Almost Full Tick Free Time). Reduce number if the Server can't handle. Lower Numbers tend to make AsyncGeneration a lot slower");
 		Lib.Config.Debug = cfg.getBoolean("Log", "Debug", false, "Log useful Debug Information in the Console");
 		cfg.save();
 	}

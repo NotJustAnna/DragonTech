@@ -1,14 +1,13 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
 import cf.brforgers.mods.DragonScalesEX.common.events.EventHandler;
-import cf.brforgers.mods.DragonScalesEX.common.world.DraconyVirus;
+import cf.brforgers.mods.DragonScalesEX.common.world.DVUtils;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {
 	public void preInit()
 	{
-        DSEXManager.registerHelpers(); //Helpers (FastFactory and RegisterHelper)
         DSEXManager.registerItems();   //Items
         DSEXManager.registerBlocks();  //Blocks
         DSEXRecipes.registerOredict(); //Oredict
@@ -30,7 +29,7 @@ public class CommonProxy {
 	public void registerHandlers() {
 		Object handler = new EventHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
-		MinecraftForge.EVENT_BUS.register(DraconyVirus.batchExecutor);
+		MinecraftForge.EVENT_BUS.register(DVUtils.batchExecutor);
 	}
 	
 	public void registerRenderThings(){

@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI;
-import cf.brforgers.mods.DragonScalesEX.common.world.DraconyVirus;
+import cf.brforgers.mods.DragonScalesEX.common.world.DVUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -82,7 +82,7 @@ public class DSEXRecipes {
         DragonScalesAPI.cauldronRecipes.add(
                 new DragonScalesAPI.CauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
                     public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
-                        DraconyVirus.InfectBiomeAsync(world, x, y - 1, z, (7 + world.rand.nextInt(10)));
+                        DVUtils.InfectBiomeAsync(world, x, y - 1, z, (7 + world.rand.nextInt(10)));
                         return null;
                     }
                 }.registerDefaultDispenserBehaviour()

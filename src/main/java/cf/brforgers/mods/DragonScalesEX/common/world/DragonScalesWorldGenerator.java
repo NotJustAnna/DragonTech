@@ -1,12 +1,11 @@
 package cf.brforgers.mods.DragonScalesEX.common.world;
 
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
@@ -20,10 +19,10 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
     int fails = 0;
 
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		chunkX*=16; chunkZ*=16;
-		switch(world.provider.dimensionId){
-			case -1: generateNether(world, random,chunkX,chunkZ); break;
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        chunkX*=16; chunkZ*=16;
+        switch (world.provider.getDimension()) {
+            case -1: generateNether(world, random,chunkX,chunkZ); break;
 			case 0 : generateSurface(world, random,chunkX,chunkZ); generateVirus(world, random,chunkX,chunkZ); break;
 			case 1 : generateEnd(world, random,chunkX,chunkZ); break;
 		}
@@ -103,11 +102,11 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 			for (int y = 128; y > 63; y--) {
 				int x = rand.nextInt(16), z = rand.nextInt(16);
 					if (
-							DraconyVirus.ConvertBlock(world, BlockX+x, y, BlockZ+z)
-					) {
+                            DVUtils.ConvertBlock(world, BlockX + x, y, BlockZ + z)
+                            ) {
 						fails = 0;
-						DraconyVirus.InfectBiomeAsync(world, BlockX+x, y, BlockZ+z, spread);
-						return;
+                        DVUtils.InfectBiomeAsync(world, BlockX + x, y, BlockZ + z, spread);
+                        return;
 					} else if (!world.isAirBlock(x, y, z)){
 						if (!world.canBlockSeeTheSky(x, y, z)) break;
 					}
@@ -116,32 +115,10 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 		fails = MathHelper.clamp_int(fails + 1,  0, 500);
 		
 		if(fails == 500) {
-			//DraconyVirus.InfectBiome(world, BlockX+rand.nextInt(16), 63, BlockZ+rand.nextInt(16), spread);
-			DraconyVirus.InfectBiomeAsync(world, BlockX+rand.nextInt(16), 63, BlockZ+rand.nextInt(16), spread);
-			fails = 0;
+            //DVUtils.InfectBiome(world, BlockX+rand.nextInt(16), 63, BlockZ+rand.nextInt(16), spread);
+            DVUtils.InfectBiomeAsync(world, BlockX + rand.nextInt(16), 63, BlockZ + rand.nextInt(16), spread);
+            fails = 0;
 		}
 
     }
-
-
-    private void tryGenerateOreOnceAsync(final World world, final int BaseX, final int BaseY, final int BaseZ, final int RangeX, final int RangeY, final int RangeZ, final Block underBlock) {
-        DraconyVirus.batchExecutor.AddRunnablesToNextTick(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < RangeX; i++) {
-                    for (int j = 0; j < RangeY; j++) {
-                        for (int k = 0; k < RangeZ; k++) {
-                            if (world.rand.nextInt(4) == 3) i = -i;
-                            if (world.rand.nextInt(4) == 3) j = -j;
-                            if (world.rand.nextInt(4) == 3) k = -k;
-                            if (world.getBlock(BaseX + i, BaseY + j, BaseZ + k).isAir(world, BaseX + i, BaseY + j, BaseZ + k) && (world.getBlock(BaseX + i, BaseY + j - 1, BaseZ + k) == underBlock || world.getBlock(BaseX + i, BaseY + j + 1, BaseZ + k) == underBlock)) {
-                                world.setBlock(BaseX + i, BaseY + j, BaseZ + k, DSEXManager.dragonCrystal, i * j * k & 0x0F, 3);
-                                return;
-                            }
-                        }
-					}
-                }
-            }
-        });
-	}
 }

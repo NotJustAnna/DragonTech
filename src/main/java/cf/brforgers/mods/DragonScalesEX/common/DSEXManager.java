@@ -26,17 +26,10 @@ import static net.minecraft.inventory.EntityEquipmentSlot.*;
  * Dragon Scales EX Manager
  */
 public class DSEXManager {
-    public static FastFactory factory;
-	public static RegisterHelper register;
+    public static final FastFactory factory = FastFactory.newFactory(DragonScalesEX.tabDragonScales, Lib.MODID, ROCK);
+    public static final RegisterHelper register = RegisterHelper.fromMod(Lib.MODID);
 
-
-    public static void registerHelpers()
-	{
-        factory = FastFactory.newFactory(DragonScalesEX.tabDragonScales, Lib.MODID, ROCK);
-        register = RegisterHelper.fromMod(Lib.MODID);
-	}
-	
-	private static void registerMaterialHandling() {
+    private static void registerMaterialHandling() {
         DRAGONMETAL_TOOL_MATERIAL.setRepairItem(ItemHelper.toStack(DRAGON_METAL));
         DRAGONSCALES_ARMOR_MATERIAL.customCraftingMaterial = DRAGON_SCALE;
     }
@@ -66,7 +59,7 @@ public class DSEXManager {
         DRAGON_STONE = factory.processBlock(new BlockVirusBase(ROCK), "DRAGON_STONE");
         register.register(DRAGON_STONE);
 
-        DRAGON_DIRT = factory.processBlock(new BlockVirusBase(GROUND).setHardness(0.6F).setHardness(0.5F)/*.setStepSound(CAULDRON.soundTypeGravel)*/, "DRAGON_DIRT");
+        DRAGON_DIRT = factory.processBlock(new BlockVirusBase(GROUND).setHardness(0.6F).setHardness(0.5F), "DRAGON_DIRT");
         register.register(DRAGON_DIRT);
 
         DRAGON_GRASS = factory.processBlock(new DragonGrass(), "DRAGON_GRASS");
@@ -81,12 +74,10 @@ public class DSEXManager {
         DRACONY_SAPLING = factory.processBlock(new DraconySapling(), "DRACONY_SAPLING");
         register.register(DRACONY_SAPLING);
 
-        DRACONY_PLANKS = factory.processBlock(new BlockVirusBase(WOOD), "DRACONY_PLANKS");
-        DRACONY_PLANKS.setHardness(2.0F).setResistance(5.0F).setStepSound(DRACONY_PLANKS.soundTypeWood);
+        DRACONY_PLANKS = factory.processBlock(new BlockVirusBase(WOOD).setHardness(2.0F).setResistance(5.0F), "DRACONY_PLANKS");
         register.register(DRACONY_PLANKS);
 
-        DRAGON_ESSENCE_BLOCK = factory.processBlock(new BlockVirusBase(IRON), "DRAGON_ESSENCE_BLOCK");
-        DRAGON_ESSENCE_BLOCK.setHardness(5.0F).setResistance(10.0F).setStepSound(DRAGON_ESSENCE_BLOCK.soundTypeMetal);
+        DRAGON_ESSENCE_BLOCK = factory.processBlock(new BlockVirusBase(IRON).setHardness(5.0F).setResistance(10.0F), "DRAGON_ESSENCE_BLOCK");
         register.register(DRAGON_ESSENCE_BLOCK);
     }
 
