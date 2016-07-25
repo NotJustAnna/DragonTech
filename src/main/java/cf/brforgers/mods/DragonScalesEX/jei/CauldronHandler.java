@@ -12,7 +12,7 @@
 //import net.minecraft.client.gui.inventory.GuiFurnace;
 //import net.minecraft.init.Items;
 //import net.minecraft.item.ItemStack;
-//import net.minecraft.util.MathHelper;
+//import net.minecraft.util.math.MathHelper;
 //import net.minecraft.util.ResourceLocation;
 //import net.minecraft.util.StatCollector;
 //import codechicken.jei.NEIServerUtils;

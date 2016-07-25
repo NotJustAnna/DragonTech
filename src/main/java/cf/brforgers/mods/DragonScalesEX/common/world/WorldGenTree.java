@@ -1,12 +1,13 @@
 package cf.brforgers.mods.DragonScalesEX.common.world;
 
-import java.util.Random;
 import net.minecraft.block.Block;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class WorldGenTree extends WorldGenAbstractTree
 {

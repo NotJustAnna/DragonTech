@@ -6,14 +6,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockCauldronConstruct extends BlockContainer {
 
 	public BlockCauldronConstruct() {
-		super(Material.iron);
-		// TODO Auto-generated constructor stub
+		super(Material.IRON);
 	}
 	
 	@Override

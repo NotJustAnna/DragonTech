@@ -1,9 +1,11 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
+import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
+import org.apache.logging.log4j.Logger;
 
 /**
  * All Static Blocks, Items, etc
@@ -13,6 +15,7 @@ public class DSEX {
             EnumHelper.addToolMaterial("dragon_metal", 10, 2000, 50.0F, 16.0F, 35);
     public static final ItemArmor.ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL =
             EnumHelper.addArmorMaterial("dragon_scales", "scales", 50, new int[]{5, 16, 12, 6}, 35, null, 3.0f);
+    public static final Logger LOGGER = DragonScalesEX.logger;
 
     // All Items
     public static Item DRAGON_SCALE, DRAGON_ESSENCE_SHARD, DRAGON_METAL, DRAGON_ESSENCE_BOTTLE, INFUSED_STICK,

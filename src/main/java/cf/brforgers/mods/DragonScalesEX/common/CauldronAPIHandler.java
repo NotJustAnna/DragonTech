@@ -2,8 +2,11 @@ package cf.brforgers.mods.DragonScalesEX.common;
 
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI;
 import cf.brforgers.api.DragonScalesEX.DragonScalesAPI.CauldronRecipe;
+import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
+import cf.brforgers.mods.DragonScalesEX.common.utils.BlockActivationParams;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,45 +15,55 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class CauldronAPIHandler {
-    public static boolean performCauldronInteraction(Block block, World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
+    public static boolean performCauldronInteraction(BlockActivationParams activation)
     {
-		//Fix the Cauldron if it is with no Water
-		int thisBlockMeta = world.getBlockMetadata(x, y, z);
-		if (thisBlockMeta == 0)
-		{
-			world.setBlock(x, y, z, Blocks.cauldron, 0, 3);
-			BlockModCauldron.setMetadataProperly(world, x, y, z, 0, block);
-			return Blocks.cauldron.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
-		}
-
-        if (world.getBlock(x, y + 1, z).equals(DSEXManager.cauldronConstruct))
+        if (activation.world.isRemote) {
             return true;
-		
-        if (world.isRemote)
-        {
+        } //Check if World is Local
+
+        WorldBlockPos worldPos = new WorldBlockPos(activation.world, activation.position); //Convert the World+BlockPos to something useful
+        IBlockState state = worldPos.getBlockState(); //Also get the State of what we're clicking
+
+        if (!state.getBlock().equals(DSEX.CAULDRON)) { //Something is trolling us
+            try { //Let's forge a Exception to get an StackTrace
+                throw new IllegalStateException("Block isn't a DSEX Cauldron");
+            } catch (Exception e) {
+                DSEX.LOGGER.warn("Forged attempt with Cauldron Interaction detected. REPORT THIS TO THE MODDER.", e);
+            }
+
+            return false;
+        }
+
+        //Fix the Cauldron if it is with no Water
+        if (state.getValue(BlockModCauldron.LEVEL) == 0) {
+            DSEX.LOGGER.warn("DSEX Cauldron is empty. This should be nothing to worry, but this is being warned if weird behaviour happens. Redirecting Call to Vanilla Cauldron");
+
+            worldPos.setBlockState(Blocks.CAULDRON.getDefaultState());
+            return activation.activate(Blocks.CAULDRON);
+        }
+
+        if (worldPos.getWorld().getBlockState(worldPos.up()).getBlock().equals(DSEX.CAULDRON_CONSTRUCT)) {
             return true;
         }
-        else
-        {
-            ItemStack stack = player.inventory.getCurrentItem();
 
-            if (stack != null)
-            {
-                if (stack.getItem().equals(DSEXManager.dragonEssenceBottle)) {
-                    return false;
-                } else {
-                	tryPerformCauldronRecipe(block, world, x, y, z, thisBlockMeta, player, stack);
-                }
-            }
-            else {
-            	
-            }
+        if (activation.player != null && !activation.player.canPlayerEdit(activation.position, activation.side, activation.heldItem)) {
+            return false;
+        }
+
+        ItemStack stack = activation.heldItem;
+        if (stack == null) return true;
+
+        if (stack.getItem().equals(DSEXManager.dragonEssenceBottle)) {
+            return false;
+        } else {
+            tryPerformCauldronRecipe(block, world, x, y, z, thisBlockMeta, player, stack);
         }
         
         return true;
     }
-	
-	public static void tryPerformCauldronRecipe(Block block, World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack)
+
+
+    public static void tryPerformCauldronRecipe(Block block, World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack)
 	{
 		int essentiaLevel = BlockModCauldron.func_150027_b(meta);
         

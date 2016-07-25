@@ -3,7 +3,7 @@ package cf.brforgers.mods.DragonScalesEX.common.blocks;
 import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import net.minecraft.block.BlockOre;
 import net.minecraft.item.Item;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
 import java.util.Random;

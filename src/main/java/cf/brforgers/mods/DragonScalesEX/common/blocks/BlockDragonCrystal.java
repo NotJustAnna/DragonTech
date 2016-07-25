@@ -1,20 +1,16 @@
 package cf.brforgers.mods.DragonScalesEX.common.blocks;
 
-import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
+import cf.brforgers.mods.DragonScalesEX.common.DSEX;
 import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -23,8 +19,8 @@ public class BlockDragonCrystal extends BlockContainer {
     private Random rand = new Random();
 
 	public BlockDragonCrystal() {
-		super(Material.rock);
-		this.setHardness(4.0F);
+        super(Material.ROCK);
+        this.setHardness(4.0F);
 	}
 
 	@Override
@@ -52,18 +48,10 @@ public class BlockDragonCrystal extends BlockContainer {
     public boolean renderAsNormalBlock(){
 		return false;
 	}
-	
-	// gets the icon of the block
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister register){
-		this.blockIcon = register.registerIcon(Lib.TEXTURE_PATH + (this.getUnlocalizedName().substring(5)));
-		this.setBlockTextureName(Lib.TEXTURE_PATH +":dragonscaleentity");
-	}
 
     public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
     {
-        return DSEXManager.DRAGON_ESSENCE_SHARD;
+        return DSEX.DRAGON_ESSENCE_SHARD;
     }
 
     public int quantityDropped(Random rand)
