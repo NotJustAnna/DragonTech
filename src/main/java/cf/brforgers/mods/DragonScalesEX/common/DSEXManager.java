@@ -1,18 +1,18 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.api.DragonScalesEX.DragonScalesAPI;
+import cf.brforgers.api.DragonScalesEX.DragonScalesOldAPI;
 import cf.brforgers.core.lib.FastFactory;
 import cf.brforgers.core.lib.ItemHelper;
 import cf.brforgers.core.lib.RegisterHelper;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockCauldronConstruct;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockDragonCrystal;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.BlockModCauldron;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCauldronConstruct;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.world.*;
-import cf.brforgers.mods.DragonScalesEX.common.items.*;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.BlockCauldronConstruct;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.BlockDragonCrystal;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.BlockModCauldron;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCauldronConstruct;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCrystal;
+import cf.brforgers.mods.DragonScalesEX.common.general.items.*;
+import cf.brforgers.mods.DragonScalesEX.common.virus.blocks.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -99,7 +99,7 @@ public class DSEXManager {
         DRAGON_MULTI = factory.processItem(new ItemDragonMulti(DRAGONMETAL_TOOL_MATERIAL), "DRAGON_MULTI");
         register.register(DRAGON_MULTI);
 
-        DragonScalesAPI.setMultitoolCustomSpeed(Blocks.OBSIDIAN, 10f);
+        DragonScalesOldAPI.setMultitoolCustomSpeed(Blocks.OBSIDIAN, 10f);
 
         DRAGON_SCEPTER = factory.processItem(new ItemDragonScepter(DRAGONMETAL_TOOL_MATERIAL), "DRAGON_SCEPTER");
         register.register(DRAGON_SCEPTER);

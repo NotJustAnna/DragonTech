@@ -365,7 +365,7 @@ public class WorldGenTree extends WorldGenAbstractTree
     }
 
     /**
-     * Checks a line of blocks in the world from the first coordinate to triplet to the second, returning the distance
+     * Checks a line of blocks in the blocks from the first coordinate to triplet to the second, returning the distance
      * (in blocks) before a non-air, non-leaf block is encountered and/or the end is encountered.
      */
     int checkBlockLine(int[] posStart, int[] posEnd)
@@ -493,7 +493,7 @@ public class WorldGenTree extends WorldGenAbstractTree
 
         if (!this.validTreeLocation())
         {
-            this.worldObj = null; //Fix vanilla Mem leak, holds latest world
+            this.worldObj = null; //Fix vanilla Mem leak, holds latest blocks
             return false;
         }
         else
@@ -502,7 +502,7 @@ public class WorldGenTree extends WorldGenAbstractTree
             this.generateLeaves();
             this.generateTrunk();
             this.generateLeafNodeBases();
-            this.worldObj = null; //Fix vanilla Mem leak, holds latest world
+            this.worldObj = null; //Fix vanilla Mem leak, holds latest blocks
             return true;
         }
     }

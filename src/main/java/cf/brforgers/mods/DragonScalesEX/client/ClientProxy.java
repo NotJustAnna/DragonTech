@@ -7,8 +7,8 @@ import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCauldronConstructRe
 import cf.brforgers.mods.DragonScalesEX.client.renderers.TileCrystalRenderer;
 import cf.brforgers.mods.DragonScalesEX.common.CommonProxy;
 import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCauldronConstruct;
-import cf.brforgers.mods.DragonScalesEX.common.blocks.tile.TileCrystal;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCauldronConstruct;
+import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCrystal;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

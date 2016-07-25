@@ -24,8 +24,9 @@ public class TileCrystalRenderer extends TileEntitySpecialRenderer{
 	public TileCrystalRenderer(){
 		this.model = new ModelDragonCrystal();
 	}
-	//renders tile entity in world
-	@Override
+
+    //renders tile entity in blocks
+    @Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale) {
 		//push matrix tells the renderer to start doing something
 		GL11.glPushMatrix();

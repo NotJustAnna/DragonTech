@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.mods.DragonScalesEX.common.events.EventHandler;
+import cf.brforgers.mods.DragonScalesEX.common.general.events.EventHandler;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraftforge.common.MinecraftForge;
 

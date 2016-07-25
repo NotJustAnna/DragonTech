@@ -1,6 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.world;
 
 import cf.brforgers.mods.DragonScalesEX.Lib;
+import cf.brforgers.mods.DragonScalesEX.common.virus.utils.DVUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -115,8 +116,8 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 		fails = MathHelper.clamp_int(fails + 1,  0, 500);
 		
 		if(fails == 500) {
-            //DVUtils.InfectBiome(world, BlockX+rand.nextInt(16), 63, BlockZ+rand.nextInt(16), spread);
-            DVUtils.InfectBiomeAsync(world, BlockX + rand.nextInt(16), 63, BlockZ + rand.nextInt(16), spread);
+			//DVUtils.InfectBiome(blocks, BlockX+rand.nextInt(16), 63, BlockZ+rand.nextInt(16), spread);
+			DVUtils.InfectBiomeAsync(world, BlockX + rand.nextInt(16), 63, BlockZ + rand.nextInt(16), spread);
             fails = 0;
 		}
 
