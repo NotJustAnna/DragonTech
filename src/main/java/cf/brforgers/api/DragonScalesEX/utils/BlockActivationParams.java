@@ -1,4 +1,4 @@
-package cf.brforgers.mods.DragonScalesEX.common.utils;
+package cf.brforgers.api.DragonScalesEX.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

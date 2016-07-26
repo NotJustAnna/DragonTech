@@ -11,11 +11,11 @@ public class DVUtils {
     private DVUtils() {
     }
 
-    public static boolean ConvertBlock(WorldBlockPos pos) {
+    public static boolean convertBlock(WorldBlockPos pos) {
         IBlockState state = pos.getBlockState();
         Block block = state.getBlock();
         if (block == DSEX.DRAGON_GRASS || block == Blocks.DIRT || block == Blocks.GRASS) {
-            ConvertBlock(new WorldBlockPos(pos.getWorld(), pos.up()));
+            convertBlock(new WorldBlockPos(pos.getWorld(), pos.up()));
             if (pos.getWorld().getLightFromNeighbors(pos.up()) < 4 && pos.getWorld().getBlockState(pos.up()).getLightOpacity(pos.getWorld(), pos.up()) > 2) {
                 pos.setBlockState(DSEX.DRAGON_GRASS.getDefaultState());
             } else {
@@ -45,7 +45,7 @@ public class DVUtils {
         }
 
         if (block == Blocks.LEAVES || block == Blocks.LEAVES2) { //Well, also fuck
-            pos.setBlockState(DSEX.DRACONY_LEAVES);
+            pos.setBlockState(DSEX.DRACONY_LEAVES.getDefaultState());
             //.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
             return true;
         }
@@ -59,7 +59,7 @@ public class DVUtils {
         return false;
     }
 
-    public static boolean CanConvertBlock(Block block) {
+    public static boolean canConvertBlock(Block block) {
         return (
                 block == DSEX.DRAGON_GRASS ||
                         block == Blocks.DIRT ||
@@ -81,11 +81,11 @@ public class DVUtils {
      *
      * @param pos
      */
-    public static void ProcriateAt(WorldBlockPos pos) {
+    public static void procriateAt(WorldBlockPos pos) {
         if (pos.getWorld().isRemote) return;
 
         for (int l = 0; l < 4; ++l) {
-            ConvertBlock(new WorldBlockPos(pos.getWorld(), pos.add(DraconyVirus.rand.nextInt(3) - 1, DraconyVirus.rand.nextInt(5) - 3, DraconyVirus.rand.nextInt(3) - 1)));
+            convertBlock(new WorldBlockPos(pos.getWorld(), pos.add(DraconyVirus.rand.nextInt(3) - 1, DraconyVirus.rand.nextInt(5) - 3, DraconyVirus.rand.nextInt(3) - 1)));
         }
     }
 }

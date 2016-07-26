@@ -1,12 +1,11 @@
 package cf.brforgers.mods.DragonScalesEX.common.general;
 
-import cf.brforgers.api.DragonScalesEX.DragonScalesOldAPI;
 import cf.brforgers.api.DragonScalesEX.DragonScalesOldAPI.CauldronRecipe;
+import cf.brforgers.api.DragonScalesEX.utils.BlockActivationParams;
 import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonScalesEX.common.DSEX;
 import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.general.blocks.BlockModCauldron;
-import cf.brforgers.mods.DragonScalesEX.common.utils.BlockActivationParams;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;

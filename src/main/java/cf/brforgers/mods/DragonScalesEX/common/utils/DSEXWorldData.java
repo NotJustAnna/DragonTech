@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class DSEXWorldData extends WorldSavedData {
     private static final String DATA_NAME = "DSEXWorldData";
-    public Map<UUID, EnumPlayerState> playerStates = new HashMap<UUID, EnumPlayerState>();
+    private Map<UUID, EnumPlayerState> playerStates = new HashMap<UUID, EnumPlayerState>();
 
     public DSEXWorldData() {
         super(DATA_NAME);
@@ -63,5 +63,14 @@ public class DSEXWorldData extends WorldSavedData {
             }
         }
         return nbt;
+    }
+
+    public EnumPlayerState getState(EntityPlayer player) {
+        return playerStates.get(player.getUniqueID());
+    }
+
+    public void setState(EntityPlayer player, EnumPlayerState state) {
+        playerStates.put(EntityPlayer.getUUID(player.getGameProfile()), state);
+        this.markDirty();
     }
 }

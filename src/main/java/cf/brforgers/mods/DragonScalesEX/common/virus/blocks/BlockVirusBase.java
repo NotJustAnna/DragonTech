@@ -28,7 +28,7 @@ public class BlockVirusBase extends Block {
 
     public static void randomTick(WorldBlockPos exactPos)
     {
-        DVUtils.ProcriateAt(exactPos);
+        DVUtils.procriateAt(exactPos);
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -37,7 +37,7 @@ public class BlockVirusBase extends Block {
 
     public boolean isToolEffective(String type, IBlockState state)
     {
-        if (type.equals("shovel") && (this == DSEX.DRAGON_GRASS || this == DSEX.DRAGON_DIRT))
+        if ("shovel".equals(type) && (this == DSEX.DRAGON_GRASS || this == DSEX.DRAGON_DIRT))
             return true;
         return super.isToolEffective(type, state);
     }

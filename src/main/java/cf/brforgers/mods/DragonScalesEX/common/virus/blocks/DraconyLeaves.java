@@ -40,7 +40,7 @@ public class DraconyLeaves extends BlockLeaves
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        if (!world.isRemote) DVUtils.ProcriateAt(new WorldBlockPos(world, pos));
+        if (!world.isRemote) DVUtils.procriateAt(new WorldBlockPos(world, pos));
 
         super.updateTick(world, pos, state, rand);
     }

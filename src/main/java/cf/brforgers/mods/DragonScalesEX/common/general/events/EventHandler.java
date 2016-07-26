@@ -1,8 +1,8 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.events;
 
 
+import cf.brforgers.api.DragonScalesEX.armor.IEventArmor;
 import cf.brforgers.mods.DragonScalesEX.common.DSEX;
-import cf.brforgers.mods.DragonScalesEX.common.general.items.ItemDragonArmor;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
@@ -18,14 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static cf.brforgers.mods.DragonScalesEX.common.utils.ArmorUtils.getCurrentArmor;
+
 public class EventHandler {
-    private static Map<UUID, Boolean> haveArmorPiece = new HashMap<UUID, Boolean>();
+    @SuppressWarnings("unchecked")
+    private Map<UUID, ItemStack>[] armorMaps = new Map[]{new HashMap<UUID, ItemStack>(), new HashMap<UUID, ItemStack>(), new HashMap<UUID, ItemStack>(), new HashMap<UUID, ItemStack>()};
 
     @SubscribeEvent
-    public void DragonDrops(LivingDropsEvent event) {
+    public void dragonDrops(LivingDropsEvent event) {
         if (!event.getEntity().worldObj.isRemote && (
                 (event.getEntity() instanceof EntityDragon) || (
-                        EntityList.getEntityString(event.getEntity()) != null &&
                                 !EntityList.getEntityString(event.getEntity()).isEmpty() && (
                                 EntityList.getEntityString(event.getEntity()).equals("HardcoreEnderExpansion.Dragon") ||
                                         EntityList.getEntityString(event.getEntity()).equals("DraconicEvolution.EnderDragon") ||
@@ -58,22 +60,42 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerTick(PlayerTickEvent event) {
+        if (event.player.worldObj.isRemote) return;
         EntityPlayer player = event.player;
-        if (player.worldObj.isRemote) return;
-        if (haveArmorPiece.get(player.getPersistentID()) == ItemDragonArmor.IsAnyArmor(player))
-            return; //State did not changed
-        haveArmorPiece.put(player.getPersistentID(), ItemDragonArmor.IsAnyArmor(player));
-        ItemDragonArmor.armorTick(player);
+        UUID uuid = EntityPlayer.getUUID(player.getGameProfile());
+        ItemStack[] cur = getCurrentArmor(player), reg = getRegisteredArmor(player);
+
+        for (int i = 0; i < 4; i++) {
+            if (cur[i] != reg[i]) {
+                if (reg[i].getItem() instanceof IEventArmor) {
+                    ((IEventArmor) reg[i].getItem()).onArmorUnworn(player.worldObj, player, reg[i]);
+                }
+                if (cur[i].getItem() instanceof IEventArmor) {
+                    ((IEventArmor) cur[i].getItem()).onArmorWorn(player.worldObj, player, cur[i]);
+                }
+                armorMaps[i].put(uuid, cur[i]);
+            }
+        }
     }
 
     @SubscribeEvent
     public void playerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        haveArmorPiece.put(event.player.getPersistentID(), ItemDragonArmor.IsAnyArmor(event.player));
-        ItemDragonArmor.armorTick(event.player);
+        if (event.player.worldObj.isRemote) return;
+
+        ItemStack[] armor = getCurrentArmor(event.player);
+        UUID uuid = EntityPlayer.getUUID(event.player.getGameProfile());
+        for (int i = 0; i < 4; i++) armorMaps[i].put(uuid, armor[i]);
+    }
+
+    private ItemStack[] getRegisteredArmor(EntityPlayer player) {
+        UUID uuid = EntityPlayer.getUUID(player.getGameProfile());
+        ItemStack[] stacks = new ItemStack[4];
+        for (int i = 0; i < 4; i++) stacks[i] = armorMaps[i].get(uuid);
+        return stacks;
     }
 
     @SubscribeEvent
-    public void CustomDrops(LivingDeathEvent e) {
+    public void easterEggDrops(LivingDeathEvent e) {
         if (e.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) e.getEntity();
 

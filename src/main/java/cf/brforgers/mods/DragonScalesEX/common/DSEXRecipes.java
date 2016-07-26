@@ -1,6 +1,5 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.api.DragonScalesEX.DragonScalesOldAPI;
 import cf.brforgers.mods.DragonScalesEX.common.virus.utils.DVUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

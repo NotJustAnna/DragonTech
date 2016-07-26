@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.blocks;
 
+import cf.brforgers.api.DragonScalesEX.utils.BlockActivationParams;
 import cf.brforgers.mods.DragonScalesEX.common.general.CauldronAPIHandler;
-import cf.brforgers.mods.DragonScalesEX.common.utils.BlockActivationParams;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.MapColor;

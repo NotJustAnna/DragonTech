@@ -1,8 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.virus.blocks;
 
 import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
-import cf.brforgers.mods.DragonScalesEX.common.world.WorldGenBigTree;
-import cf.brforgers.mods.DragonScalesEX.common.world.WorldGenTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;

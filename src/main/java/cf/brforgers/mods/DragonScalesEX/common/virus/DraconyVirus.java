@@ -32,7 +32,7 @@ public class DraconyVirus implements Runnable {
                     final int x = pos.getX() + rand.nextInt(3) - 1;
                     final int y = pos.getY() + rand.nextInt(5) - 3;
                     final int z = pos.getZ() + rand.nextInt(3) - 1;
-                    if (DVUtils.CanConvertBlock(pos.getBlockState().getBlock())) {
+                    if (DVUtils.canConvertBlock(pos.getBlockState().getBlock())) {
                         taggedForBaking.add(new DoubleReturn<WorldBlockPos, Integer>(new WorldBlockPos(pos.getWorld(), x, y, z), spread));
                     }
                 }
@@ -43,7 +43,7 @@ public class DraconyVirus implements Runnable {
 
         while (canRun(taggedForTransforming)) {
             WorldBlockPos pos = taggedForTransforming.get(0);
-            DVUtils.ConvertBlock(pos);
+            DVUtils.convertBlock(pos);
             taggedForBaking.remove(0);
         }
     }

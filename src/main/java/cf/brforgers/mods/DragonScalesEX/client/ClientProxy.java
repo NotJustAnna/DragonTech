@@ -10,11 +10,9 @@ import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCauldronConstruct;
 import cf.brforgers.mods.DragonScalesEX.common.general.blocks.tile.TileCrystal;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Loader;
 
 public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonChestplate = new ModelDragonChestplate(1.0f);
@@ -25,11 +23,6 @@ public class ClientProxy extends CommonProxy {
 	
 	public void preInit(){
 		super.preInit();
-		
-		//Tweak to Remove the Cauldron from NEI
-		if (Loader.isModLoaded("NotEnoughItems"));
-        codechicken.nei.api.API.hideItem(new ItemStack(DSEXManager.modCauldron));
-
 	}
 	
 	public void registerRenderThings(){
@@ -70,13 +63,5 @@ public class ClientProxy extends CommonProxy {
 			return dragonBoots;
 		}
 		return dragonLeggings;
-	}
-	
-	@Override
-	public int getRenderType(String name) {
-        if (name.equals("CAULDRON"))
-            return cauldronRenderType;
-		
-		return 0;
 	}
 }

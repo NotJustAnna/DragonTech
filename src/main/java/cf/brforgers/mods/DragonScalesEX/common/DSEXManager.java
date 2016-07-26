@@ -1,6 +1,5 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.api.DragonScalesEX.DragonScalesOldAPI;
 import cf.brforgers.core.lib.FastFactory;
 import cf.brforgers.core.lib.ItemHelper;
 import cf.brforgers.core.lib.RegisterHelper;

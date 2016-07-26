@@ -1,8 +1,11 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.items;
 
+import cf.brforgers.api.DragonScalesEX.armor.IEventArmor;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import cf.brforgers.mods.DragonScalesEX.Lib;
+import cf.brforgers.mods.DragonScalesEX.common.DSEX;
 import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
+import cf.brforgers.mods.DragonScalesEX.common.utils.ArmorUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
@@ -22,77 +25,49 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
+public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventArmor
 {
+	private static final int[] armorDisplayValues = {5, 16, 12, 6};
+
     public ItemDragonArmor(ArmorMaterial armorMaterial, EntityEquipmentSlot armorType) {
         super(armorMaterial, 0, armorType);
     }
 
-	public static boolean IsFullArmor(EntityPlayer player) {
-		boolean[] armor = ArmorEquipped(player);
+	public static boolean haveFullArmor(EntityPlayer player) {
+		boolean[] armor = armorEquipped(player);
 		return armor[0] && armor[1] && armor[2] && armor[3];
 	}
 
-    public static boolean IsAnyArmor(EntityPlayer player) {
-		boolean[] armor = ArmorEquipped(player);
-		return armor[0] || armor[1] || armor[2] || armor[3];
+	public static boolean haveAnyArmor(EntityPlayer player) {
+		boolean[] armor = armorEquipped(player);
+		return armor[0] && armor[1] && armor[2] && armor[3];
 	}
-	
-	public static boolean[] ArmorEquipped(EntityPlayer player) {
+
+	public static boolean[] armorEquipped(EntityPlayer player) {
 		boolean[] result = new boolean[4];
 		for (int i = 0; i < result.length; i++)
-			result[i] = ArmorEquippedOnSlot(player, i);
+			result[i] = armorEquippedOnSlot(player, i);
 		return result;
 	}
-	
-	public static boolean ArmorEquippedOnSlot(EntityPlayer player, int slot) {
-        ItemStack stack = Lists.newArrayList(player.getArmorInventoryList()).get(slot);
-        return stack != null && stack.getItem() != null && stack.getItem().equals(GetArmorForSlot(slot));
-    }
-	
-	public static Item GetArmorForSlot(int slot) {
+
+	public static boolean armorEquippedOnSlot(EntityPlayer player, int slot) {
+		ItemStack stack = Lists.newArrayList(player.getArmorInventoryList()).get(slot);
+		return stack != null && stack.getItem() != null && stack.getItem().equals(getArmorForSlot(slot));
+	}
+
+	public static Item getArmorForSlot(int slot) {
 		switch (slot) {
 			case 0:
-				return DSEXManager.scalesBoots;
+				return DSEX.SCALES_BOOTS;
 			case 1:
-				return DSEXManager.scalesLeggings;
+				return DSEX.SCALES_LEGGINGS;
 			case 2:
-				return DSEXManager.scalesChestplate;
+				return DSEX.SCALES_CHESTPLATE;
 			case 3:
-				return DSEXManager.scalesHelm;
+				return DSEX.SCALES_HELM;
 		}
 		return null;
 	}
-
-    public static void armorTick(EntityPlayer player) {
-        if (ArmorEquippedOnSlot(player, 3)) {
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0, true));
-        }
-
-        if (ArmorEquippedOnSlot(player, 2)) {
-            player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 0, true));
-
-        }
-
-        if (ArmorEquippedOnSlot(player, 1)) {
-            player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3, true));
-        }
-
-        if (ArmorEquippedOnSlot(player, 0)) {
-            player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3, true));
-            player.fallDistance = 0.0F;
-            player.stepHeight = 1.0f;
-        } else {
-            player.stepHeight = 0.5f;
-        }
-
-        if (IsFullArmor(player)) {
-            player.capabilities.allowFlying = true;
-        } else if (player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true) {
-            player.capabilities.allowFlying = false;
-            player.capabilities.isFlying = false;
-        }
-    }
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
@@ -170,11 +145,9 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 		return null;*/
 	}
 
-    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-		armorTick(player);
+	public EnumRarity getRarity(ItemStack ignored) {
+		return EnumRarity.RARE;
 	}
-
-	public EnumRarity getRarity(ItemStack ignored) { return EnumRarity.rare; }
 
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
@@ -187,13 +160,68 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor
 
 	@Override
 	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
-		int[] v = { 5, 16, 12, 6 };
-
-        return v[((ItemArmor)armor.getItem()).armorType];
+		return armorDisplayValues[slot];
 	}
 
     @Override
 	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
 		stack.damageItem(damage/2, entity);
+	}
+
+	@Override
+	public void onArmorWorn(World world, EntityPlayer player, ItemStack stack) {
+		if (haveFullArmor(player)) {
+			player.capabilities.allowFlying = true;
+			player.fallDistance = 0.0F;
+			player.stepHeight = 1.0f;
+		}
+	}
+
+	@Override
+	public void onArmorUnworn(World world, EntityPlayer player, ItemStack stack) {
+		if (haveAnyArmor(player)) return;
+		if (player.capabilities.isCreativeMode == false && player.capabilities.allowFlying == true) {
+			player.capabilities.allowFlying = false;
+			player.capabilities.isFlying = false;
+		}
+		player.stepHeight = 0.5f;
+	}
+
+	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+		if (!haveFullArmor(player) || itemStack.getItem() != DSEX.SCALES_CHESTPLATE) return;
+
+		player.capabilities.allowFlying = true;
+		player.fallDistance = 0.0F;
+		player.stepHeight = 1.0f;
+		if (player.getHealth() < 20.0f) {
+			player.heal(0.05f);
+
+			ArmorUtils.getCurrentArmor(player)[player.worldObj.rand.nextInt(4)].damageItem(1, player);
+		}
+
+
+		if (armorEquippedOnSlot(player, 3)) {
+			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0, true));
+		}
+
+		if (armorEquippedOnSlot(player, 2)) {
+			player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 0, true));
+
+		}
+
+		if (armorEquippedOnSlot(player, 1)) {
+			player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3, true));
+		}
+
+		if (armorEquippedOnSlot(player, 0)) {
+			player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3, true));
+
+		} else {
+
+		}
+
+		if (haveFullArmor(player)) {
+			player.capabilities.allowFlying = true;
+		}
 	}
 }

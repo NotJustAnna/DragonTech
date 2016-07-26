@@ -103,7 +103,7 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 			for (int y = 128; y > 63; y--) {
 				int x = rand.nextInt(16), z = rand.nextInt(16);
 					if (
-                            DVUtils.ConvertBlock(world, BlockX + x, y, BlockZ + z)
+                            DVUtils.convertBlock(world, BlockX + x, y, BlockZ + z)
                             ) {
 						fails = 0;
                         DVUtils.InfectBiomeAsync(world, BlockX + x, y, BlockZ + z, spread);
