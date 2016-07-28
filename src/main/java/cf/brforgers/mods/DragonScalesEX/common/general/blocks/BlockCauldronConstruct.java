@@ -22,20 +22,7 @@ public class BlockCauldronConstruct extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-		return new TileCauldronConstruct();
-	}
-	
-	@Override
-	public int getRenderType(){
-		return -1;
-	}
-	
-	@Override
-	public boolean isOpaqueCube(){
-		return false;
-	}
-	public boolean renderAsNormalBlock(){
-		return false;
+    public TileEntity createNewTileEntity(World world, int meta) {
+        return new TileCauldronConstruct();
 	}
 }

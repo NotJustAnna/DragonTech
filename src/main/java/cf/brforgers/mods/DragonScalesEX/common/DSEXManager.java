@@ -1,5 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
+import cf.brforgers.api.DragonScalesEX.DragonScalesEXAPI;
 import cf.brforgers.core.lib.FastFactory;
 import cf.brforgers.core.lib.ItemHelper;
 import cf.brforgers.core.lib.RegisterHelper;
@@ -98,7 +99,7 @@ public class DSEXManager {
         DRAGON_MULTI = factory.processItem(new ItemDragonMulti(DRAGONMETAL_TOOL_MATERIAL), "DRAGON_MULTI");
         register.register(DRAGON_MULTI);
 
-        DragonScalesOldAPI.setMultitoolCustomSpeed(Blocks.OBSIDIAN, 10f);
+        DragonScalesEXAPI.setCustomSpeedForBlock(Blocks.OBSIDIAN, 10f);
 
         DRAGON_SCEPTER = factory.processItem(new ItemDragonScepter(DRAGONMETAL_TOOL_MATERIAL), "DRAGON_SCEPTER");
         register.register(DRAGON_SCEPTER);

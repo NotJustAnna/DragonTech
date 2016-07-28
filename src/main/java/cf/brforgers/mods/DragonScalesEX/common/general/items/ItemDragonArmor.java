@@ -1,29 +1,21 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.items;
 
 import cf.brforgers.api.DragonScalesEX.armor.IEventArmor;
-import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
-import cf.brforgers.mods.DragonScalesEX.Lib;
 import cf.brforgers.mods.DragonScalesEX.common.DSEX;
-import cf.brforgers.mods.DragonScalesEX.common.DSEXManager;
 import cf.brforgers.mods.DragonScalesEX.common.utils.ArmorUtils;
 import com.google.common.collect.Lists;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventArmor
 {
@@ -69,81 +61,46 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventA
 		return null;
 	}
 
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-		int id = stack.getItem().equals(DSEXManager.scalesLeggings) ? 2 : stack.getItem().equals(DSEXManager.scalesChestplate) ? 3 : 1;
-		return Lib.TEXTURE_PATH + "textures/models/armor/scalesArmor"+id+".png";
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
-		if (itemStack != null && itemStack.getItem() instanceof ItemDragonArmor)
-		{
-			ModelBiped armorModel = DragonScalesEX.proxy.getArmorModel(armorSlot);
-
-			armorModel.bipedHead.showModel = armorSlot == 0;
-			armorModel.bipedHeadwear.showModel = armorSlot == 0;
-			armorModel.bipedBody.showModel = armorSlot == 1 || armorSlot == 2;
-			armorModel.bipedRightArm.showModel = armorSlot == 1;
-			armorModel.bipedLeftArm.showModel = armorSlot == 1;
-			armorModel.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3;
-			armorModel.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3;
-
-			if (entityLiving != null) {
-				armorModel.isSneak = entityLiving.isSneaking();
-				armorModel.isRiding = entityLiving.isRiding();
-				armorModel.isChild = entityLiving.isChild();
-				if(entityLiving instanceof EntityLiving)
-				{
-                    armorModel.rightArmPose = // = ((EntityLiving)entityLiving).getHeldItem(EnumHand.MAIN_HAND) != null ? 1 : 0;
-                }
-
-				if(entityLiving instanceof EntityPlayer){
-					//armorModel.heldItemRight = ((EntityPlayer) entityLiving).getCurrentArmor(0) != null ? 1 :0;
-					armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
-				}
-			}
-            return armorModel;
-        }
-
-        return null; //Default Rendering
-		/*
-		ModelBiped armorModel = new ModelBiped();
-		if(itemStack != null){
-			if(itemStack.getItem() instanceof ItemDragonArmor){
-				int type = ((ItemArmor)itemStack.getItem()).armorType;
-
-				if(type == 1){
-					armorModel = MainClass.proxy.getArmorModel(0);
-				}else if(type == 3){
-					armorModel = MainClass.proxy.getArmorModel(1);
-				}else if(type == 2/4){
-					armorModel = MainClass.proxy.getArmorModel(2);
-				}
-			}
-			if(armorModel != null){
-				armorModel.bipedHead.showModel = armorSlot == 0;
-				armorModel.bipedHeadwear.showModel = armorSlot == 0;
-				armorModel.bipedBody.showModel = armorSlot == 1 || armorSlot == 2;
-				armorModel.bipedRightArm.showModel = armorSlot == 1;
-				armorModel.bipedLeftArm.showModel = armorSlot == 1;
-				armorModel.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3;
-				armorModel.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3;
-
-				armorModel.isSneak = entityLiving.isSneaking();
-				armorModel.isRiding = entityLiving.isRiding();
-				armorModel.isChild = entityLiving.isChild();
-				armorModel.heldItemRight = entityLiving.getCurrentArmor(0) != null ? 1 :0;
-				if(entityLiving instanceof EntityPlayer){
-					armorModel.aimedBow =((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
-				}
-				return armorModel;
-			}
-		}
-
-		return null;*/
-	}
+//	@Override
+//	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+//		int id = stack.getItem().equals(DSEXManager.scalesLeggings) ? 2 : stack.getItem().equals(DSEXManager.scalesChestplate) ? 3 : 1;
+//		return Lib.TEXTURE_PATH + "textures/models/armor/scalesArmor"+id+".png";
+//	}
+//
+//	@Override
+//	@SideOnly(Side.CLIENT)
+//	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
+//		if (itemStack != null && itemStack.getItem() instanceof ItemDragonArmor)
+//		{
+//			ModelBiped armorModel = DragonScalesEX.proxy.getArmorModel(armorSlot);
+//
+//			armorModel.bipedHead.showModel = armorSlot == 0;
+//			armorModel.bipedHeadwear.showModel = armorSlot == 0;
+//			armorModel.bipedBody.showModel = armorSlot == 1 || armorSlot == 2;
+//			armorModel.bipedRightArm.showModel = armorSlot == 1;
+//			armorModel.bipedLeftArm.showModel = armorSlot == 1;
+//			armorModel.bipedRightLeg.showModel = armorSlot == 2 || armorSlot == 3;
+//			armorModel.bipedLeftLeg.showModel = armorSlot == 2 || armorSlot == 3;
+//
+//			if (entityLiving != null) {
+//				armorModel.isSneak = entityLiving.isSneaking();
+//				armorModel.isRiding = entityLiving.isRiding();
+//				armorModel.isChild = entityLiving.isChild();
+//				if(entityLiving instanceof EntityLiving)
+//				{
+//                    armorModel.rightArmPose = // = ((EntityLiving)entityLiving).getHeldItem(EnumHand.MAIN_HAND) != null ? 1 : 0;
+//                }
+//
+//				if(entityLiving instanceof EntityPlayer){
+//					//armorModel.heldItemRight = ((EntityPlayer) entityLiving).getCurrentArmor(0) != null ? 1 :0;
+//					armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
+//				}
+//			}
+//            return armorModel;
+//        }
+//
+//        return null;
+//	}
 
 	public EnumRarity getRarity(ItemStack ignored) {
 		return EnumRarity.RARE;
@@ -199,29 +156,16 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventA
 			ArmorUtils.getCurrentArmor(player)[player.worldObj.rand.nextInt(4)].damageItem(1, player);
 		}
 
-
 		if (armorEquippedOnSlot(player, 3)) {
-			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 260, 0, true));
-		}
-
-		if (armorEquippedOnSlot(player, 2)) {
-			player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 40, 0, true));
-
-		}
+            player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 260, 0, false, false));
+        }
 
 		if (armorEquippedOnSlot(player, 1)) {
-			player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(), 40, 3, true));
-		}
+            player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 40, 3, false, false));
+        }
 
 		if (armorEquippedOnSlot(player, 0)) {
-			player.addPotionEffect(new PotionEffect(Potion.jump.getId(), 40, 3, true));
-
-		} else {
-
-		}
-
-		if (haveFullArmor(player)) {
-			player.capabilities.allowFlying = true;
-		}
+            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, 3, false, false));
+        }
 	}
 }

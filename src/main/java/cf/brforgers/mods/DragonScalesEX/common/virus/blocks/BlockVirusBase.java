@@ -28,7 +28,8 @@ public class BlockVirusBase extends Block {
 
     public static void randomTick(WorldBlockPos exactPos)
     {
-        DVUtils.procriateAt(exactPos);
+        if (exactPos.getWorld().rand.nextInt(20) == 0)
+            DVUtils.procriateAt(exactPos);
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {

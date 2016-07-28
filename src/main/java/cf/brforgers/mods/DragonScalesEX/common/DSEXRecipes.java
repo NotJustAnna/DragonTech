@@ -1,12 +1,12 @@
 package cf.brforgers.mods.DragonScalesEX.common;
 
-import cf.brforgers.mods.DragonScalesEX.common.virus.utils.DVUtils;
+import cf.brforgers.api.DragonScalesEX.DragonScalesEXAPI;
+import cf.brforgers.api.DragonScalesEX.cauldron.DummyCauldronRecipe;
+import cf.brforgers.mods.DragonScalesEX.common.virus.DraconyVirus;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -38,53 +38,53 @@ public class DSEXRecipes {
     }
 
     public static void registerRecipes() {
-        DragonScalesOldAPI.cauldronRecipes.add(new DragonScalesOldAPI.CauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE)).registerDefaultDispenserBehaviour());
-        DragonScalesOldAPI.cauldronRecipes.add(new DragonScalesOldAPI.CauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL)).registerDefaultDispenserBehaviour());
-        DragonScalesOldAPI.cauldronRecipes.add(new DragonScalesOldAPI.CauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL)).registerDefaultDispenserBehaviour());
-        DragonScalesOldAPI.cauldronRecipes.add(new DragonScalesOldAPI.CauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE)).registerDefaultDispenserBehaviour());
-        DragonScalesOldAPI.cauldronRecipes.add(new DragonScalesOldAPI.CauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK)).registerDefaultDispenserBehaviour());
-        DragonScalesOldAPI.cauldronRecipes.add(
-                new DragonScalesOldAPI.CauldronRecipe(new ItemStack(BRICK_BLOCK), 1, new ItemStack(DRAGON_BRICKS)) {
-                    public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
-                        ItemStack output = super.getOutput(input, essentiaLevel, world, z, z, z, player);
+        DragonScalesEXAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE)));
+        DragonScalesEXAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL)));
+        DragonScalesEXAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL)));
+        DragonScalesEXAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE)));
+        DragonScalesEXAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK)));
+        DragonScalesEXAPI.cauldronRecipes.add(
+                new DummyCauldronRecipe(new ItemStack(BRICK_BLOCK), 1, new ItemStack(DRAGON_BRICKS)) {
+                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
+                        ItemStack output = super.getOutput(params, essentiaLevel);
                         output.stackSize = input.stackSize;
                         return output;
                     }
 
-                    public int getEssentiaCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+                    public int getEssentiaCost(BlockActivationParams params, int essentiaLevel) {
                         return MathHelper.clamp_int((int) ((float) (input.stackSize / 64) * 3) + 1, 1, 3);
                     }
 
-                    public int getItemCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+                    public int getItemCost(BlockActivationParams params, int essentiaLevel) {
                         return input.stackSize;
                     }
-                }.registerDefaultDispenserBehaviour()
+                }
         );
-        DragonScalesOldAPI.cauldronRecipes.add(
-                new DragonScalesOldAPI.CauldronRecipe(new ItemStack(SOUL_SAND), 1, new ItemStack(END_STONE)) {
-                    public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
-                        ItemStack output = super.getOutput(input, essentiaLevel, world, z, z, z, player);
+        DragonScalesEXAPI.cauldronRecipes.add(
+                new DummyCauldronRecipe(new ItemStack(SOUL_SAND), 1, new ItemStack(END_STONE)) {
+                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
+                        ItemStack output = super.getOutput(params, essentiaLevel);
                         output.stackSize = MathHelper.clamp_int(input.stackSize, 0, 16);
                         return output;
                     }
 
-                    public int getEssentiaCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+                    public int getEssentiaCost(BlockActivationParams params, int essentiaLevel) {
                         return MathHelper.clamp_int((int) ((float) (input.stackSize / 16) * 3) + 1, 1, 3);
                     }
 
-                    public int getItemCost(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
+                    public int getItemCost(BlockActivationParams params, int essentiaLevel) {
                         return MathHelper.clamp_int(input.stackSize, 0, 16);
                     }
-                }.registerDefaultDispenserBehaviour()
+                }
         );
 
-        DragonScalesOldAPI.cauldronRecipes.add(
-                new DragonScalesOldAPI.CauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
-                    public ItemStack getOutput(ItemStack input, int essentiaLevel, World world, int x, int y, int z, EntityPlayer player) {
-                        DVUtils.InfectBiomeAsync(world, x, y - 1, z, (7 + world.rand.nextInt(10)));
+        DragonScalesEXAPI.cauldronRecipes.add(
+                new DummyCauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
+                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
+                        DraconyVirus.createAt(world, x, y - 1, z, (7 + world.rand.nextInt(10)));
                         return null;
                     }
-                }.registerDefaultDispenserBehaviour()
+                }
         );
 
         GameRegistry.addShapelessRecipe(new ItemStack(DRAGON_ESSENCE_BOTTLE), new ItemStack(POTIONITEM, 1, 0), new ItemStack(DRAGON_ESSENCE_SHARD));

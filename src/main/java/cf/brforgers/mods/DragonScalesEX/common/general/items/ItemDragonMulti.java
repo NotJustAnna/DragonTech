@@ -1,5 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.items;
 
+import cf.brforgers.api.DragonScalesEX.DragonScalesEXAPI;
 import cf.brforgers.mods.DragonScalesEX.DragonScalesEX;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.state.IBlockState;
@@ -37,18 +38,14 @@ public class ItemDragonMulti extends ItemPickaxe
     @Override
     public float getStrVsBlock(ItemStack stack, IBlockState block) {
         //Maior, mais rápido
-    	return Collections.max(
-    		Arrays.asList(
-    			new Float[]{
-                        pickaxe.getStrVsBlock(stack, block),
-                        axe.getStrVsBlock(stack, block),
-                        shovel.getStrVsBlock(stack, block),
-                        hoe.getStrVsBlock(stack, block),
-                        //DragonScalesOldAPI.getSpeed(block),
-                        4.0f
-    			}
-    		)
-    	).floatValue();
+        return Collections.max(Arrays.asList(
+                pickaxe.getStrVsBlock(stack, block),
+                axe.getStrVsBlock(stack, block),
+                shovel.getStrVsBlock(stack, block),
+                hoe.getStrVsBlock(stack, block),
+                DragonScalesEXAPI.getCustomSpeedForBlock(block.getBlock()),
+                4.0f
+        ));
     }
 
     @Override

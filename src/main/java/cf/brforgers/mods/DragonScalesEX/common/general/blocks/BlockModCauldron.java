@@ -1,7 +1,6 @@
 package cf.brforgers.mods.DragonScalesEX.common.general.blocks;
 
-import cf.brforgers.api.DragonScalesEX.utils.BlockActivationParams;
-import cf.brforgers.mods.DragonScalesEX.common.general.CauldronAPIHandler;
+import cf.brforgers.mods.DragonScalesEX.common.general.CauldronHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.MapColor;
@@ -19,7 +18,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -104,6 +102,7 @@ public class BlockModCauldron extends Block {
      * Overrides for Dragon Essentia
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        return CauldronAPIHandler.performCauldronInteraction(new BlockActivationParams(worldIn, pos, playerIn, hand, heldItem, side, new Vec3d(hitX, hitY, hitZ)));
+        CauldronHandler.performCauldronInteraction(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+        return true;
     }
 }

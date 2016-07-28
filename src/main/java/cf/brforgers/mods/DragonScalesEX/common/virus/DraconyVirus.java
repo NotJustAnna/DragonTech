@@ -1,6 +1,7 @@
 package cf.brforgers.mods.DragonScalesEX.common.virus;
 
-import cf.brforgers.core.lib.batch.TickBatchExecutor;
+import cf.brforgers.core.lib.batch.BatchExecutor;
+import cf.brforgers.core.lib.batch.ProfiledRunnable;
 import cf.brforgers.core.lib.utils.DoubleReturn;
 import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonScalesEX.common.virus.utils.DVUtils;
@@ -10,15 +11,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DraconyVirus implements Runnable {
-    public static Random rand = new Random();
-    public static TickBatchExecutor.Server batchExecutor = new TickBatchExecutor.Server();
-    public List<DoubleReturn<WorldBlockPos, Integer>> taggedForBaking = new ArrayList<DoubleReturn<WorldBlockPos, Integer>>();
-    public List<WorldBlockPos> taggedForTransforming = new ArrayList<WorldBlockPos>();
+public class DraconyVirus extends ProfiledRunnable {
+    private static Random rand = null;
+    private final BatchExecutor batchExecutor;
+    private List<DoubleReturn<WorldBlockPos, Integer>> taggedForBaking = new ArrayList<DoubleReturn<WorldBlockPos, Integer>>();
+    private List<WorldBlockPos> taggedForTransforming = new ArrayList<WorldBlockPos>();
+
+    private DraconyVirus(BatchExecutor executor, WorldBlockPos pos, int spread) {
+        this.tickTimeout = 1;
+        batchExecutor = executor;
+        taggedForBaking.add(new DoubleReturn<WorldBlockPos, Integer>(new WorldBlockPos(pos.getWorld(), pos), spread));
+    }
+
+    /**
+     * Injects a DraconyVirus Async Generator instance at the BatchExecutor
+     *
+     * @param executor
+     * @param pos
+     * @param spread
+     */
+    public static void createAt(BatchExecutor executor, WorldBlockPos pos, int spread) {
+        if (rand == null) rand = new Random(pos.getWorld().getSeed()); //
+        executor.addRunnablesToThisTick(new DraconyVirus(executor, pos, spread));
+    }
 
     @Override
     public void run() {
-        while (canRun(taggedForBaking)) {
+        Long millis = System.currentTimeMillis();
+        while (shouldRunNext(millis) && taggedForBaking.size()>0) {
             DoubleReturn<WorldBlockPos, Integer> bakingEntry = taggedForBaking.get(0);
             int spread = bakingEntry.object2;
 
@@ -41,14 +61,12 @@ public class DraconyVirus implements Runnable {
             taggedForBaking.remove(0);
         }
 
-        while (canRun(taggedForTransforming)) {
+        while (shouldRunNext(millis) && taggedForTransforming.size()>0) {
             WorldBlockPos pos = taggedForTransforming.get(0);
             DVUtils.convertBlock(pos);
-            taggedForBaking.remove(0);
+            taggedForTransforming.remove(0);
         }
-    }
 
-    private boolean canRun(List list) {
-        return true;
+        if (taggedForBaking.size() > 0 || taggedForTransforming.size() > 0) batchExecutor.addRunnablesToThisTick(this);
     }
 }

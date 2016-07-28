@@ -16,6 +16,8 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class DSEXWorld implements IWorldGenerator {
@@ -27,6 +29,13 @@ public class DSEXWorld implements IWorldGenerator {
         this.debug = Utils.debugFlag;
     }};
     public static GridSystem<EnumVirusState> virusGrid = new GridSystem<EnumVirusState>(8);
+    List<Integer> dims = new ArrayList<Integer>() {{
+        dims.add(0);
+        dims.add(1);
+        dims.add(-1);
+        dims.add(-100); //Deep Dark
+        dims.add(6); //Aroma MinerWorld
+    }};
 
     private DSEXWorld() {
     }
@@ -34,7 +43,6 @@ public class DSEXWorld implements IWorldGenerator {
     public static void initWorld() {
         boolean biome = true, virus = true, ore = true;
         GameRegistry.registerWorldGenerator(new DSEXWorld(), 1000);
-        if (biome) initBiome();
         if (virus) initVirus();
         if (ore) initOre();
     }
@@ -43,23 +51,20 @@ public class DSEXWorld implements IWorldGenerator {
         //Dunno what to add
     }
 
-    private static void initBiome() {
-        //Register Biome
-    }
-
     private static void initVirus() {
         //Prepare GridSystem
     }
 
-    public static void generateOre(WorldBlockPos pos, Random random) {
-
-    }
-
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        new ArrayList<Integer>().con
     }
 
-    private void tryGenerateOreOnceAsync(final WorldBlockPos pos, final Vec3i range, final Block underBlock) {
+    public void generate(Random random, int x, int y, World world, int dim) {
+
+    }
+
+    private void generateOreAsync(final WorldBlockPos pos, final Vec3i range, final Block underBlock) {
         DVUtils.batchExecutor.AddRunnablesToNextTick(new Runnable() {
             @Override
             public void run() {

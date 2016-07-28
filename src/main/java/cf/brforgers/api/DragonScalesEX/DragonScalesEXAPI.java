@@ -2,8 +2,10 @@ package cf.brforgers.api.DragonScalesEX;
 
 import cf.brforgers.api.DragonScalesEX.cauldron.ICauldronRecipe;
 import cf.brforgers.api.DragonScalesEX.cauldron.IJEICauldron;
-import cf.brforgers.api.DragonScalesEX.utils.BlockActivationParams;
+import cf.brforgers.core.lib.world.WorldBlockPos;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +15,14 @@ import java.util.Map;
 public class DragonScalesEXAPI {
     public static final List<ICauldronRecipe> cauldronRecipes = new ArrayList<ICauldronRecipe>();
     public static final List<IJEICauldron> jeiCauldronRecipes = new ArrayList<IJEICauldron>();
-    private static Map<Block, Float> customMultiToolMiningSpeed = new HashMap<Block, Float>();
+    private static final Map<Block, Float> customMultiToolMiningSpeed = new HashMap<Block, Float>();
 
     private DragonScalesEXAPI() {
     }
 
-    public static ICauldronRecipe getValidRecipe(BlockActivationParams activationParams, int essentiaLevel) {
+    public static ICauldronRecipe getValidRecipe(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
         for (ICauldronRecipe recipe : cauldronRecipes) {
-            if (recipe.isValidInput(activationParams, essentiaLevel)) return recipe;
+            if (recipe.isValidInput(pos, heldItem, hand, essentiaLevel)) return recipe;
         }
         return null;
     }

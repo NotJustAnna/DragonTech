@@ -1,12 +1,13 @@
 package cf.brforgers.api.DragonScalesEX.cauldron;
 
-import cf.brforgers.api.DragonScalesEX.utils.BlockActivationParams;
+import cf.brforgers.core.lib.world.WorldBlockPos;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 public class DummyCauldronRecipe implements ICauldronRecipe, IJEICauldron {
-    private final ItemStack input;
-    private final ItemStack output;
-    private final int essentiaCost;
+    protected final ItemStack input;
+    protected final ItemStack output;
+    protected final int essentiaCost;
 
     public DummyCauldronRecipe(ItemStack input, int essentiaCost, ItemStack output) {
         this.input = input;
@@ -30,22 +31,22 @@ public class DummyCauldronRecipe implements ICauldronRecipe, IJEICauldron {
     }
 
     @Override
-    public boolean isValidInput(BlockActivationParams activation, int essentiaLevel) {
-        return this.input.isItemEqual(input) && (getItemCost(activation, essentiaLevel) <= input.stackSize) && (getEssentiaCost(activation, essentiaLevel) <= essentiaLevel);
+    public boolean isValidInput(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+        return this.input.isItemEqual(input) && (getItemCost(pos, heldItem, hand, essentiaLevel) <= input.stackSize) && (getEssentiaCost(pos, heldItem, hand, essentiaLevel) <= essentiaLevel);
     }
 
     @Override
-    public ItemStack getOutput(BlockActivationParams activation, int essentiaLevel) {
+    public ItemStack getOutput(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
         return null;
     }
 
     @Override
-    public int getEssentiaCost(BlockActivationParams activation, int essentiaLevel) {
+    public int getEssentiaCost(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
         return essentiaCost;
     }
 
     @Override
-    public int getItemCost(BlockActivationParams activation, int essentiaLevel) {
+    public int getItemCost(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
         return input.stackSize;
     }
 }

@@ -59,7 +59,8 @@ public class DVUtils {
         return false;
     }
 
-    public static boolean canConvertBlock(Block block) {
+    public static boolean canConvertBlock(IBlockState state) {
+        Block block = state.getBlock();
         return (
                 block == DSEX.DRAGON_GRASS ||
                         block == Blocks.DIRT ||
