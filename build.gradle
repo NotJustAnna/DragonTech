@@ -36,12 +36,12 @@ println " Building: ${archivesBaseName} v${version}"
 
 dependencies {
     // you may put jars on which you depend on in ./libs
-    println("[DragonScalesEX] Adding dependencies...")
+    println("[DragonTech] Adding dependencies...")
     // compile against the JEI API
     deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232:api"
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_1.10.2:3.7.6.232"
-    println("[DragonScalesEX] Done.") 
+    println("[DragonTech] Done.")
 }
 
 idea.module.inheritOutputDirs = true
