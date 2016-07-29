@@ -4,7 +4,7 @@ public class Lib {
 	private Lib() {}
 	public static final String MODID = "DragonScalesEX";
 	public static final String MODNAME = "Dragon Scales EX Mod";
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "1.3.1";
 	public static final String DEPS = "after:BRCore@[1.0,);after:NotEnoughItems"; // + ";required-after:MODID"; for Each other MOD
 	
 	//Little Helper, huh?

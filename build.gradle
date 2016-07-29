@@ -26,7 +26,7 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.3"
+version = "1.3.1"
 group= "cf.brforgers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "DragonScalesEX"
 
