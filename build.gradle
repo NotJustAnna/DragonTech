@@ -21,9 +21,9 @@ repositories {
     }
 }
 
-version = "2.0"
+version = "1.0"
 group= "cf.brforgers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "DragonScalesEX"
+archivesBaseName = "DragonTech"
 
 minecraft {
     version = "1.10.2-12.18.1.2011"
