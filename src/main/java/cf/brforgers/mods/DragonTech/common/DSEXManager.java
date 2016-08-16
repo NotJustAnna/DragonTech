@@ -4,6 +4,7 @@ import cf.brforgers.api.DragonTech.DragonTechAPI;
 import cf.brforgers.core.lib.FastFactory;
 import cf.brforgers.core.lib.ItemHelper;
 import cf.brforgers.core.lib.RegisterHelper;
+import cf.brforgers.core.lib.RegisterManager;
 import cf.brforgers.mods.DragonTech.DragonTech;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockCauldronConstruct;
@@ -28,6 +29,7 @@ import static net.minecraft.inventory.EntityEquipmentSlot.*;
 public class DSEXManager {
     public static final FastFactory factory = FastFactory.newFactory(DragonTech.tabDragonScales, Lib.MODID, ROCK);
     public static final RegisterHelper register = RegisterHelper.fromMod(Lib.MODID);
+    public static final RegisterManager registries = RegisterManager.getPersonal();
 
     private static void registerMaterialHandling() {
         DRAGONMETAL_TOOL_MATERIAL.setRepairItem(ItemHelper.toStack(DRAGON_METAL));

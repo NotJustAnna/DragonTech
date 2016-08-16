@@ -2,10 +2,7 @@ package cf.brforgers.api.DragonTech;
 
 import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
 import cf.brforgers.api.DragonTech.cauldron.IJEICauldron;
-import cf.brforgers.core.lib.world.WorldBlockPos;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,23 +15,6 @@ public class DragonTechAPI {
     private static final Map<Block, Float> customMultiToolMiningSpeed = new HashMap<Block, Float>();
 
     private DragonTechAPI() {
-    }
-
-    public static ICauldronRecipe getValidRecipe(WorldBlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-        for (ICauldronRecipe recipe : cauldronRecipes) {
-            if (recipe.isValidInput(pos, heldItem, hand, essentiaLevel)) return recipe;
-        }
-        return null;
-    }
-
-    public static void register(Object object) {
-        if (object instanceof ICauldronRecipe) {
-            cauldronRecipes.add((ICauldronRecipe) object);
-        }
-
-        if (object instanceof IJEICauldron) {
-            jeiCauldronRecipes.add((IJEICauldron) object);
-        }
     }
 
     public static void setCustomSpeedForBlock(Block block, float speed) {

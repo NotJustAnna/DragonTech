@@ -1,9 +1,8 @@
 package cf.brforgers.mods.DragonTech.common.general;
 
-import cf.brforgers.api.DragonTech.DragonTechAPI;
 import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
-import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DSEXManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +16,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class CauldronHandler {
+    public static ICauldronRecipe getValidRecipe(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+        for (ICauldronRecipe recipe : DSEXManager.registries.get(ICauldronRecipe.class)) {
+            if (recipe.isValidInput(world, pos, heldItem, hand, essentiaLevel)) return recipe;
+        }
+        return null;
+    }
+
     public static void performCauldronInteraction(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) return; //Check if World is Local
 
@@ -59,17 +65,15 @@ public class CauldronHandler {
         //WorldBlockPos worldPos = new WorldBlockPos(params.world, params.position);
         int level = world.getBlockState(pos).getValue(BlockModCauldron.LEVEL);
 
-        WorldBlockPos wp = new WorldBlockPos(world, pos);
-
-        ICauldronRecipe recipe = DragonTechAPI.getValidRecipe(wp, heldItem, hand, level);
+        ICauldronRecipe recipe = getValidRecipe(world, pos, heldItem, hand, level);
 
         if (recipe != null) {
             ItemStack stack = heldItem;
-            ItemStack out = recipe.getOutput(wp, heldItem, hand, level);
+            ItemStack out = recipe.getOutput(world, pos, heldItem, hand, level);
 
-            stack.stackSize -= recipe.getItemCost(wp, heldItem, hand, level);
+            stack.stackSize -= recipe.getItemCost(world, pos, heldItem, hand, level);
 
-            setWaterLevel(world, pos, state, level - recipe.getEssentiaCost(wp, heldItem, hand, level));
+            setWaterLevel(world, pos, state, level - recipe.getEssentiaCost(world, pos, heldItem, hand, level));
 
             if (stack.stackSize == 0) {
                 player.setHeldItem(hand, out);

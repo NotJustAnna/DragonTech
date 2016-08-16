@@ -1,9 +1,15 @@
 package cf.brforgers.mods.DragonTech;
 
+import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
+import cf.brforgers.api.DragonTech.cauldron.IJEICauldron;
+import cf.brforgers.core.lib.ModDefinition;
+import cf.brforgers.core.lib.RegisterManager;
 import cf.brforgers.mods.DragonTech.common.CommonProxy;
 import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DSEXManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -14,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Lib.MODID, name = Lib.MODNAME, version = Lib.VERSION, dependencies = Lib.DEPS)
 public class DragonTech {
-
 	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {
 		@Override
 		public Item getTabIconItem() {
@@ -26,6 +31,12 @@ public class DragonTech {
 	@SidedProxy(clientSide = "cf.brforgers.mods.DragonTech.client.ClientProxy", serverSide = "cf.brforgers.mods.DragonTech.common.CommonProxy")
 	public static CommonProxy proxy;
 	public static Logger logger;
+
+	public DragonTech() {
+		RegisterManager.getGlobal(ModDefinition.class).putObject(Lib.MODID, new ModDefinition(Lib.MODID, Lib.MODNAME, Lib.FANCYNAME));
+		DSEXManager.registries.boundRegistryWithForge(ICauldronRecipe.class, 1024, new ResourceLocation("dragontech", "cauldron_recipes"), null);
+		DSEXManager.registries.boundRegistryWithForge(IJEICauldron.class, 1024, new ResourceLocation("dragontech", "jei_cauldron"), null);
+	}
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)

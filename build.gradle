@@ -15,9 +15,11 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 repositories {
-    maven {
-        // location of the maven that hosts JEI files
+    maven { //JEI
         url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven { //GUIDEAPI
+        url 'http://tehnut.info/maven/'
     }
 }
 
@@ -36,12 +38,14 @@ println " Building: ${archivesBaseName} v${version}"
 
 dependencies {
     // you may put jars on which you depend on in ./libs
-    println("[DragonTech] Adding dependencies...")
+    println("[${archivesBaseName}] Adding dependencies...")
     // compile against the JEI API
     deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232:api"
+    // let's use GuideAPI too
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.9-2.0.0-31"
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_1.10.2:3.7.6.232"
-    println("[DragonTech] Done.")
+    println("[${archivesBaseName}] Done.")
 }
 
 idea.module.inheritOutputDirs = true
