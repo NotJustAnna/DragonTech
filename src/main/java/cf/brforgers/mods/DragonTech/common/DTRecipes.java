@@ -1,20 +1,24 @@
 package cf.brforgers.mods.DragonTech.common;
 
-import cf.brforgers.api.DragonTech.DragonTechAPI;
 import cf.brforgers.api.DragonTech.cauldron.DummyCauldronRecipe;
-import cf.brforgers.mods.DragonTech.common.virus.DraconyVirus;
+import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
+import cf.brforgers.mods.DragonTech.common.world.DTWorld;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-import static cf.brforgers.mods.DragonTech.common.DSEX.*;
+import static cf.brforgers.mods.DragonTech.common.DT.*;
+import static cf.brforgers.mods.DragonTech.common.DTManager.REGISTER;
 import static net.minecraft.init.Blocks.*;
 import static net.minecraft.init.Items.*;
 
-public class DSEXRecipes {
+public class DTRecipes {
     private static ItemStack toWildcardStack(Block block) {
         return new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE);
     }
@@ -38,50 +42,50 @@ public class DSEXRecipes {
     }
 
     public static void registerRecipes() {
-        DragonTechAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE)));
-        DragonTechAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL)));
-        DragonTechAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL)));
-        DragonTechAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE)));
-        DragonTechAPI.cauldronRecipes.add(new DummyCauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK)));
-        DragonTechAPI.cauldronRecipes.add(
+        REGISTER.register(new DummyCauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE)));
+        REGISTER.register(new DummyCauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL)));
+        REGISTER.register(new DummyCauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL)));
+        REGISTER.register(new DummyCauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE)));
+        REGISTER.register(new DummyCauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK)));
+        REGISTER.register(
                 new DummyCauldronRecipe(new ItemStack(BRICK_BLOCK), 1, new ItemStack(DRAGON_BRICKS)) {
-                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
-                        ItemStack output = super.getOutput(params, essentiaLevel);
+                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                        ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
                         output.stackSize = input.stackSize;
                         return output;
                     }
 
-                    public int getEssentiaCost(BlockActivationParams params, int essentiaLevel) {
+                    public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
                         return MathHelper.clamp_int((int) ((float) (input.stackSize / 64) * 3) + 1, 1, 3);
                     }
 
-                    public int getItemCost(BlockActivationParams params, int essentiaLevel) {
-                        return input.stackSize;
+                    public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                        return heldItem.stackSize;
                     }
                 }
         );
-        DragonTechAPI.cauldronRecipes.add(
+        REGISTER.register(
                 new DummyCauldronRecipe(new ItemStack(SOUL_SAND), 1, new ItemStack(END_STONE)) {
-                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
-                        ItemStack output = super.getOutput(params, essentiaLevel);
+                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                        ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
                         output.stackSize = MathHelper.clamp_int(input.stackSize, 0, 16);
                         return output;
                     }
 
-                    public int getEssentiaCost(BlockActivationParams params, int essentiaLevel) {
+                    public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
                         return MathHelper.clamp_int((int) ((float) (input.stackSize / 16) * 3) + 1, 1, 3);
                     }
 
-                    public int getItemCost(BlockActivationParams params, int essentiaLevel) {
+                    public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
                         return MathHelper.clamp_int(input.stackSize, 0, 16);
                     }
                 }
         );
 
-        DragonTechAPI.cauldronRecipes.add(
+        REGISTER.register(
                 new DummyCauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
-                    public ItemStack getOutput(BlockActivationParams params, int essentiaLevel) {
-                        DraconyVirus.createAt(world, x, y - 1, z, (7 + world.rand.nextInt(10)));
+                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                        DTVirus.createAt(DTWorld.batchExecutor, world, pos, (7 + world.rand.nextInt(10)));
                         return null;
                     }
                 }

@@ -2,11 +2,11 @@ package cf.brforgers.mods.DragonTech;
 
 import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
 import cf.brforgers.api.DragonTech.cauldron.IJEICauldron;
+import cf.brforgers.core.lib.GeneralRegistry;
 import cf.brforgers.core.lib.ModDefinition;
-import cf.brforgers.core.lib.RegisterManager;
 import cf.brforgers.mods.DragonTech.common.CommonProxy;
-import cf.brforgers.mods.DragonTech.common.DSEX;
-import cf.brforgers.mods.DragonTech.common.DSEXManager;
+import cf.brforgers.mods.DragonTech.common.DT;
+import cf.brforgers.mods.DragonTech.common.DTManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -20,10 +20,10 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Lib.MODID, name = Lib.MODNAME, version = Lib.VERSION, dependencies = Lib.DEPS)
 public class DragonTech {
-	public static final CreativeTabs tabDragonScales = new CreativeTabs("tabDragonScalesEX") {
-		@Override
+    public static final CreativeTabs tabDragonTech = new CreativeTabs("tabDragonTech") {
+        @Override
 		public Item getTabIconItem() {
-            return DSEX.DRAGON_ESSENCE_SHARD;
+            return DT.DRAGON_ESSENCE_SHARD;
         }
 	};
 	@Mod.Instance
@@ -33,10 +33,10 @@ public class DragonTech {
 	public static Logger logger;
 
 	public DragonTech() {
-		RegisterManager.getGlobal(ModDefinition.class).putObject(Lib.MODID, new ModDefinition(Lib.MODID, Lib.MODNAME, Lib.FANCYNAME));
-		DSEXManager.registries.boundRegistryWithForge(ICauldronRecipe.class, 1024, new ResourceLocation("dragontech", "cauldron_recipes"), null);
-		DSEXManager.registries.boundRegistryWithForge(IJEICauldron.class, 1024, new ResourceLocation("dragontech", "jei_cauldron"), null);
-	}
+        GeneralRegistry.getGlobal(ModDefinition.class).putObject(Lib.MODID, Lib.MOD);
+        DTManager.REGISTER.REGISTRY.boundRegistryWithForge(ICauldronRecipe.class, 1024, new ResourceLocation("dragontech", "cauldron_recipes"), null);
+        DTManager.REGISTER.REGISTRY.boundRegistryWithForge(IJEICauldron.class, 1024, new ResourceLocation("dragontech", "jei_cauldron"), null);
+    }
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)

@@ -1,37 +1,37 @@
 package cf.brforgers.mods.DragonTech.common;
 
-import cf.brforgers.mods.DragonTech.common.general.events.EventHandler;
+import cf.brforgers.core.lib.EasterEggManager;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.item.ItemStack;
 
 public class CommonProxy {
 	public void preInit()
 	{
-        DSEXManager.registerItems();   //Items
-        DSEXManager.registerBlocks();  //Blocks
-        DSEXRecipes.registerOredict(); //Oredict
-    }
+		DTManager.registerItems();   //Items
+		DTManager.registerBlocks();  //Blocks
+		DTRecipes.registerOredict(); //Oredict
+	}
 	
 	public void init()
 	{
-        DSEXRecipes.registerOredict();
-        DSEXRecipes.registerRecipes();
-        registerRenderThings();
+		DTRecipes.registerOredict();
+		DTRecipes.registerRecipes();
+		registerRenderThings();
 		registerHandlers();
 	}
 	
 	public void postInit()
 	{
+		EasterEggManager.addDropItemStack("AdrianTodt", new ItemStack(DT.DRAGON_SCALE));
+		EasterEggManager.addDragonDropItemStack(new ItemStack(DT.DRAGON_SCALE, 30));
+		EasterEggManager.addDragonDropItemStack(new ItemStack(DT.DRAGON_SCALE, 30));
 		//CauldronAPIHandler.processDispensingBehaviour();
 	}
 	
 	public void registerHandlers() {
-		Object handler = new EventHandler();
-		MinecraftForge.EVENT_BUS.register(handler);
 	}
-	
-	public void registerRenderThings(){
-		
+
+	public void registerRenderThings() {
 	}
 
 	public ModelBiped getArmorModel(int id) {

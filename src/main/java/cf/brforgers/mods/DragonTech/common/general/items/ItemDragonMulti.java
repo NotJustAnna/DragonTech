@@ -27,7 +27,7 @@ public class ItemDragonMulti extends ItemPickaxe
         shovel = new InternalMultiToolShovel(material);
         axe = new InternalMultiToolAxe(material);
         hoe = new InternalMultiToolHoe(material);
-        this.setCreativeTab(DragonTech.tabDragonScales);
+        this.setCreativeTab(DragonTech.tabDragonTech);
     }
 
 	@Override

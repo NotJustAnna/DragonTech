@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
 import cf.brforgers.core.lib.world.WorldBlockPos;
-import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class DraconyLeaves extends BlockLeaves
 {
-    private ItemStack sapling = new ItemStack(DSEX.DRACONY_SAPLING);
+    private ItemStack sapling = new ItemStack(DT.DRACONY_SAPLING);
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)

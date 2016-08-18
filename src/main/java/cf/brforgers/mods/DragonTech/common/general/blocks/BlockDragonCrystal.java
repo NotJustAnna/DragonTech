@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.general.blocks;
 
-import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.general.blocks.tile.TileCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -51,7 +51,7 @@ public class BlockDragonCrystal extends BlockContainer {
 
     public Item getItemDropped(int ignored1, Random ignored2, int ignored3)
     {
-        return DSEX.DRAGON_ESSENCE_SHARD;
+        return DT.DRAGON_ESSENCE_SHARD;
     }
 
     public int quantityDropped(Random rand)

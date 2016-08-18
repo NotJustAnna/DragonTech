@@ -1,8 +1,8 @@
 package cf.brforgers.mods.DragonTech.common.general;
 
 import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
-import cf.brforgers.mods.DragonTech.common.DSEX;
-import cf.brforgers.mods.DragonTech.common.DSEXManager;
+import cf.brforgers.mods.DragonTech.common.DT;
+import cf.brforgers.mods.DragonTech.common.DTManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class CauldronHandler {
     public static ICauldronRecipe getValidRecipe(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-        for (ICauldronRecipe recipe : DSEXManager.registries.get(ICauldronRecipe.class)) {
+        for (ICauldronRecipe recipe : DTManager.registries.get(ICauldronRecipe.class)) {
             if (recipe.isValidInput(world, pos, heldItem, hand, essentiaLevel)) return recipe;
         }
         return null;
@@ -35,17 +35,17 @@ public class CauldronHandler {
     }
 
     private static boolean checkCauldronIntegrity(World world, BlockPos pos, IBlockState state) {
-        if (!state.getBlock().equals(DSEX.CAULDRON)) { //Something is trolling us
+        if (!state.getBlock().equals(DT.CAULDRON)) { //Something is trolling us
             try {
-                throw new IllegalStateException("Block isn't a DSEX Cauldron");
+                throw new IllegalStateException("Block isn't a DT Cauldron");
             } catch (Exception e) { //Let's forge a Exception to get an StackTrace
-                DSEX.LOGGER.warn("Forged attempt with Cauldron Interaction detected. REPORT THIS TO THE MODDER.", e);
+                DT.LOGGER.warn("Forged attempt with Cauldron Interaction detected. REPORT THIS TO THE MODDER.", e);
             }
             return false;
         }
 
         if (state.getValue(BlockModCauldron.LEVEL) == 0) { //Fix the Cauldron if it is with no Water
-            DSEX.LOGGER.warn("DSEX Cauldron is empty. This should be nothing to worry, but this is being warned if weird behaviour happens.");
+            DT.LOGGER.warn("DT Cauldron is empty. This should be nothing to worry, but this is being warned if weird behaviour happens.");
             world.setBlockState(pos, Blocks.CAULDRON.getDefaultState());
             return false;
         }
@@ -54,7 +54,7 @@ public class CauldronHandler {
     }
 
     private static boolean isLocked(World world, BlockPos pos, IBlockState state) {
-        if (world.getBlockState(pos.up()).getBlock().equals(DSEX.CAULDRON_CONSTRUCT)) {
+        if (world.getBlockState(pos.up()).getBlock().equals(DT.CAULDRON_CONSTRUCT)) {
             return true;
         }
 

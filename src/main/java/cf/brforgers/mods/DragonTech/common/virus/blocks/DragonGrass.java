@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
-import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DT;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,7 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
         {
             if (world.getLightFromNeighbors(pos.up()) < 4 && world.getBlockState(pos.up()).getLightOpacity(world, pos.up()) > 2)
             {
-                world.setBlockState(pos, DSEX.DRAGON_DIRT.getDefaultState());
+                world.setBlockState(pos, DT.DRAGON_DIRT.getDefaultState());
             } else if (world.getLightFromNeighbors(pos.up()) >= 9)
             {
                 super.updateTick(world, pos, state, rand);
@@ -39,7 +39,7 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return DSEX.DRAGON_DIRT.getItemDropped(DSEX.DRAGON_DIRT.getDefaultState(), rand, fortune);
+        return DT.DRAGON_DIRT.getItemDropped(DT.DRAGON_DIRT.getDefaultState(), rand, fortune);
     }
 
     @Override

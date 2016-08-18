@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
-import cf.brforgers.mods.DragonTech.common.DSEXManager;
+import cf.brforgers.mods.DragonTech.common.DTManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -27,12 +27,12 @@ public class ItemEssenceBottle extends Item {
 			Block block = blockSource.getWorld().getBlock(x, y, z);
 			int meta = blockSource.getWorld().getBlockMetadata(x, y, z);
 
-			if (block == DSEXManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
-				meta++;
+            if (block == DTManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
+                meta++;
 				meta &= 3;
-				blockSource.getWorld().setBlock(x, y, z, DSEXManager.modCauldron, meta, 3);
-				((BlockModCauldron) DSEXManager.modCauldron).setMetadataProperly(blockSource.getWorld(), x, y, z, meta, DSEXManager.modCauldron);
-			} else {
+                blockSource.getWorld().setBlock(x, y, z, DTManager.modCauldron, meta, 3);
+                ((BlockModCauldron) DTManager.modCauldron).setMetadataProperly(blockSource.getWorld(), x, y, z, meta, DTManager.modCauldron);
+            } else {
 				return stack;
 			}
 			stack.stackSize -= 1;
@@ -54,12 +54,11 @@ public class ItemEssenceBottle extends Item {
 		Block block = theWorld.getBlock(x, y, z);
 		int meta = theWorld.getBlockMetadata(x, y, z);
 
-		if (block == DSEXManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0)
-		{
+        if (block == DTManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
 			meta++;
-			theWorld.setBlock(x, y, z, DSEXManager.modCauldron, meta & 3, 3);
-			((BlockModCauldron) DSEXManager.modCauldron).setMetadataProperly(theWorld, x, y, z, meta & 3, DSEXManager.modCauldron);
-		} else {
+            theWorld.setBlock(x, y, z, DTManager.modCauldron, meta & 3, 3);
+            ((BlockModCauldron) DTManager.modCauldron).setMetadataProperly(theWorld, x, y, z, meta & 3, DTManager.modCauldron);
+        } else {
 			return false;
 		}
 		stack.stackSize--;

@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
-import cf.brforgers.mods.DragonTech.common.DSEXManager;
+import cf.brforgers.mods.DragonTech.common.DTManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -42,7 +42,7 @@ public class DraconySapling extends BlockBush implements IGrowable
     /* Override for DragonLands Grass */
     protected boolean canPlaceBlockOn(Block block)
     {
-        return block == Blocks.grass || block == Blocks.dirt || block == DSEXManager.dragonGrass;
+        return block == Blocks.grass || block == Blocks.dirt || block == DTManager.dragonGrass;
     }
 
     public void growTree(World world, int x, int y, int z, Random r)
@@ -70,7 +70,7 @@ public class DraconySapling extends BlockBush implements IGrowable
         
         if (isHuge)
         {
-            tree = new WorldGenBigTree(true, DSEXManager.draconyLog, DSEXManager.draconyLeaves, this);
+            tree = new WorldGenBigTree(true, DTManager.draconyLog, DTManager.draconyLeaves, this);
             world.setBlock(x + offX, y, z + offZ, Blocks.air);
             world.setBlock(x + offX + 1, y, z + offZ, Blocks.air);
             world.setBlock(x + offX, y, z + offZ + 1, Blocks.air);
@@ -78,7 +78,7 @@ public class DraconySapling extends BlockBush implements IGrowable
         }
         else
         {
-            tree = new WorldGenTree(true, DSEXManager.draconyLog, DSEXManager.draconyLeaves, this);
+            tree = new WorldGenTree(true, DTManager.draconyLog, DTManager.draconyLeaves, this);
             world.setBlock(x, y, z, Blocks.air);
         }
             

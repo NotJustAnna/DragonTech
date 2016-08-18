@@ -1,5 +1,7 @@
 package cf.brforgers.mods.DragonTech;
 
+import cf.brforgers.core.lib.ModDefinition;
+
 public class Lib {
 	public static final String MODID = "dragontech";
 	public static final String MODNAME = "DragonTech";
@@ -9,6 +11,8 @@ public class Lib {
 	public static final String TEXTURE_PATH = MODID + ":";
 	//Easter Eggs
 	public static final String FANCYNAME = "§5§lDragonTech";
+
+    public static final ModDefinition MOD = new ModDefinition(MODID, MODNAME, FANCYNAME);
 
     private Lib() {
     }

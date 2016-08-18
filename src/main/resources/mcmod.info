@@ -1,12 +1,12 @@
 [
 {
-"modid": "DragonScalesEX",
-"name": "Dragon Scales EX Mod",
-"description": "EX means EXperimental!",
+"modid": "dragontech",
+"name": "DragonTech",
+"description": "Here be Dragons!",
 "version": "${version}",
 "mcversion": "${mcversion}",
 "url": "",
-"authorList": ["Jakester12","Heltrato","Hyghlander"],
+"authorList": ["Jakester12","Heltrato","AdrianTodt"],
 "credits": "Thanks to y'all for downloading this mod and supporting me making it :)"
 }
 ]

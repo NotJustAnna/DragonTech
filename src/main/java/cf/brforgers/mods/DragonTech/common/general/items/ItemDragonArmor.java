@@ -1,8 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
-import cf.brforgers.api.DragonTech.armor.IEventArmor;
-import cf.brforgers.mods.DragonTech.common.DSEX;
-import cf.brforgers.mods.DragonTech.common.utils.ArmorUtils;
+import cf.brforgers.mods.DragonTech.common.DT;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,20 +48,20 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventA
 	public static Item getArmorForSlot(int slot) {
 		switch (slot) {
 			case 0:
-				return DSEX.SCALES_BOOTS;
-			case 1:
-				return DSEX.SCALES_LEGGINGS;
-			case 2:
-				return DSEX.SCALES_CHESTPLATE;
-			case 3:
-				return DSEX.SCALES_HELM;
-		}
+                return DT.SCALES_BOOTS;
+            case 1:
+                return DT.SCALES_LEGGINGS;
+            case 2:
+                return DT.SCALES_CHESTPLATE;
+            case 3:
+                return DT.SCALES_HELM;
+        }
 		return null;
 	}
 
 //	@Override
 //	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-//		int id = stack.getItem().equals(DSEXManager.scalesLeggings) ? 2 : stack.getItem().equals(DSEXManager.scalesChestplate) ? 3 : 1;
+//		int id = stack.getItem().equals(DTManager.scalesLeggings) ? 2 : stack.getItem().equals(DTManager.scalesChestplate) ? 3 : 1;
 //		return Lib.TEXTURE_PATH + "textures/models/armor/scalesArmor"+id+".png";
 //	}
 //
@@ -145,7 +143,7 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventA
 	}
 
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-		if (!haveFullArmor(player) || itemStack.getItem() != DSEX.SCALES_CHESTPLATE) return;
+        if (!haveFullArmor(player) || itemStack.getItem() != DT.SCALES_CHESTPLATE) return;
 
 		player.capabilities.allowFlying = true;
 		player.fallDistance = 0.0F;

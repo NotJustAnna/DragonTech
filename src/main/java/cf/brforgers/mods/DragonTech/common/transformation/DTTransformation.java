@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.transformation;
 
-import cf.brforgers.mods.DragonTech.common.utils.DSEXWorldData;
+import cf.brforgers.mods.DragonTech.common.utils.DTWorldData;
 import cf.brforgers.mods.DragonTech.common.utils.EnumPlayerState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class DSEXTransformation {
+public class DTTransformation {
     public static void enableDragonModel(Item item) {
         item.addPropertyOverride(new ResourceLocation("entityType"), new IItemPropertyGetter() {
             @SideOnly(Side.CLIENT)
@@ -30,7 +30,7 @@ public class DSEXTransformation {
 
     private static float isDragon(EntityLivingBase entityIn) {
         if (entityIn instanceof EntityPlayer) {
-            return DSEXWorldData.get((EntityPlayer) entityIn).getState((EntityPlayer) entityIn) == EnumPlayerState.NONE ? 0 : 1;
+            return DTWorldData.get((EntityPlayer) entityIn).getState((EntityPlayer) entityIn) == EnumPlayerState.NONE ? 0 : 1;
         }
 
         return 0;

@@ -7,7 +7,7 @@
 //import cf.brforgers.mods.DragonTech.Lib;
 //import cf.brforgers.api.DragonTech.DragonScalesOldAPI;
 //import cf.brforgers.api.DragonTech.DragonScalesOldAPI.CauldronRecipe;
-//import cf.brforgers.mods.DragonTech.common.DSEXManager;
+//import cf.brforgers.mods.DragonTech.common.DTManager;
 //import net.minecraft.client.gui.inventory.GuiContainer;
 //import net.minecraft.client.gui.inventory.GuiFurnace;
 //import net.minecraft.init.Items;
@@ -27,7 +27,7 @@
 //        public InfusionPair(ItemStack ingred, int essentiaAmount, ItemStack result) {
 //            essentiaAmount = MathHelper.clamp_int(essentiaAmount, 0, 3);
 //            this.inputStack = new PositionedStack(ingred, 43, 18);
-//            this.essentiaBottle = new PositionedStack((essentiaAmount == 0) ? new ItemStack(Items.glass_bottle) : new ItemStack(DSEXManager.dragonEssenceBottle, essentiaAmount), 74, 38);
+//            this.essentiaBottle = new PositionedStack((essentiaAmount == 0) ? new ItemStack(Items.glass_bottle) : new ItemStack(DTManager.dragonEssenceBottle, essentiaAmount), 74, 38);
 //            this.outputStack = new PositionedStack(result, 105, 18);
 //            this.cauldronIcon = new PositionedStack(new ItemStack(Items.cauldron), 74, 18);
 //        }

@@ -13,26 +13,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class DSEXWorldData extends WorldSavedData {
-    private static final String DATA_NAME = "DSEXWorldData";
+public class DTWorldData extends WorldSavedData {
+    private static final String DATA_NAME = "DTWorldData";
     private Map<UUID, EnumPlayerState> playerStates = new HashMap<UUID, EnumPlayerState>();
 
-    public DSEXWorldData() {
+    public DTWorldData() {
         super(DATA_NAME);
     }
 
-    public static DSEXWorldData get(World world) {
+    public static DTWorldData get(World world) {
         MapStorage storage = world.getMapStorage();
-        DSEXWorldData instance = (DSEXWorldData) storage.getOrLoadData(DSEXWorldData.class, DATA_NAME);
+        DTWorldData instance = (DTWorldData) storage.getOrLoadData(DTWorldData.class, DATA_NAME);
 
         if (instance == null) {
-            instance = new DSEXWorldData();
+            instance = new DTWorldData();
             storage.setData(DATA_NAME, instance);
         }
         return instance;
     }
 
-    public static DSEXWorldData get(EntityPlayer player) {
+    public static DTWorldData get(EntityPlayer player) {
         return get(player.worldObj);
     }
 

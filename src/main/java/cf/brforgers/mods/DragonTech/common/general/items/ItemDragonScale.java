@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
-import cf.brforgers.mods.DragonTech.common.DSEXManager;
+import cf.brforgers.mods.DragonTech.common.DTManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,8 +25,8 @@ public class ItemDragonScale extends Item {
 		if (world.getBlock(x, y, z) != Blocks.cauldron ||world.getBlockMetadata(x, y, z) != 3)
 			return false;
 
-        world.setBlock(x, y, z, DSEXManager.modCauldron, 3, 3);
-        BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DSEXManager.modCauldron);
+        world.setBlock(x, y, z, DTManager.modCauldron, 3, 3);
+        BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DTManager.modCauldron);
 
         stack.stackSize -= 1;
 		

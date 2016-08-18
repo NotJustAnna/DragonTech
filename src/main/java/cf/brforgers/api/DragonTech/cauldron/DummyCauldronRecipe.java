@@ -1,6 +1,6 @@
 package cf.brforgers.api.DragonTech.cauldron;
 
-import cf.brforgers.api.DragonTech.IProvider;
+import cf.brforgers.api.DragonTech.providers.IProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -26,13 +26,18 @@ public class DummyCauldronRecipe extends IForgeRegistryEntry.Impl<ICauldronRecip
     }
 
     @Override
+    public boolean canProvide() {
+        return true;
+    }
+
+    @Override
     public boolean isValidInput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
         return this.input.isItemEqual(input) && (getItemCost(world, pos, heldItem, hand, essentiaLevel) <= input.stackSize) && (getEssentiaCost(world, pos, heldItem, hand, essentiaLevel) <= essentiaLevel);
     }
 
     @Override
     public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-        return null;
+        return output;
     }
 
     @Override

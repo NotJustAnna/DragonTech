@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
 import cf.brforgers.core.lib.world.WorldBlockPos;
-import cf.brforgers.mods.DragonTech.common.DSEX;
+import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -26,10 +26,10 @@ public class BlockVirusBase extends Block {
         return SoundType.STONE;
     }
 
-    public static void randomTick(WorldBlockPos exactPos)
+    public static void randomTick(World world, BlockPos pos)
     {
-        if (exactPos.getWorld().rand.nextInt(20) == 0)
-            DVUtils.procriateAt(exactPos);
+        if (world.rand.nextInt(20) == 0)
+            DVUtils.procriateAt(world, pos);
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -38,7 +38,7 @@ public class BlockVirusBase extends Block {
 
     public boolean isToolEffective(String type, IBlockState state)
     {
-        if ("shovel".equals(type) && (this == DSEX.DRAGON_GRASS || this == DSEX.DRAGON_DIRT))
+        if ("shovel".equals(type) && (this == DT.DRAGON_GRASS || this == DT.DRAGON_DIRT))
             return true;
         return super.isToolEffective(type, state);
     }

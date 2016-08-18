@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * All Static Blocks, Items, etc
  */
-public class DSEX {
+public class DT {
     public static final Item.ToolMaterial DRAGONMETAL_TOOL_MATERIAL =
             EnumHelper.addToolMaterial("dragon_metal", 10, 2000, 50.0F, 16.0F, 35);
     public static final ItemArmor.ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL =

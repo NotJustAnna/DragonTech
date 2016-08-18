@@ -8,7 +8,7 @@ import mezz.jei.api.JEIPlugin;
 import javax.annotation.Nonnull;
 
 @JEIPlugin
-public class JEIDSEX implements IModPlugin {
+public class JEIDT implements IModPlugin {
     @Override
     public void register(@Nonnull IModRegistry registry) {
 

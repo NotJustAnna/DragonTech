@@ -2,7 +2,7 @@ package cf.brforgers.mods.DragonTech.common.world;
 
 import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonTech.Lib;
-import cf.brforgers.mods.DragonTech.common.virus.DraconyVirus;
+import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -46,8 +46,8 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 			baseX += rand.nextInt(16);
 			baseY += rand.nextInt(16);
 			baseZ += rand.nextInt(16);
-			DSEXWorld.generateOre(world, baseX, baseY, baseZ, 5, 5, 5, Blocks.end_stone);
-		}
+            DTWorld.generateOre(world, baseX, baseY, baseZ, 5, 5, 5, Blocks.end_stone);
+        }
 	}
 
 	private void generateNether(World world, Random rand, int BlockX, int BlockZ) {
@@ -115,8 +115,8 @@ public class DragonScalesWorldGenerator implements IWorldGenerator {
 				BlockPos pos = new BlockPos(x, y, z);
 				if (DVUtils.canConvertBlock(world.getBlockState(pos))) {
 						fails = 0;
-					DraconyVirus.createAt(DSEXWorld.batchExecutor, new WorldBlockPos(world, BlockX + x, y, BlockZ + z), spread);
-					return;
+                    DTVirus.createAt(DTWorld.batchExecutor, new WorldBlockPos(world, BlockX + x, y, BlockZ + z), spread);
+                    return;
 				} else if (!world.isAirBlock(pos)) {
 						if (!world.canBlockSeeTheSky(x, y, z)) break;
 					}
