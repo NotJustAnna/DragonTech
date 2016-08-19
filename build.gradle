@@ -48,6 +48,12 @@ dependencies {
     println("[${archivesBaseName}] Done.")
 }
 
+jar {
+    manifest {
+        attributes 'FMLAT': 'dt_at.cfg'
+    }
+}
+
 idea.module.inheritOutputDirs = true
 
 processResources

@@ -6,6 +6,7 @@ import cf.brforgers.core.lib.batch.TickBatchExecutor;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.EnumVirusState;
+import cf.brforgers.mods.DragonTech.common.world.blocks.BlockDragonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
@@ -65,8 +66,9 @@ public class DTWorld implements IWorldGenerator {
                             if (world.rand.nextInt(4) == 3) i = -i;
                             if (world.rand.nextInt(4) == 3) j = -j;
                             if (world.rand.nextInt(4) == 3) k = -k;
-                            if (world.getBlock(BaseX + i, BaseY + j, BaseZ + k).isAir(world, BaseX + i, BaseY + j, BaseZ + k) && (world.getBlock(BaseX + i, BaseY + j - 1, BaseZ + k) == underBlock || world.getBlock(BaseX + i, BaseY + j + 1, BaseZ + k) == underBlock)) {
-                                world.setBlock(BaseX + i, BaseY + j, BaseZ + k, DT.DRAGON_CRYSTAL, i * j * k & 0x0F, 3);
+                            BlockPos pos2 = pos.add(i, j, k);
+                            if (world.isAirBlock(pos2) && (world.getBlockState(pos2.up()).getBlock() == underBlock || world.getBlockState(pos2.down()).getBlock() == underBlock)) {
+                                world.setBlockState(pos2, DT.DRAGON_CRYSTAL.getDefaultState().withProperty(BlockDragonCrystal.ROTATION, i * j * k));
                                 return;
                             }
                         }

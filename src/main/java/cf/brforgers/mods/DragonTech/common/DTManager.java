@@ -7,12 +7,14 @@ import cf.brforgers.core.lib.ModRegister;
 import cf.brforgers.mods.DragonTech.DragonTech;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockCauldronConstruct;
-import cf.brforgers.mods.DragonTech.common.general.blocks.BlockDragonCrystal;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import cf.brforgers.mods.DragonTech.common.general.blocks.tile.TileCauldronConstruct;
-import cf.brforgers.mods.DragonTech.common.general.blocks.tile.TileCrystal;
 import cf.brforgers.mods.DragonTech.common.general.items.*;
-import cf.brforgers.mods.DragonTech.common.virus.blocks.*;
+import cf.brforgers.mods.DragonTech.common.virus.blocks.BlockVirusBase;
+import cf.brforgers.mods.DragonTech.common.virus.blocks.DraconyLeaves;
+import cf.brforgers.mods.DragonTech.common.virus.blocks.DraconyLog;
+import cf.brforgers.mods.DragonTech.common.virus.blocks.DragonGrass;
+import cf.brforgers.mods.DragonTech.common.world.blocks.BlockDragonCrystal;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -54,7 +56,6 @@ public class DTManager {
 
         DRAGON_CRYSTAL = FACTORY.processBlock(new BlockDragonCrystal(), "DRAGON_CRYSTAL");
         REGISTER.register(DRAGON_CRYSTAL);
-        GameRegistry.registerTileEntity(TileCrystal.class, "Tile"+Lib.MODID+"DragonCrystal");
 
         DRAGON_STONE = FACTORY.processBlock(new BlockVirusBase(ROCK), "DRAGON_STONE");
         REGISTER.register(DRAGON_STONE);
@@ -71,8 +72,8 @@ public class DTManager {
         DRACONY_LOG = FACTORY.processBlock(new DraconyLog(), "DRACONY_LOG");
         REGISTER.register(DRACONY_LOG);
 
-        DRACONY_SAPLING = FACTORY.processBlock(new DraconySapling(), "DRACONY_SAPLING");
-        REGISTER.register(DRACONY_SAPLING);
+        //DRACONY_SAPLING = FACTORY.processBlock(new DraconySapling(), "DRACONY_SAPLING");
+        //REGISTER.register(DRACONY_SAPLING);
 
         DRACONY_PLANKS = FACTORY.processBlock(new BlockVirusBase(WOOD).setHardness(2.0F).setResistance(5.0F), "DRACONY_PLANKS");
         REGISTER.register(DRACONY_PLANKS);

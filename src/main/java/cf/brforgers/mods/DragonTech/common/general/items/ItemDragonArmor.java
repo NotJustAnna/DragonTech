@@ -1,5 +1,7 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
+import cf.brforgers.core.internal.InternalEventHandler;
+import cf.brforgers.core.lib.IEventArmor;
 import cf.brforgers.mods.DragonTech.common.DT;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;
@@ -151,7 +153,7 @@ public class ItemDragonArmor extends ItemArmor implements ISpecialArmor, IEventA
 		if (player.getHealth() < 20.0f) {
 			player.heal(0.05f);
 
-			ArmorUtils.getCurrentArmor(player)[player.worldObj.rand.nextInt(4)].damageItem(1, player);
+			InternalEventHandler.getCurrentArmor(player)[player.worldObj.rand.nextInt(4)].damageItem(1, player);
 		}
 
 		if (armorEquippedOnSlot(player, 3)) {

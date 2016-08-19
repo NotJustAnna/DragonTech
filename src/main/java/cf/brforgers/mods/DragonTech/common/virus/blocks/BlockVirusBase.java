@@ -1,6 +1,5 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
-import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.block.Block;
@@ -33,7 +32,7 @@ public class BlockVirusBase extends Block {
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        randomTick(new WorldBlockPos(worldIn, pos));
+        randomTick(worldIn, pos);
     }
 
     public boolean isToolEffective(String type, IBlockState state)

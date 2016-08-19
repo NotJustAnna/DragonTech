@@ -1,6 +1,5 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
-import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.block.BlockLeaves;
@@ -40,7 +39,7 @@ public class DraconyLeaves extends BlockLeaves
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
     {
-        if (!world.isRemote) DVUtils.procriateAt(new WorldBlockPos(world, pos));
+        if (!world.isRemote) DVUtils.procriateAt(world, pos);
 
         super.updateTick(world, pos, state, rand);
     }

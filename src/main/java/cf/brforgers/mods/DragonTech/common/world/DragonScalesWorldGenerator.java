@@ -1,6 +1,5 @@
 package cf.brforgers.mods.DragonTech.common.world;
 
-import cf.brforgers.core.lib.world.WorldBlockPos;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
@@ -8,7 +7,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;

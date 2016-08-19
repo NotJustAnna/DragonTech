@@ -1,12 +1,9 @@
 package cf.brforgers.mods.DragonTech.common.virus.blocks;
 
 import net.minecraft.block.BlockLog;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -21,15 +18,6 @@ public class DraconyLog extends BlockLog
         this.setTickRandomly(true);
         this.setHardness(2.0F);
         this.setStepSound(soundTypeWood);
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        textures[0] = iconRegister.registerIcon(this.getTextureName() + "_side");
-        textures[1] = iconRegister.registerIcon(this.getTextureName() + "_top");
-        this.blockIcon = textures[0];
     }
     
     /**

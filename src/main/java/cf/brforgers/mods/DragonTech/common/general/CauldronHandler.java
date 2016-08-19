@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class CauldronHandler {
     public static ICauldronRecipe getValidRecipe(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-        for (ICauldronRecipe recipe : DTManager.registries.get(ICauldronRecipe.class)) {
+        for (ICauldronRecipe recipe : DTManager.REGISTER.REGISTRY.get(ICauldronRecipe.class)) {
             if (recipe.isValidInput(world, pos, heldItem, hand, essentiaLevel)) return recipe;
         }
         return null;
@@ -62,7 +62,6 @@ public class CauldronHandler {
     }
 
     public static void tryPerformCauldronRecipe(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        //WorldBlockPos worldPos = new WorldBlockPos(params.world, params.position);
         int level = world.getBlockState(pos).getValue(BlockModCauldron.LEVEL);
 
         ICauldronRecipe recipe = getValidRecipe(world, pos, heldItem, hand, level);
