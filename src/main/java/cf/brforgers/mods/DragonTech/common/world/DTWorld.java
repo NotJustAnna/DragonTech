@@ -7,7 +7,6 @@ import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.EnumVirusState;
 import cf.brforgers.mods.DragonTech.common.world.blocks.BlockDragonCrystal;
-import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
@@ -49,14 +48,14 @@ public class DTWorld implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-
+        this.generate(random, chunkX, chunkZ, world, world.provider.getDimension());
     }
 
     public void generate(Random random, int x, int y, World world, int dim) {
-
+        DTDimManager d = DTDimManager.getDimension(dim);
     }
 
-    private void generateOreAsync(final World world, final BlockPos pos, final Vec3i range, final Block underBlock) {
+    private void generateOreAsync(final World world, final BlockPos pos, final Vec3i range) {
         batchExecutor.addRunnablesToNextTick(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +66,7 @@ public class DTWorld implements IWorldGenerator {
                             if (world.rand.nextInt(4) == 3) j = -j;
                             if (world.rand.nextInt(4) == 3) k = -k;
                             BlockPos pos2 = pos.add(i, j, k);
-                            if (world.isAirBlock(pos2) && (world.getBlockState(pos2.up()).getBlock() == underBlock || world.getBlockState(pos2.down()).getBlock() == underBlock)) {
+                            if (world.isAirBlock(pos2) && (!world.isAirBlock(pos2.up()) || !world.isAirBlock(pos2.down()))) {
                                 world.setBlockState(pos2, DT.DRAGON_CRYSTAL.getDefaultState().withProperty(BlockDragonCrystal.ROTATION, i * j * k));
                                 return;
                             }

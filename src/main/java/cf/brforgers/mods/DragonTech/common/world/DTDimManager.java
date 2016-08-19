@@ -7,10 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DTDimManager {
-    //BITMASKS
-    public static final int BIT_ORES = 1;  //0001
-    public static final int BIT_VIRUS = 2; //0010
-    public static final int BIT_ISLES = 4; //0100
+    public static final DTDimManager DEFAULT = new DTDimManager(false, false, false);
     public static Map<Integer, DTDimManager> dims = new HashMap<Integer, DTDimManager>() {{
         dims.put(0, new DTDimManager(true, true, true)); //Overworld
         dims.put(1, new DTDimManager(true, false, false)); //Nether
@@ -19,44 +16,43 @@ public class DTDimManager {
         dims.put(6, new DTDimManager(true, false, false)); //Aroma MinerWorld
     }};
     public GridSystem<EnumVirusState> virusGrid = new GridSystem<EnumVirusState>(8);
-    private int bits = 0;
+    private boolean generateOres, generateVirus, generateIslands;
 
-    public DTDimManager(boolean genOres, boolean genVirus, boolean genIsles) {
-        setOreGen(genOres);
-        setVirus(genVirus);
-        setIsles(genIsles);
+    public DTDimManager(boolean generateOres, boolean generateVirus, boolean generateIslands) {
+        this.generateOres = generateOres;
+        this.generateVirus = generateVirus;
+        this.generateIslands = generateIslands;
     }
 
-    private static boolean getFromMask(int integer, int bitmask) { //Helper function to Bitwise operations
-        return (integer & bitmask) == bitmask;
+    public static DTDimManager getDimension(int id) {
+        if (dims.containsKey(id)) return dims.get(id);
+        return DEFAULT;
     }
 
-    private static int setFromMask(int integer, int bitmask, boolean value) { //Helper function to Bitwise operations
-        if (value) return integer | bitmask;
-        return integer ^ (integer & bitmask);
+    public boolean doGenerateOres() {
+        return generateOres;
     }
 
-    public void setOreGen(boolean value) {
-        bits = setFromMask(bits, BIT_ORES, value);
+    public DTDimManager setGenerateOres(boolean generateOres) {
+        this.generateOres = generateOres;
+        return this;
     }
 
-    public boolean isOreGenEnabled() {
-        return getFromMask(bits, BIT_ORES);
+    public boolean doGenerateVirus() {
+        return generateVirus;
     }
 
-    public void setVirus(boolean value) {
-        bits = setFromMask(bits, BIT_VIRUS, value);
+    public DTDimManager setGenerateVirus(boolean generateVirus) {
+        this.generateVirus = generateVirus;
+        return this;
     }
 
-    public boolean isVirusEnabled() {
-        return getFromMask(bits, BIT_VIRUS);
+    public boolean doGenerateIslands() {
+        return generateIslands;
     }
 
-    public void setIsles(boolean value) {
-        bits = setFromMask(bits, BIT_ISLES, value);
-    }
-
-    public boolean isIslesEnabled() {
-        return getFromMask(bits, BIT_ISLES);
+    public DTDimManager setGenerateIslands(boolean generateIslands) {
+        this.generateIslands = generateIslands;
+        return this;
     }
 }

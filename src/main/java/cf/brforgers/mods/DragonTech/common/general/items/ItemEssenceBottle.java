@@ -3,7 +3,9 @@ package cf.brforgers.mods.DragonTech.common.general.items;
 import cf.brforgers.mods.DragonTech.common.DTManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.item.EntityItem;
@@ -13,18 +15,18 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemEssenceBottle extends Item {
 	private static IBehaviorDispenseItem dispenserBehavior = new IBehaviorDispenseItem() {
 		@Override
 		public ItemStack dispense(IBlockSource blockSource, ItemStack stack) {
-			EnumFacing facing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata()); //Get Facing
-			int x = blockSource.getXInt() + facing.getFrontOffsetX();
-			int y = blockSource.getYInt() + facing.getFrontOffsetY();
-			int z = blockSource.getZInt() + facing.getFrontOffsetZ();
+			IBlockState state = blockSource.getWorld().getBlockState(blockSource.getBlockPos());
+			EnumFacing f = (EnumFacing) state.getValue(BlockDirectional.FACING);
+			BlockPos pos = blockSource.getBlockPos().offset(f, 1);
 
-			Block block = blockSource.getWorld().getBlock(x, y, z);
+			Block block = blockSource.getWorld().getBlockState(pos).getBlock();
 			int meta = blockSource.getWorld().getBlockMetadata(x, y, z);
 
             if (block == DTManager.modCauldron && meta < 3 || block == Blocks.cauldron && meta == 0) {
@@ -36,7 +38,7 @@ public class ItemEssenceBottle extends Item {
 				return stack;
 			}
 			stack.stackSize -= 1;
-			return stack;
+			return null;
 		}
 	};
 
@@ -44,7 +46,7 @@ public class ItemEssenceBottle extends Item {
 	public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
 		super();
 		returnItemstack = returnedItemStackOnUse;
-		BlockDispenser.dispenseBehaviorRegistry.putObject(this, dispenserBehavior);
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, dispenserBehavior);
 	}
 	
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World theWorld, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
