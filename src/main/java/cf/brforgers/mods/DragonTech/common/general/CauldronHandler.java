@@ -4,6 +4,8 @@ import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.DTManager;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class CauldronHandler {
@@ -72,7 +73,7 @@ public class CauldronHandler {
 
             stack.stackSize -= recipe.getItemCost(world, pos, heldItem, hand, level);
 
-            setWaterLevel(world, pos, state, level - recipe.getEssentiaCost(world, pos, heldItem, hand, level));
+            setWaterLevel(world, pos, level - recipe.getEssentiaCost(world, pos, heldItem, hand, level), true);
 
             if (stack.stackSize == 0) {
                 player.setHeldItem(hand, out);
@@ -84,8 +85,27 @@ public class CauldronHandler {
         }
     }
 
-    public static void setWaterLevel(World worldIn, BlockPos pos, IBlockState state, int level) {
-        worldIn.setBlockState(pos, state.withProperty(BlockModCauldron.LEVEL, Integer.valueOf(MathHelper.clamp_int(level, 0, 3))), 2);
-        worldIn.updateComparatorOutputLevel(pos, state.getBlock());
+    public static boolean isValidCauldron(IBlockState state, boolean acceptVanillaAsWell, boolean checkAlsoLevel) {
+        return state.getBlock() == DT.CAULDRON && (!checkAlsoLevel || state.getValue(BlockModCauldron.LEVEL) > 0) || acceptVanillaAsWell && state.getBlock() == Blocks.CAULDRON && (!checkAlsoLevel || state.getValue(BlockModCauldron.LEVEL) > 0);
+    }
+
+    public static void setWaterLevel(World worldIn, BlockPos pos, int level, boolean ignoreCheck) {
+        IBlockState state = worldIn.getBlockState(pos);
+
+        if (ignoreCheck || isValidCauldron(state, true, false)) {
+            Block newBlock = (level == 0) ? Blocks.CAULDRON : DT.CAULDRON;
+            worldIn.setBlockState(pos, newBlock.getDefaultState().withProperty(BlockCauldron.LEVEL, level));
+            worldIn.updateComparatorOutputLevel(pos, state.getBlock());
+        }
+    }
+
+    public static int getWaterLevel(World worldIn, BlockPos pos) {
+        IBlockState state = worldIn.getBlockState(pos);
+
+        if (isValidCauldron(state, true, false)) {
+            return state.getValue(BlockCauldron.LEVEL);
+        }
+
+        return -1;
     }
 }

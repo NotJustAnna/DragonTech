@@ -13,6 +13,6 @@ public class ItemDragonSword extends ItemSword
 	
 	public EnumRarity getRarity(ItemStack ignored)
 	{
-		return EnumRarity.rare;
+		return EnumRarity.RARE;
 	}
 }

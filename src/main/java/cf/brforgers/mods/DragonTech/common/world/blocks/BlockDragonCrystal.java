@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class BlockDragonCrystal extends Block {
     public static final Material CRYSTAL = new Material(MapColor.LAPIS).setTranslucent().setRequiresTool().setNoPushMobility();
-    public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 16);
+    public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
     private Random rand = new Random();
 
 	public BlockDragonCrystal() {

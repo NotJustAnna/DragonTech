@@ -67,7 +67,7 @@ public class DTWorld implements IWorldGenerator {
                             if (world.rand.nextInt(4) == 3) k = -k;
                             BlockPos pos2 = pos.add(i, j, k);
                             if (world.isAirBlock(pos2) && (!world.isAirBlock(pos2.up()) || !world.isAirBlock(pos2.down()))) {
-                                world.setBlockState(pos2, DT.DRAGON_CRYSTAL.getDefaultState().withProperty(BlockDragonCrystal.ROTATION, i * j * k));
+                                world.setBlockState(pos2, DT.DRAGON_CRYSTAL.getDefaultState().withProperty(BlockDragonCrystal.ROTATION, (i * j * k) & 15));
                                 return;
                             }
                         }

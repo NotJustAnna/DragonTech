@@ -1,43 +1,46 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
-import cf.brforgers.mods.DragonTech.common.DTManager;
-import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
+import cf.brforgers.mods.DragonTech.common.general.CauldronHandler;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemDragonScale extends Item {
-	public ItemStack returnItemstack = null;
-	public ItemDragonScale(ItemStack returnedItemStackOnUse) {
-		super();
-		returnItemstack = returnedItemStackOnUse;
+    public ItemDragonScale() {
+        super();
 	}
-	
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-    {
-		if (!player.canPlayerEdit(x, y, z, side, stack))
-            return false;
-		
-		if (world.getBlock(x, y, z) != Blocks.cauldron ||world.getBlockMetadata(x, y, z) != 3)
-			return false;
 
-        world.setBlock(x, y, z, DTManager.modCauldron, 3, 3);
-        BlockModCauldron.setMetadataProperly(world, x, y, z, 3, DTManager.modCauldron);
+    @Override
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        if (!player.canPlayerEdit(pos, side, stack))
+            return EnumActionResult.FAIL;
+
+        if (world.getBlockState(pos).getBlock() != Blocks.CAULDRON || world.getBlockState(pos).getValue(BlockCauldron.LEVEL) != 3)
+            return EnumActionResult.FAIL;
 
         stack.stackSize -= 1;
-		
-		if(stack.stackSize <= 0)
-			player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-        
-        if (returnItemstack != null)
-            if (!player.inventory.addItemStackToInventory(returnItemstack.copy()))
-                world.spawnEntityInWorld(new EntityItem(world, (double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D, returnItemstack.copy()));
-            else if (player instanceof EntityPlayerMP)
+
+        if (stack.stackSize <= 0)
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+
+        CauldronHandler.setWaterLevel(world, pos, 3, true);
+
+        ItemStack returnStack = new ItemStack(Items.LEATHER);
+
+        if (!player.inventory.addItemStackToInventory(returnStack))
+            world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));
+        else if (player instanceof EntityPlayerMP)
                 ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
-        return false;
+        return EnumActionResult.SUCCESS;
     }
 }
