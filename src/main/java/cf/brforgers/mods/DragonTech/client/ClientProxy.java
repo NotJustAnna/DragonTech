@@ -4,6 +4,8 @@ import cf.brforgers.mods.DragonTech.client.models.ModelDragonChestplate;
 import cf.brforgers.mods.DragonTech.common.CommonProxy;
 import net.minecraft.client.model.ModelBiped;
 
+import static cf.brforgers.mods.DragonTech.common.DTManager.REGISTER;
+
 public class ClientProxy extends CommonProxy {
 	private static final ModelBiped dragonChestplate = new ModelDragonChestplate(1.0f);
 	private static final ModelBiped dragonLeggings = new ModelBiped(0.45f);
@@ -16,6 +18,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public void registerRenderThings(){
+		REGISTER.automagicallyRegisterRenderers();
 	}
 	
 	@Override

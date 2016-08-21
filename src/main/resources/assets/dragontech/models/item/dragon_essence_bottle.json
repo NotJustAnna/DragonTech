@@ -1,0 +1,6 @@
+{
+  "parent": "dragontech:item/_standard_item",
+  "textures": {
+    "layer0": "dragontech:items/dragon_essence_bottle"
+  }
+}
