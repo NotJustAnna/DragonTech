@@ -6,9 +6,7 @@ import cf.brforgers.core.lib.ez.mods.FastFactory;
 import cf.brforgers.core.lib.ez.mods.ModRegister;
 import cf.brforgers.mods.DragonTech.DragonTech;
 import cf.brforgers.mods.DragonTech.Lib;
-import cf.brforgers.mods.DragonTech.common.general.blocks.BlockCauldronConstruct;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockModCauldron;
-import cf.brforgers.mods.DragonTech.common.general.blocks.tile.TileCauldronConstruct;
 import cf.brforgers.mods.DragonTech.common.general.items.*;
 import cf.brforgers.mods.DragonTech.common.virus.blocks.BlockVirusBase;
 import cf.brforgers.mods.DragonTech.common.virus.blocks.DraconyLeaves;
@@ -18,7 +16,6 @@ import cf.brforgers.mods.DragonTech.common.world.blocks.BlockDragonCrystal;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import static cf.brforgers.mods.DragonTech.common.DT.*;
 import static net.minecraft.block.material.Material.*;
@@ -40,46 +37,57 @@ public class DTManager {
         DRAGON_BRICKS = FACTORY.newBlock("DRAGON_BRICKS").setHardness(2.0F).setResistance(10.0F);//setStepSound(DRAGON_BRICKS.soundTypePiston);
 
         REGISTER.register(DRAGON_BRICKS);
+        REGISTER.registerItemBlock(DRAGON_BRICKS);
 
         DRAGON_SCALE_BLOCK = FACTORY.newBlock("DRAGON_SCALE_BLOCK").setHardness(0.8F);//.setStepSound(DRAGON_SCALE_BLOCK.soundTypeCloth);
         REGISTER.register(DRAGON_SCALE_BLOCK);
+        REGISTER.registerItemBlock(DRAGON_SCALE_BLOCK);
 
         //dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(DRAGON_BRICKS.soundTypePiston), "dragonEssenceOre");
         //REGISTER.REGISTER(dragonEssenceOre, "dragonEssenceOre");
 
         CAULDRON = new BlockModCauldron().setRegistryName(REGISTER.MOD.getLocation("cauldron"));
         REGISTER.register(CAULDRON);
+        //no ItemBlock for you u.u
 
-        CAULDRON_CONSTRUCT = new BlockCauldronConstruct();
-        REGISTER.register(CAULDRON_CONSTRUCT);
-        GameRegistry.registerTileEntity(TileCauldronConstruct.class, "Tile" + Lib.MODID + "ModelCauldronConstruct");
+        //CAULDRON_CONSTRUCT = new BlockCauldronConstruct();
+        //REGISTER.register(CAULDRON_CONSTRUCT);
+        //GameRegistry.registerTileEntity(TileCauldronConstruct.class, "Tile" + Lib.MODID + "ModelCauldronConstruct");
 
         DRAGON_CRYSTAL = FACTORY.processBlock(new BlockDragonCrystal(), "DRAGON_CRYSTAL");
         REGISTER.register(DRAGON_CRYSTAL);
+        REGISTER.registerItemBlock(DRAGON_CRYSTAL);
 
         DRAGON_STONE = FACTORY.processBlock(new BlockVirusBase(ROCK), "DRAGON_STONE");
         REGISTER.register(DRAGON_STONE);
+        REGISTER.registerItemBlock(DRAGON_STONE);
 
         DRAGON_DIRT = FACTORY.processBlock(new BlockVirusBase(GROUND).setHardness(0.6F).setHardness(0.5F), "DRAGON_DIRT");
         REGISTER.register(DRAGON_DIRT);
+        REGISTER.registerItemBlock(DRAGON_DIRT);
 
         DRAGON_GRASS = FACTORY.processBlock(new DragonGrass(), "DRAGON_GRASS");
         REGISTER.register(DRAGON_GRASS);
+        REGISTER.registerItemBlock(DRAGON_GRASS);
 
         DRACONY_LEAVES = FACTORY.processBlock(new DraconyLeaves(), "DRACONY_LEAVES");
         REGISTER.register(DRACONY_LEAVES);
+        REGISTER.registerItemBlock(DRACONY_LEAVES);
 
         DRACONY_LOG = FACTORY.processBlock(new DraconyLog(), "DRACONY_LOG");
         REGISTER.register(DRACONY_LOG);
+        REGISTER.registerItemBlock(DRACONY_LOG);
 
         //DRACONY_SAPLING = FACTORY.processBlock(new DraconySapling(), "DRACONY_SAPLING");
         //REGISTER.register(DRACONY_SAPLING);
 
         DRACONY_PLANKS = FACTORY.processBlock(new BlockVirusBase(WOOD).setHardness(2.0F).setResistance(5.0F), "DRACONY_PLANKS");
         REGISTER.register(DRACONY_PLANKS);
+        REGISTER.registerItemBlock(DRACONY_PLANKS);
 
         DRAGON_ESSENCE_BLOCK = FACTORY.processBlock(new BlockVirusBase(IRON).setHardness(5.0F).setResistance(10.0F), "DRAGON_ESSENCE_BLOCK");
         REGISTER.register(DRAGON_ESSENCE_BLOCK);
+        REGISTER.registerItemBlock(DRAGON_ESSENCE_BLOCK);
     }
 
 	public static void registerItems()

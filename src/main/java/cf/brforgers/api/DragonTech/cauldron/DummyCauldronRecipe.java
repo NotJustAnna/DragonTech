@@ -1,33 +1,24 @@
 package cf.brforgers.api.DragonTech.cauldron;
 
-import cf.brforgers.api.DragonTech.providers.IProvider;
+import cf.brforgers.core.lib.ez.mods.ModDefinition;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-public class DummyCauldronRecipe extends IForgeRegistryEntry.Impl<ICauldronRecipe> implements ICauldronRecipe, IProvider<IJEICauldron> {
+public class DummyCauldronRecipe implements ICauldronRecipe, IJEICauldron {
     protected final ItemStack input;
     protected final ItemStack output;
     protected final int essentiaCost;
-    private final IJEICauldron jei;
 
     public DummyCauldronRecipe(ItemStack input, int essentiaCost, ItemStack output) {
         this.input = input;
         this.output = output;
         this.essentiaCost = essentiaCost;
-        jei = new DummyJEIRecipe(input, essentiaCost, output);
     }
 
-    @Override
-    public IJEICauldron provide() {
-        return jei;
-    }
-
-    @Override
-    public boolean canProvide() {
-        return true;
+    public String procedurallyGenerateName(ModDefinition definition) {
+        return (definition.getLocation(input.getDisplayName() + "To" + output.getDisplayName() + "Costing" + essentiaCost + "Essentia"));
     }
 
     @Override
@@ -50,30 +41,18 @@ public class DummyCauldronRecipe extends IForgeRegistryEntry.Impl<ICauldronRecip
         return input.stackSize;
     }
 
-    public static class DummyJEIRecipe extends IForgeRegistryEntry.Impl<IJEICauldron> implements IJEICauldron {
-        protected final ItemStack input;
-        protected final ItemStack output;
-        protected final int essentiaCost;
+    @Override
+    public ItemStack getJEIInput() {
+        return input;
+    }
 
-        public DummyJEIRecipe(ItemStack input, int essentiaCost, ItemStack output) {
-            this.input = input;
-            this.output = output;
-            this.essentiaCost = essentiaCost;
-        }
+    @Override
+    public ItemStack getJEIOutput() {
+        return output;
+    }
 
-        @Override
-        public ItemStack getJEIInput() {
-            return input;
-        }
-
-        @Override
-        public ItemStack getJEIOutput() {
-            return output;
-        }
-
-        @Override
-        public int getJEIEssentia() {
-            return essentiaCost;
-        }
+    @Override
+    public int getJEIEssentia() {
+        return essentiaCost;
     }
 }

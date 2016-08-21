@@ -111,4 +111,8 @@ public class BlockModCauldron extends Block {
         CauldronHandler.performCauldronInteraction(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
         return true;
     }
+
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(LEVEL);
+    }
 }

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -29,6 +30,11 @@ public class BlockDragonCrystal extends Block {
 
     public static int getRotationMeta(double rotationYaw) {
         return MathHelper.floor_double((double) ((rotationYaw * 4F) / 360F) + 0.5D);
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer.Builder(this).add(ROTATION).build();
     }
 
     @Override
@@ -62,5 +68,9 @@ public class BlockDragonCrystal extends Block {
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(ROTATION, meta);
+    }
+
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(ROTATION);
     }
 }

@@ -1,15 +1,11 @@
 package cf.brforgers.mods.DragonTech;
 
-import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
-import cf.brforgers.api.DragonTech.cauldron.IJEICauldron;
 import cf.brforgers.core.lib.ez.mods.GeneralRegistry;
 import cf.brforgers.core.lib.ez.mods.ModDefinition;
 import cf.brforgers.mods.DragonTech.common.CommonProxy;
 import cf.brforgers.mods.DragonTech.common.DT;
-import cf.brforgers.mods.DragonTech.common.DTManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -34,8 +30,6 @@ public class DragonTech {
 
 	public DragonTech() {
 		GeneralRegistry.getGlobal(ModDefinition.class).put(Lib.MODID, Lib.MOD);
-		DTManager.REGISTER.REGISTRY.boundRegistryWithForge(ICauldronRecipe.class, 1024, new ResourceLocation("dragontech", "cauldron_recipes"), null);
-        DTManager.REGISTER.REGISTRY.boundRegistryWithForge(IJEICauldron.class, 1024, new ResourceLocation("dragontech", "jei_cauldron"), null);
     }
 	
 	@Mod.EventHandler

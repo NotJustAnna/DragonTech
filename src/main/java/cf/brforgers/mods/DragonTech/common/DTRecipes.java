@@ -1,6 +1,8 @@
 package cf.brforgers.mods.DragonTech.common;
 
 import cf.brforgers.api.DragonTech.cauldron.DummyCauldronRecipe;
+import cf.brforgers.api.DragonTech.cauldron.ICauldronRecipe;
+import cf.brforgers.api.DragonTech.cauldron.IJEICauldron;
 import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
 import cf.brforgers.mods.DragonTech.common.world.DTWorld;
 import net.minecraft.block.Block;
@@ -12,6 +14,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Map;
 
 import static cf.brforgers.mods.DragonTech.common.DT.*;
 import static cf.brforgers.mods.DragonTech.common.DTManager.REGISTER;
@@ -42,54 +46,83 @@ public class DTRecipes {
     }
 
     public static void registerRecipes() {
-        REGISTER.register(new DummyCauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE)));
-        REGISTER.register(new DummyCauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL)));
-        REGISTER.register(new DummyCauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL)));
-        REGISTER.register(new DummyCauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE)));
-        REGISTER.register(new DummyCauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK)));
-        REGISTER.register(
-                new DummyCauldronRecipe(new ItemStack(BRICK_BLOCK), 1, new ItemStack(DRAGON_BRICKS)) {
-                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
-                        output.stackSize = input.stackSize;
-                        return output;
-                    }
+        Map<String, IJEICauldron> m1 = REGISTER.REGISTRY.get(IJEICauldron.class);
+        Map<String, ICauldronRecipe> m2 = REGISTER.REGISTRY.get(ICauldronRecipe.class);
+        DummyCauldronRecipe c1 = null;
+        String c2 = null;
 
-                    public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        return MathHelper.clamp_int((int) ((float) (input.stackSize / 64) * 3) + 1, 1, 3);
-                    }
+        c1 = new DummyCauldronRecipe(new ItemStack(LEATHER), 3, new ItemStack(DRAGON_SCALE));
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
 
-                    public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        return heldItem.stackSize;
-                    }
-                }
-        );
-        REGISTER.register(
-                new DummyCauldronRecipe(new ItemStack(SOUL_SAND), 1, new ItemStack(END_STONE)) {
-                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
-                        output.stackSize = MathHelper.clamp_int(input.stackSize, 0, 16);
-                        return output;
-                    }
+        c1 = new DummyCauldronRecipe(new ItemStack(GOLD_INGOT), 3, new ItemStack(DRAGON_METAL));
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
 
-                    public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        return MathHelper.clamp_int((int) ((float) (input.stackSize / 16) * 3) + 1, 1, 3);
-                    }
+        c1 = new DummyCauldronRecipe(new ItemStack(EMERALD), 3, new ItemStack(DRAGON_CRYSTAL));
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
 
-                    public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        return MathHelper.clamp_int(input.stackSize, 0, 16);
-                    }
-                }
-        );
+        c1 = new DummyCauldronRecipe(new ItemStack(GLASS_BOTTLE), 1, new ItemStack(DRAGON_ESSENCE_BOTTLE));
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
 
-        REGISTER.register(
-                new DummyCauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
-                    public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
-                        DTVirus.createAt(DTWorld.batchExecutor, world, pos, (7 + world.rand.nextInt(10)));
-                        return null;
-                    }
-                }
-        );
+        c1 = new DummyCauldronRecipe(new ItemStack(STICK), 0, new ItemStack(INFUSED_STICK));
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
+
+        c1 = new DummyCauldronRecipe(new ItemStack(BRICK_BLOCK), 1, new ItemStack(DRAGON_BRICKS)) {
+            public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
+                output.stackSize = input.stackSize;
+                return output;
+            }
+
+            public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                return MathHelper.clamp_int((int) ((float) (input.stackSize / 64) * 3) + 1, 1, 3);
+            }
+
+            public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                return heldItem.stackSize;
+            }
+        };
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
+
+        c1 = new DummyCauldronRecipe(new ItemStack(SOUL_SAND), 1, new ItemStack(END_STONE)) {
+            public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                ItemStack output = super.getOutput(world, pos, heldItem, hand, essentiaLevel);
+                output.stackSize = MathHelper.clamp_int(input.stackSize, 0, 16);
+                return output;
+            }
+
+            public int getEssentiaCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                return MathHelper.clamp_int((int) ((float) (input.stackSize / 16) * 3) + 1, 1, 3);
+            }
+
+            public int getItemCost(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                return MathHelper.clamp_int(input.stackSize, 0, 16);
+            }
+        };
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
+
+        c1 = new DummyCauldronRecipe(new ItemStack(DRAGON_ESSENCE_BLOCK), 3, new ItemStack(DRAGON_GRASS)) {
+            public ItemStack getOutput(World world, BlockPos pos, ItemStack heldItem, EnumHand hand, int essentiaLevel) {
+                DTVirus.createAt(DTWorld.batchExecutor, world, pos, (7 + world.rand.nextInt(10)));
+                return null;
+            }
+        };
+        c2 = c1.procedurallyGenerateName(REGISTER.MOD);
+        m1.put(c2, c1);
+        m2.put(c2, c1);
 
         GameRegistry.addShapelessRecipe(new ItemStack(DRAGON_ESSENCE_BOTTLE), new ItemStack(POTIONITEM, 1, 0), new ItemStack(DRAGON_ESSENCE_SHARD));
 
