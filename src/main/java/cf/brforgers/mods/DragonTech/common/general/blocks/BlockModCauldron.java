@@ -6,6 +6,7 @@ import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,7 +38,12 @@ public class BlockModCauldron extends Block {
 
     public BlockModCauldron() {
         super(Material.IRON, MapColor.STONE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, 0));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer.Builder(this).add(LEVEL).build();
     }
 
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn) {
@@ -53,7 +59,7 @@ public class BlockModCauldron extends Block {
     }
 
     public void setWaterLevel(World worldIn, BlockPos pos, IBlockState state, int level) {
-        worldIn.setBlockState(pos, state.withProperty(LEVEL, Integer.valueOf(MathHelper.clamp_int(level, 0, 3))), 2);
+        worldIn.setBlockState(pos, state.withProperty(LEVEL, MathHelper.clamp_int(level, 0, 3)), 2);
         worldIn.updateComparatorOutputLevel(pos, this);
     }
 
@@ -62,7 +68,7 @@ public class BlockModCauldron extends Block {
      */
     public void fillWithRain(World worldIn, BlockPos pos) {
         if (worldIn.rand.nextInt(40) == 1) {
-            float f = worldIn.getBiomeGenForCoords(pos).getFloatTemperature(pos);
+            float f = worldIn.getBiome(pos).getFloatTemperature(pos);
 
             if (worldIn.getBiomeProvider().getTemperatureAtHeight(f, pos.getY()) >= 0.15F) {
                 worldIn.setBlockState(pos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, (Integer) worldIn.getBlockState(pos).getValue(LEVEL)));

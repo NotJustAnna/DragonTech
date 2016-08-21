@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common;
 
-import cf.brforgers.core.lib.EasterEggManager;
+import cf.brforgers.core.lib.ez.EasterEggManager;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.ItemStack;
 

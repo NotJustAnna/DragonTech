@@ -1,7 +1,7 @@
 package cf.brforgers.mods.DragonTech.common.general.items;
 
 import cf.brforgers.core.internal.InternalEventHandler;
-import cf.brforgers.core.lib.IEventArmor;
+import cf.brforgers.core.lib.ez.hooks.IEventArmor;
 import cf.brforgers.mods.DragonTech.common.DT;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityLivingBase;

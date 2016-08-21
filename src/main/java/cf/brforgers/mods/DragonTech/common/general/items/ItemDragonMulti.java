@@ -22,7 +22,7 @@ public class ItemDragonMulti extends ItemPickaxe
 	private Item pickaxe, axe, shovel, hoe;
 	
     public ItemDragonMulti(ToolMaterial material) {
-    	super (material);
+        super(material);
         pickaxe = new InternalMultiToolPickaxe(material);
         shovel = new InternalMultiToolShovel(material);
         axe = new InternalMultiToolAxe(material);
@@ -30,7 +30,7 @@ public class ItemDragonMulti extends ItemPickaxe
         this.setCreativeTab(DragonTech.tabDragonTech);
     }
 
-	@Override
+    @Override
     public boolean canHarvestBlock(IBlockState block) {
         return pickaxe.canHarvestBlock(block) || axe.canHarvestBlock(block) || shovel.canHarvestBlock(block) || hoe.canHarvestBlock(block);
     }
@@ -90,7 +90,7 @@ public class ItemDragonMulti extends ItemPickaxe
 
     private class InternalMultiToolAxe extends ItemAxe {
         public InternalMultiToolAxe(ToolMaterial material) {
-            super(material);
+            super(material, 0, 0);
             efficiencyOnProperMaterial *= 16.0F;
         }
     }

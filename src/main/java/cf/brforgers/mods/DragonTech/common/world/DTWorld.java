@@ -1,8 +1,8 @@
 package cf.brforgers.mods.DragonTech.common.world;
 
-import cf.brforgers.core.lib.GridSystem;
-import cf.brforgers.core.lib.Utils;
 import cf.brforgers.core.lib.batch.TickBatchExecutor;
+import cf.brforgers.core.lib.utils.GridSystem;
+import cf.brforgers.core.lib.utils.Utils;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
@@ -63,7 +63,7 @@ public class DTWorld implements IWorldGenerator {
         if (Lib.Config.DraconyVirus_ChanceMultiplier == 0) return;
 
         int base, chance, spread;
-        base = dim.getWeight(world.getBiomeGenForCoords(pos.up(1)));
+        base = dim.getWeight(world.getBiome(pos.up(1)));
         chance = base + rand.nextInt(6);
         spread = chance + rand.nextInt(2);
 

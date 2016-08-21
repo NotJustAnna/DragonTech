@@ -1,9 +1,9 @@
 package cf.brforgers.mods.DragonTech.common;
 
 import cf.brforgers.api.DragonTech.DragonTechAPI;
-import cf.brforgers.core.lib.FastFactory;
-import cf.brforgers.core.lib.ItemHelper;
-import cf.brforgers.core.lib.ModRegister;
+import cf.brforgers.core.lib.ez.ItemHelper;
+import cf.brforgers.core.lib.ez.mods.FastFactory;
+import cf.brforgers.core.lib.ez.mods.ModRegister;
 import cf.brforgers.mods.DragonTech.DragonTech;
 import cf.brforgers.mods.DragonTech.Lib;
 import cf.brforgers.mods.DragonTech.common.general.blocks.BlockCauldronConstruct;
@@ -28,7 +28,7 @@ import static net.minecraft.inventory.EntityEquipmentSlot.*;
  * DragonTech Manager
  */
 public class DTManager {
-    public static final FastFactory FACTORY = FastFactory.newFactory(DragonTech.tabDragonTech, Lib.MODID, ROCK);
+    public static final FastFactory FACTORY = FastFactory.newFactory(Lib.MOD, DragonTech.tabDragonTech, ROCK);
     public static final ModRegister REGISTER = ModRegister.fromMod(Lib.MOD);
 
     private static void registerMaterialHandling() {
@@ -47,7 +47,7 @@ public class DTManager {
         //dragonEssenceOre = ModBlock.process(new BlockDragonEssenceOre().setHardness(3.0F).setResistance(5.0F).setStepSound(DRAGON_BRICKS.soundTypePiston), "dragonEssenceOre");
         //REGISTER.REGISTER(dragonEssenceOre, "dragonEssenceOre");
 
-        CAULDRON = new BlockModCauldron();
+        CAULDRON = new BlockModCauldron().setRegistryName(REGISTER.MOD.getLocation("cauldron"));
         REGISTER.register(CAULDRON);
 
         CAULDRON_CONSTRUCT = new BlockCauldronConstruct();

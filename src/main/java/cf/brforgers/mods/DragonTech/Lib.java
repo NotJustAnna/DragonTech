@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech;
 
-import cf.brforgers.core.lib.ModDefinition;
+import cf.brforgers.core.lib.ez.mods.ModDefinition;
 
 public class Lib {
 	public static final String MODID = "dragontech";

@@ -1,6 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.world;
 
-import cf.brforgers.core.lib.GridSystem;
+import cf.brforgers.core.lib.utils.GridSystem;
 import cf.brforgers.mods.DragonTech.common.virus.EnumVirusState;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;

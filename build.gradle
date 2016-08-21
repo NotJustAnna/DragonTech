@@ -28,10 +28,10 @@ group= "cf.brforgers" // http://maven.apache.org/guides/mini/guide-naming-conven
 archivesBaseName = "DragonTech"
 
 minecraft {
-    version = "1.10.2-12.18.1.2011"
+    version = "1.10.2-12.18.1.2070"
     println " Minecraft: " + version
     runDir = "run"
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20160820"
     makeObfSourceJar = false
 }
 println " Building: ${archivesBaseName} v${version}"
@@ -42,7 +42,7 @@ dependencies {
     // compile against the JEI API
     deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232:api"
     // let's use GuideAPI too
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.9-2.0.0-31"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.10.2-2.0.2-45"
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_1.10.2:3.7.6.232"
     println("[${archivesBaseName}] Done.")
