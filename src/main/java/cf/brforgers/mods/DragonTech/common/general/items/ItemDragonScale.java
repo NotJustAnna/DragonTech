@@ -6,7 +6,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -16,9 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemDragonScale extends Item {
-    public ItemDragonScale() {
+    public ItemStack returnItemstack = null;
+
+    public ItemDragonScale(ItemStack returnedItemStackOnUse) {
         super();
-	}
+        returnItemstack = returnedItemStackOnUse;
+    }
 
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
@@ -35,7 +37,7 @@ public class ItemDragonScale extends Item {
 
         CauldronHandler.setWaterLevel(world, pos, 3, true);
 
-        ItemStack returnStack = new ItemStack(Items.LEATHER);
+        ItemStack returnStack = returnItemstack.copy();
 
         if (!player.inventory.addItemStackToInventory(returnStack))
             world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));

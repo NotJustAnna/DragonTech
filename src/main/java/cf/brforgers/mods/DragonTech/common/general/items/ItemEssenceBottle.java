@@ -8,7 +8,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -41,8 +40,11 @@ public class ItemEssenceBottle extends Item {
 //		}
 //	};
 
-	public ItemEssenceBottle() {
+	public ItemStack returnItemstack = null;
+
+	public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
 		super();
+		returnItemstack = returnedItemStackOnUse;
 		//BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, dispenserBehavior);
 	}
 
@@ -68,7 +70,7 @@ public class ItemEssenceBottle extends Item {
 			return EnumActionResult.FAIL;
 		}
 
-		ItemStack returnStack = new ItemStack(Items.GLASS_BOTTLE);
+		ItemStack returnStack = returnItemstack.copy();
 
 		if (!player.inventory.addItemStackToInventory(returnStack))
 			world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));
