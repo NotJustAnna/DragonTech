@@ -42,7 +42,7 @@ public class ItemDragonScale extends Item {
         if (!player.inventory.addItemStackToInventory(returnStack))
             world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));
         else if (player instanceof EntityPlayerMP)
-                ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+            ((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
         return EnumActionResult.SUCCESS;
     }
 }

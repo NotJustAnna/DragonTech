@@ -12,11 +12,11 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class BlockVirusBase extends Block {
-	public BlockVirusBase(Material mat) {
-		super(mat);
+    public BlockVirusBase(Material mat) {
+        super(mat);
         setSoundType(fromMaterial(mat));
         this.setTickRandomly(true);
-	}
+    }
 
     private static SoundType fromMaterial(Material material) {
         if (material.equals(Material.PLANTS) || material.equals(Material.GRASS)) return SoundType.PLANT;
@@ -25,8 +25,7 @@ public class BlockVirusBase extends Block {
         return SoundType.STONE;
     }
 
-    public static void randomTick(World world, BlockPos pos)
-    {
+    public static void randomTick(World world, BlockPos pos) {
         if (world.rand.nextInt(20) == 0)
             DVUtils.procriateAt(world, pos);
     }
@@ -35,8 +34,7 @@ public class BlockVirusBase extends Block {
         randomTick(worldIn, pos);
     }
 
-    public boolean isToolEffective(String type, IBlockState state)
-    {
+    public boolean isToolEffective(String type, IBlockState state) {
         if ("shovel".equals(type) && (this == DT.DRAGON_GRASS || this == DT.DRAGON_DIRT))
             return true;
         return super.isToolEffective(type, state);

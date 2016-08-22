@@ -18,46 +18,43 @@ import org.apache.logging.log4j.Logger;
 public class DragonTech {
     public static final CreativeTabs tabDragonTech = new CreativeTabs("tabDragonTech") {
         @Override
-		public Item getTabIconItem() {
+        public Item getTabIconItem() {
             return DT.DRAGON_ESSENCE_SHARD;
         }
-	};
-	@Mod.Instance
-	public static DragonTech instance;
-	@SidedProxy(clientSide = "cf.brforgers.mods.DragonTech.client.ClientProxy", serverSide = "cf.brforgers.mods.DragonTech.common.CommonProxy")
-	public static CommonProxy proxy;
-	public static Logger logger;
+    };
+    @Mod.Instance
+    public static DragonTech instance;
+    @SidedProxy(clientSide = "cf.brforgers.mods.DragonTech.client.ClientProxy", serverSide = "cf.brforgers.mods.DragonTech.common.CommonProxy")
+    public static CommonProxy proxy;
+    public static Logger logger;
 
-	public DragonTech() {
-		GeneralRegistry.getGlobal(ModDefinition.class).put(Lib.MODID, Lib.MOD);
+    public DragonTech() {
+        GeneralRegistry.getGlobal(ModDefinition.class).put(Lib.MODID, Lib.MOD);
     }
-	
-	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent e)
-	{
-		logger = e.getModLog();
-		proxy.preInit();
-		
-		Configuration cfg = new Configuration(e.getSuggestedConfigurationFile());
-		cfg.load();
+
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent e) {
+        logger = e.getModLog();
+        proxy.preInit();
+
+        Configuration cfg = new Configuration(e.getSuggestedConfigurationFile());
+        cfg.load();
 
         Lib.Config.DraconyVirus_SpreadingMultiplier = cfg.getInt("SpreadingMultiplier", "DVUtils", 3, 1, 4, "Determines how big the Virus World Gen will be (The bigger, the Longer it takes to Generate)");
         Lib.Config.DraconyVirus_ChanceMultiplier = cfg.getInt("ChanceMultiplier", "DVUtils", 1, 0, 4, "Determines how rare the Virus World Gen will be (Less = rarer; 0 disables)");
         Lib.Config.DraconyVirus_ForceGeneration = cfg.getBoolean("ForceGeneration", "DVUtils", false, "Force Generation after 500 Chunks non-generated. Used to Debug more easily the World Gen");
         Lib.Config.BatchExecutor_Timeout = cfg.getInt("BatchExecutorTimeout", "Optimization", 3, 1, 4, "Determines how much of the tick it will reserve to proccess the Runnables (1=1/5 of the Tick;4 = Almost Full Tick Free Time). Reduce number if the Server can't handle. Lower Numbers tend to make AsyncGeneration a lot slower");
-		Lib.Config.Debug = cfg.getBoolean("Log", "Debug", false, "Log useful Debug Information in the Console");
-		cfg.save();
-	}
-	
-	@Mod.EventHandler
-	public void init(FMLInitializationEvent e)
-	{
-		proxy.init();
-	}
-	
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent e)
-	{
-		proxy.postInit();
-	}
+        Lib.Config.Debug = cfg.getBoolean("Log", "Debug", false, "Log useful Debug Information in the Console");
+        cfg.save();
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent e) {
+        proxy.init();
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        proxy.postInit();
+    }
 }

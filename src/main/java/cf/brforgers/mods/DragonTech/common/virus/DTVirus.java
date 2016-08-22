@@ -41,7 +41,7 @@ public class DTVirus extends ProfiledRunnable {
     @Override
     public void run() {
         Long millis = System.currentTimeMillis();
-        while (shouldRunNext(millis) && taggedForBaking.size()>0) {
+        while (shouldRunNext(millis) && taggedForBaking.size() > 0) {
             ITripleProvider<World, BlockPos, Integer> bakingEntry = taggedForBaking.get(0);
             int spread = bakingEntry.provideC();
 
@@ -65,7 +65,7 @@ public class DTVirus extends ProfiledRunnable {
             taggedForBaking.remove(0);
         }
 
-        while (shouldRunNext(millis) && taggedForTransforming.size()>0) {
+        while (shouldRunNext(millis) && taggedForTransforming.size() > 0) {
             IDoubleProvider<World, BlockPos> p = taggedForTransforming.get(0);
             DVUtils.convertBlock(p.provideA(), p.provideB());
             taggedForTransforming.remove(0);

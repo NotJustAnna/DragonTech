@@ -17,10 +17,9 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class ItemDragonMulti extends ItemPickaxe
-{
-	private Item pickaxe, axe, shovel, hoe;
-	
+public class ItemDragonMulti extends ItemPickaxe {
+    private Item pickaxe, axe, shovel, hoe;
+
     public ItemDragonMulti(ToolMaterial material) {
         super(material);
         pickaxe = new InternalMultiToolPickaxe(material);
@@ -58,19 +57,18 @@ public class ItemDragonMulti extends ItemPickaxe
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         boolean success = false;
         for (int ix = -1; ix < 2; ix++) {
-    		for (int iz = -1; iz < 2; iz++) {
-    			for (int iy = -1; iy < 2; iy++) {
+            for (int iz = -1; iz < 2; iz++) {
+                for (int iy = -1; iy < 2; iy++) {
                     if (world.isAirBlock(new BlockPos(pos.getX() + ix, pos.getY() + iy + 1, pos.getZ() + iz))) {
                         success |= hoe.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ) == EnumActionResult.SUCCESS;
                     }
-    			}
-    		}
-		}
+                }
+            }
+        }
         return success ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
     }
 
-	public EnumRarity getRarity(ItemStack ignored)
-	{
+    public EnumRarity getRarity(ItemStack ignored) {
         return EnumRarity.RARE;
     }
 

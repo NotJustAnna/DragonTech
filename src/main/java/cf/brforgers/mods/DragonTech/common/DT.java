@@ -14,7 +14,7 @@ public class DT {
     public static final Item.ToolMaterial DRAGONMETAL_TOOL_MATERIAL =
             EnumHelper.addToolMaterial("dragon_metal", 10, 2000, 50.0F, 16.0F, 35);
     public static final ItemArmor.ArmorMaterial DRAGONSCALES_ARMOR_MATERIAL =
-            EnumHelper.addArmorMaterial("dragon_scales", "scales", 50, new int[]{5, 16, 12, 6}, 35, null, 3.0f);
+            EnumHelper.addArmorMaterial("dragon_scales", "dragontech:scales", 50, new int[]{5, 16, 12, 6}, 35, null, 3.0f);
     public static final Logger LOGGER = DragonTech.logger;
 
     // All Items

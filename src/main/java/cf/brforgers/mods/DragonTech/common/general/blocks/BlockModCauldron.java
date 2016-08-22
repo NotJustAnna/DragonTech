@@ -99,8 +99,7 @@ public class BlockModCauldron extends Block {
     /**
      * Convert the given metadata into a BlockState for this Block
      */
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(LEVEL, Integer.valueOf(meta));
     }
 

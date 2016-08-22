@@ -12,8 +12,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class DragonGrass extends BlockVirusBase implements IGrowable {
-    public DragonGrass()
-    {
+    public DragonGrass() {
         super(Material.GRASS);
         this.setTickRandomly(true);
         this.setSoundType(SoundType.PLANT);
@@ -23,22 +22,17 @@ public class DragonGrass extends BlockVirusBase implements IGrowable {
     /**
      * Ticks the block if it's been scheduled
      */
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (!world.isRemote)
-        {
-            if (world.getLightFromNeighbors(pos.up()) < 4 && world.getBlockState(pos.up()).getLightOpacity(world, pos.up()) > 2)
-            {
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!world.isRemote) {
+            if (world.getLightFromNeighbors(pos.up()) < 4 && world.getBlockState(pos.up()).getLightOpacity(world, pos.up()) > 2) {
                 world.setBlockState(pos, DT.DRAGON_DIRT.getDefaultState());
-            } else if (world.getLightFromNeighbors(pos.up()) >= 9)
-            {
+            } else if (world.getLightFromNeighbors(pos.up()) >= 9) {
                 super.updateTick(world, pos, state, rand);
             }
         }
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return DT.DRAGON_DIRT.getItemDropped(DT.DRAGON_DIRT.getDefaultState(), rand, fortune);
     }
 

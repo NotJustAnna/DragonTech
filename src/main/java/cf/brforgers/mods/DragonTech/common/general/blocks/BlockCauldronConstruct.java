@@ -13,18 +13,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockCauldronConstruct extends BlockContainer {
-	public static final PropertyInteger ROTATION = BlockDragonCrystal.ROTATION;
-	public BlockCauldronConstruct() {
-		super(Material.IRON);
-	}
+    public static final PropertyInteger ROTATION = BlockDragonCrystal.ROTATION;
 
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		worldIn.setBlockState(pos, state.withProperty(ROTATION, BlockDragonCrystal.getRotationMeta(placer.rotationYaw)));
-	}
+    public BlockCauldronConstruct() {
+        super(Material.IRON);
+    }
 
-	@Override
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        worldIn.setBlockState(pos, state.withProperty(ROTATION, BlockDragonCrystal.getRotationMeta(placer.rotationYaw)));
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TileCauldronConstruct();
-	}
+    }
 }

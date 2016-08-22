@@ -49,6 +49,7 @@ dependencies {
 }
 
 jar {
+    exclude "**/*.bat"
     manifest {
         attributes 'FMLAT': 'dt_at.cfg'
     }
@@ -73,5 +74,6 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+        exclude '*.bat'
     }
 }

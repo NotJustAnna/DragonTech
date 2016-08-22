@@ -40,42 +40,42 @@ public class ItemEssenceBottle extends Item {
 //		}
 //	};
 
-	public ItemStack returnItemstack = null;
+    public ItemStack returnItemstack = null;
 
-	public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
-		super();
-		returnItemstack = returnedItemStackOnUse;
-		//BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, dispenserBehavior);
-	}
+    public ItemEssenceBottle(ItemStack returnedItemStackOnUse) {
+        super();
+        returnItemstack = returnedItemStackOnUse;
+        //BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, dispenserBehavior);
+    }
 
-	@Override
-	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		if (!player.canPlayerEdit(pos, side, stack))
-			return EnumActionResult.FAIL;
+    @Override
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        if (!player.canPlayerEdit(pos, side, stack))
+            return EnumActionResult.FAIL;
 
-		if (!(world.getBlockState(pos).getBlock() == Blocks.CAULDRON && world.getBlockState(pos).getValue(BlockCauldron.LEVEL) == 0 || world.getBlockState(pos).getBlock() == DT.CAULDRON && world.getBlockState(pos).getValue(BlockModCauldron.LEVEL) == 3))
-			return EnumActionResult.FAIL;
+        if (!(world.getBlockState(pos).getBlock() == Blocks.CAULDRON && world.getBlockState(pos).getValue(BlockCauldron.LEVEL) == 0 || world.getBlockState(pos).getBlock() == DT.CAULDRON && world.getBlockState(pos).getValue(BlockModCauldron.LEVEL) == 3))
+            return EnumActionResult.FAIL;
 
-		stack.stackSize -= 1;
+        stack.stackSize -= 1;
 
-		if (stack.stackSize <= 0)
-			player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+        if (stack.stackSize <= 0)
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 
-		int meta = CauldronHandler.getWaterLevel(world, pos);
+        int meta = CauldronHandler.getWaterLevel(world, pos);
 
-		if (meta < 3) {
-			meta++;
-			CauldronHandler.setWaterLevel(world, pos, meta, true);
-		} else {
-			return EnumActionResult.FAIL;
-		}
+        if (meta < 3) {
+            meta++;
+            CauldronHandler.setWaterLevel(world, pos, meta, true);
+        } else {
+            return EnumActionResult.FAIL;
+        }
 
-		ItemStack returnStack = returnItemstack.copy();
+        ItemStack returnStack = returnItemstack.copy();
 
-		if (!player.inventory.addItemStackToInventory(returnStack))
-			world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));
-		else if (player instanceof EntityPlayerMP)
-			((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
-		return EnumActionResult.SUCCESS;
-	}
+        if (!player.inventory.addItemStackToInventory(returnStack))
+            world.spawnEntityInWorld(new EntityItem(world, (double) pos.getX() + 0.5D, pos.getY() + 1.5D, (double) pos.getZ() + 0.5D, returnStack));
+        else if (player instanceof EntityPlayerMP)
+            ((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
+        return EnumActionResult.SUCCESS;
+    }
 }

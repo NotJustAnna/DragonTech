@@ -33,7 +33,7 @@ public class DTManager {
         DRAGONSCALES_ARMOR_MATERIAL.customCraftingMaterial = DRAGON_SCALE;
     }
 
-	public static void registerBlocks() {
+    public static void registerBlocks() {
         DRAGON_BRICKS = FACTORY.newBlock("dragon_bricks").setHardness(2.0F).setResistance(10.0F);//setStepSound(DRAGON_BRICKS.soundTypePiston);
 
         REGISTER.register(DRAGON_BRICKS);
@@ -90,8 +90,7 @@ public class DTManager {
         REGISTER.registerItemBlock(DRAGON_ESSENCE_BLOCK);
     }
 
-	public static void registerItems()
-	{
+    public static void registerItems() {
         DRAGON_SCALE = FACTORY.processItem(new ItemDragonScale(new ItemStack(Items.LEATHER)), "dragon_scale");
         REGISTER.register(DRAGON_SCALE);
         DRAGON_ESSENCE_SHARD = FACTORY.processItem(new ItemDragonScale(null), "dragon_essence_shard");

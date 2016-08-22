@@ -1,6 +1,12 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/cube",
   "textures": {
-    "all": "dragontech:blocks/dragon_grass"
+    "particle": "dragontech:blocks/dragon_dirt",
+    "down": "dragontech:blocks/dragon_dirt",
+    "up": "dragontech:blocks/dragon_grass_top",
+    "north": "dragontech:blocks/dragon_grass_side",
+    "east": "dragontech:blocks/dragon_grass_side",
+    "south": "dragontech:blocks/dragon_grass_side",
+    "west": "dragontech:blocks/dragon_grass_side"
   }
 }

@@ -23,10 +23,10 @@ public class BlockDragonCrystal extends Block {
     public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
     private Random rand = new Random();
 
-	public BlockDragonCrystal() {
+    public BlockDragonCrystal() {
         super(CRYSTAL);
         this.setHardness(4.0F);
-	}
+    }
 
     public static int getRotationMeta(double rotationYaw) {
         return MathHelper.floor_double((double) ((rotationYaw * 4F) / 360F) + 0.5D);
@@ -43,8 +43,7 @@ public class BlockDragonCrystal extends Block {
     }
 
     @Override
-    public int quantityDropped(Random rand)
-    {
+    public int quantityDropped(Random rand) {
         return MathHelper.getRandomIntegerInRange(rand, 1, 4);
     }
 
@@ -65,8 +64,7 @@ public class BlockDragonCrystal extends Block {
     }
 
     @SuppressWarnings("deprecation")
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(ROTATION, meta);
     }
 
