@@ -19,8 +19,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Random;
 
-import static cf.brforgers.mods.DragonTech.common.virus.DTVirus.rand;
-
 public class DTWorld implements IWorldGenerator {
     public static TickBatchExecutor.Base batchExecutor = new TickBatchExecutor.Server() {{
         this.runOnTickEnd = false;
@@ -64,16 +62,16 @@ public class DTWorld implements IWorldGenerator {
 
         int base, chance, spread;
         base = dim.getWeight(world.getBiome(pos.up(1)));
-        chance = base + rand.nextInt(6);
-        spread = chance + rand.nextInt(2);
+		chance = base + random.nextInt(6);
+		spread = chance + random.nextInt(2);
 
         chance *= Lib.Config.DraconyVirus_ChanceMultiplier;
         spread *= Lib.Config.DraconyVirus_SpreadingMultiplier;
 
-        if (rand.nextInt(1000) <= (chance)) {
-            for (int y = 128; y > 0; y--) {
-                int x = rand.nextInt(16), z = rand.nextInt(16);
-                BlockPos pos2 = pos.add(x, y, z);
+		if (random.nextInt(1000) <= (chance)) {
+			for (int y = 128; y > 0; y--) {
+				int x = random.nextInt(16), z = random.nextInt(16);
+				BlockPos pos2 = pos.add(x, y, z);
                 if (DVUtils.canConvertBlock(world.getBlockState(pos))) {
                     DTVirus.createAt(DTWorld.batchExecutor, world, pos2, spread);
                     return;

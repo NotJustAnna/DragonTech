@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Random;
 
 public class DTVirus extends ProfiledRunnable {
-    public static Random rand = null;
     private final BatchExecutor batchExecutor;
     private List<ITripleProvider<World, BlockPos, Integer>> taggedForBaking = new ArrayList<ITripleProvider<World, BlockPos, Integer>>();
     private List<IDoubleProvider<World, BlockPos>> taggedForTransforming = new ArrayList<IDoubleProvider<World, BlockPos>>();
@@ -34,7 +33,6 @@ public class DTVirus extends ProfiledRunnable {
      * @param spread
      */
     public static void createAt(BatchExecutor executor, World world, BlockPos pos, int spread) {
-        if (rand == null) rand = new Random(world.getSeed()); //
         executor.addRunnablesToThisTick(new DTVirus(executor, world, pos, spread));
     }
 
@@ -44,6 +42,8 @@ public class DTVirus extends ProfiledRunnable {
         while (shouldRunNext(millis) && taggedForBaking.size() > 0) {
             ITripleProvider<World, BlockPos, Integer> bakingEntry = taggedForBaking.get(0);
             int spread = bakingEntry.provideC();
+
+			Random rand = bakingEntry.provideA().rand;
 
             if (rand.nextInt(10) < spread - 1) {
                 spread--;

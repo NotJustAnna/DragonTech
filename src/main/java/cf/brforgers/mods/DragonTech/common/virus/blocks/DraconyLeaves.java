@@ -4,6 +4,7 @@ import cf.brforgers.mods.DragonTech.common.DT;
 import cf.brforgers.mods.DragonTech.common.virus.utils.DVUtils;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -54,5 +55,31 @@ public class DraconyLeaves extends BlockLeaves {
         if (worldIn.rand.nextInt(chance) == 0) {
             spawnAsEntity(worldIn, pos, new ItemStack(Items.APPLE));
         }
-    }
+	}
+
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
+	}
+
+	/**
+	 * Convert the BlockState into the correct metadata value
+	 */
+	public int getMetaFromState(IBlockState state) {
+		int i = 0;
+
+		if (!state.getValue(DECAYABLE)) {
+			i |= 4;
+		}
+
+		if (state.getValue(CHECK_DECAY)) {
+			i |= 8;
+		}
+
+		return i;
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer.Builder(this).add(DECAYABLE, CHECK_DECAY).build();
+	}
 }

@@ -1,7 +1,6 @@
 package cf.brforgers.mods.DragonTech.common.virus.utils;
 
 import cf.brforgers.mods.DragonTech.common.DT;
-import cf.brforgers.mods.DragonTech.common.virus.DTVirus;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -26,8 +25,8 @@ public class DVUtils {
         }
 
         if (block == Blocks.SNOW_LAYER) {
-            if (DTVirus.rand.nextInt(10) == 1) {
-                world.setBlockState(pos, DT.DRAGON_CRYSTAL.getDefaultState());
+			if (world.rand.nextInt(10) == 1) {
+				world.setBlockState(pos, DT.DRAGON_CRYSTAL.getDefaultState());
             } else {
                 world.setBlockToAir(pos);
             }
@@ -85,7 +84,7 @@ public class DVUtils {
         if (world.isRemote) return;
 
         for (int l = 0; l < 4; ++l) {
-            convertBlock(world, new BlockPos(pos.add(DTVirus.rand.nextInt(3) - 1, DTVirus.rand.nextInt(5) - 3, DTVirus.rand.nextInt(3) - 1)));
-        }
+			convertBlock(world, new BlockPos(pos.add(world.rand.nextInt(3) - 1, world.rand.nextInt(5) - 3, world.rand.nextInt(3) - 1)));
+		}
     }
 }
