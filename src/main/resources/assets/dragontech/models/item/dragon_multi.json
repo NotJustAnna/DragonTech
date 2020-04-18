@@ -1,6 +1,0 @@
-{
-  "parent": "dragontech:item/_standard_tool",
-  "textures": {
-    "layer0": "dragontech:items/dragon_multi"
-  }
-}

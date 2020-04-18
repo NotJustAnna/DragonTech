@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.github.adriantodt.dragontech.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "GameRulesMixin",
+    "IntRuleMixin",
+    "SpreadableBlockMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

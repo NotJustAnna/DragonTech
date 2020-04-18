@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "dragontech:blocks/dracony_planks"
+    "all": "dragontech:block/dracony_planks"
   }
 }

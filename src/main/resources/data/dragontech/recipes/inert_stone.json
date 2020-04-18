@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "inert_stone",
+  "ingredients": [
+    {"tag": "dragontech:inert_mix_stones"},
+    {"tag": "dragontech:inert_mix"},
+    {"tag": "dragontech:inert_mix"},
+    {"tag": "dragontech:inert_mix"},
+    {"tag": "dragontech:inert_mix"},
+    {"tag": "dragontech:inert_mix"}
+  ],
+  "result": {"item": "dragontech:inert_stone", "count": 8}
+}

@@ -1,19 +1,16 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "dragontech:dracony_log"
-    },
-    "axis=z": {
-      "model": "dragontech:dracony_log",
-      "x": 90
-    },
     "axis=x": {
-      "model": "dragontech:dracony_log",
+      "model": "dragontech:block/dracony_log_horizontal",
       "x": 90,
       "y": 90
     },
-    "axis=none": {
-      "model": "dragontech:dracony_bark"
+    "axis=y": {
+      "model": "dragontech:block/dracony_log"
+    },
+    "axis=z": {
+      "model": "dragontech:block/dracony_log_horizontal",
+      "x": 90
     }
   }
 }

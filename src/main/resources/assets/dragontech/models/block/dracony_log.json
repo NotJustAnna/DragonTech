@@ -1,7 +1,7 @@
 {
-  "parent": "block/cube_column",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "dragontech:blocks/dracony_log_top",
-    "side": "dragontech:blocks/dracony_log_side"
+    "end": "dragontech:block/dracony_log_top",
+    "side": "dragontech:block/dracony_log"
   }
 }

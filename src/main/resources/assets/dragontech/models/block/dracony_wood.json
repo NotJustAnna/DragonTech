@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "dragontech:block/dracony_log",
+    "side": "dragontech:block/dracony_log"
+  }
+}

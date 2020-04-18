@@ -1,79 +1,92 @@
-println '#################################################'
-println '   BRForgers GradleBuilding:'
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-    }
-}
-apply plugin: 'net.minecraftforge.gradle.forge'
-
-repositories {
-    maven { //JEI
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven { //GUIDEAPI
-        url 'http://tehnut.info/maven/'
-    }
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+    id "org.jetbrains.kotlin.jvm"
 }
 
-version = "1.0"
-group= "cf.brforgers" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "DragonTech"
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
 
 minecraft {
-    version = "1.10.2-12.18.1.2070"
-    println " Minecraft: " + version
-    runDir = "run"
-    mappings = "snapshot_20160820"
-    makeObfSourceJar = false
 }
-println " Building: ${archivesBaseName} v${version}"
+
+
+repositories {
+    maven { url = "http://maven.fabricmc.net/" }
+}
 
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    println("[${archivesBaseName}] Adding dependencies...")
-    // compile against the JEI API
-    deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232:api"
-    // let's use GuideAPI too
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.10.2-2.0.2-45"
-    // at runtime, use the full JEI jar
-    runtime "mezz.jei:jei_1.10.2:3.7.6.232"
-    println("[${archivesBaseName}] Done.")
+    //to change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
+    //modRuntime "me.shedaniel:RoughlyEnoughItems:3.6.6"
+
+    // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
+    // You may need to force-disable transitiveness on them.
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "fabric.mod.json"
+        expand "version": project.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "fabric.mod.json"
+    }
+}
+
+// ensure that the encoding is set to UTF-8, no matter what the system default is
+// this fixes some edge cases with special characters not displaying correctly
+// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+// if it is present.
+// If you remove this task, sources will not be generated.
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
 }
 
 jar {
-    exclude "**/*.bat"
-    manifest {
-        attributes 'FMLAT': 'dt_at.cfg'
+    from "LICENSE"
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // add all the jars that should be included when publishing to maven
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+
+    // select the repositories you want to publish to
+    repositories {
+        // uncomment to publish to the local maven
+        // mavenLocal()
     }
 }
 
-idea.module.inheritOutputDirs = true
-
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-        exclude '*.bat'
-    }
-}
+compileKotlin.kotlinOptions.jvmTarget = "1.8"

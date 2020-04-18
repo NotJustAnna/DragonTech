@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "dragontech:block/dracony_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "dragontech:block/dracony_wood"
+    },
+    "axis=z": {
+      "model": "dragontech:block/dracony_wood",
+      "x": 90
+    }
+  }
+}

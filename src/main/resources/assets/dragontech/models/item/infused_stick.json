@@ -1,6 +1,0 @@
-{
-  "parent": "dragontech:item/_standard_item",
-  "textures": {
-    "layer0": "dragontech:items/infused_stick"
-  }
-}

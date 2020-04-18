@@ -1,14 +1,5 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "dragontech:dracony_planks"
-  },
   "variants": {
-    "normal": [
-      {}
-    ],
-    "inventory": [
-      {}
-    ]
+    "": { "model": "dragontech:block/dracony_planks" }
   }
 }

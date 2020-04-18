@@ -1,6 +1,6 @@
 {
-  "parent": "dragontech:item/_standard_item",
+  "parent": "item/generated",
   "textures": {
-    "layer0": "dragontech:items/dragon_Scale"
+    "layer0": "dragontech:item/dragon_scale"
   }
 }
